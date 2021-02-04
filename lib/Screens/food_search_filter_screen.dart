@@ -96,7 +96,6 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
             color: Colors.grey[800],
             icon: Icon(Icons.close),
             onPressed: () {
-              Navigator.pop(context);
             },
           ),
         ),

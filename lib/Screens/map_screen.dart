@@ -58,7 +58,6 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getAllPostedDish();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -96,11 +95,18 @@ class _MapScreenState extends State<MapScreen> {
       ),
       backgroundColor: Colors.black87,
       title: Container(
-        height: MediaQuery.of(context).size.height * 0.100,
-        width: MediaQuery.of(context).size.width*1,
-        child: Image(
-          image: AssetImage("assets/images/Logo.png"),
-          fit: BoxFit.contain,
+        height: MediaQuery.of(context).size.height * 0.09,
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image(
+                image: AssetImage("assets/images/Logo.png"),
+              ),
+            ),
+          ],
         ),
       ),
       actions: [
@@ -111,10 +117,7 @@ class _MapScreenState extends State<MapScreen> {
           icon: Icon(MyFlutterApp.money),
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => CalendarTimeline(
-                        )));
+                context, MaterialPageRoute(builder: (_) => CalendarTimeline()));
           },
         ),
         IconButton(
@@ -272,7 +275,8 @@ class _MapScreenState extends State<MapScreen> {
                                 onPressed: () => Navigator.push(
                                   (context),
                                   MaterialPageRoute(
-                                    builder: (_) => FoodSearchFilterScreen(setCategory: setCategory),
+                                    builder: (_) => FoodSearchFilterScreen(
+                                        setCategory: setCategory),
                                   ),
                                 ),
                                 color: Colors.grey[300],
@@ -280,20 +284,22 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                           ],
                         ),
-                        ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: restaurants.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return FoodItemList(
-                              restaurant: restaurants[index],
-                              postedDishes: postedDishes
-                                  .where((element) =>
-                                      element.makerId == restaurants[index].id)
-                                  .toList(),
-                            );
-                          },
-                        ),
+                        if (restaurants.isNotEmpty)
+                          ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: restaurants.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return FoodItemList(
+                                restaurant: restaurants[index],
+                                postedDishes: postedDishes
+                                    .where((element) =>
+                                        element.makerId ==
+                                        restaurants[index].id)
+                                    .toList(),
+                              );
+                            },
+                          ),
                       ],
                     ),
                   ),
@@ -308,7 +314,6 @@ class _MapScreenState extends State<MapScreen> {
       currentPosition = position;
       moveCamera(currentPosition.latitude, currentPosition.longitude);
     }
-
   }
 
   void moveCamera(lat, lng) {
@@ -322,71 +327,78 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  void setCategory(List<String> categories,List<DateTime> dates){
-    postedDishes=[];
-    restaurants=[];
-    if(dates.length>0 ){
-      postedDishes=foodData.dishesData.where((selectedDish){
-        if(dates.lastIndexWhere((element) => element.day==selectedDish.startTime.day &&
-            element.month==selectedDish.startTime.month &&
-            element.year==selectedDish.startTime.year
-        )!=-1){
-          if(categories.length==0)
-            return true;
-          if(categories.contains(selectedDish.category))
-            return true;
+  void setCategory(List<String> categories, List<DateTime> dates) {
+    postedDishes = [];
+    restaurants = [];
+    if (dates.length > 0) {
+      postedDishes = foodData.dishesData.where((selectedDish) {
+        if (dates.lastIndexWhere((element) =>
+                element.day == selectedDish.startTime.day &&
+                element.month == selectedDish.startTime.month &&
+                element.year == selectedDish.startTime.year) !=
+            -1) {
+          if (categories.length == 0) return true;
+          if (categories.contains(selectedDish.category)) return true;
         }
         return false;
       }).toList();
-      restaurants=foodData.restaurantData.where((element) =>
-          postedDishes.indexWhere((posted) => posted.makerId==element.id)!=-1).toList();
-
-
-    }
-    else if(categories.length>0){
-      postedDishes=foodData.dishesData.where((element) => categories.contains(element.category)).toList();
-      restaurants=foodData.restaurantData.where((element) =>
-      postedDishes.indexWhere((posted) => posted.makerId==element.id)!=-1).toList();
-
-    }
-    else{
+      restaurants = foodData.restaurantData
+          .where((element) =>
+              postedDishes
+                  .indexWhere((posted) => posted.makerId == element.id) !=
+              -1)
+          .toList();
+    } else if (categories.length > 0) {
+      postedDishes = foodData.dishesData
+          .where((element) => categories.contains(element.category))
+          .toList();
+      restaurants = foodData.restaurantData
+          .where((element) =>
+              postedDishes
+                  .indexWhere((posted) => posted.makerId == element.id) !=
+              -1)
+          .toList();
+    } else {
       postedDishes.addAll(foodData.dishesData);
       restaurants.addAll(foodData.restaurantData);
     }
-    if(restaurants.length==0)
-      {
-        Fluttertoast.showToast(
-            msg: "No dish found according to the filter",
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.grey,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        postedDishes.addAll(foodData.dishesData);
-        restaurants.addAll(foodData.restaurantData);
-      }
+    if (restaurants.length == 0) {
+      Fluttertoast.showToast(
+          msg: "No dish found according to the filter",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      postedDishes.addAll(foodData.dishesData);
+      restaurants.addAll(foodData.restaurantData);
+    }
 
-
-    setState(() {
-    });
   }
-
 
   void getAllPostedDish() {
     database.getAllPostedDishes().listen((allDishes) {
-      restaurants=[];
+      restaurants = [];
       postedDishes = [];
       foodData.dishesData = [];
       foodData.restaurantData = [];
       _markers = Set<Marker>();
-      foodData.dishesData.addAll(allDishes.where((element) => element.salesDate.isAfter(DateTime.now())).toList());
-      postedDishes.addAll(allDishes.where((element) => element.salesDate.isAfter(DateTime.now())).toList());
+      foodData.dishesData.addAll(allDishes
+          .where((element) => element.salesDate.isAfter(DateTime.now()))
+          .toList());
+      postedDishes.addAll(allDishes
+          .where((element) => element.salesDate.isAfter(DateTime.now()))
+          .toList());
       for (PostedDish posted in foodData.dishesData) {
         database.getOtherUserData(posted.makerId).listen((currentRestaurant) {
           setRestaurant(currentRestaurant, posted);
           setRestaurantMarker(currentRestaurant, posted);
         });
       }
+      if (foodData.dishesData.isEmpty)
+        setState(() {
+          loading = false;
+        });
     });
   }
 
@@ -395,11 +407,11 @@ class _MapScreenState extends State<MapScreen> {
         element.restaurantName == currentRestaurant.restaurantName);
     if (index == -1 && currentPosition != null) {
       currentRestaurant.distance = getDistance(currentPosition, posted);
-      if(currentRestaurant.distance<5000) {
+      if (currentRestaurant.distance < 5000) {
         foodData.restaurantData.add(currentRestaurant);
         restaurants.add(currentRestaurant);
       }
-      }
+    }
   }
 
   void setRestaurantMarker(User event, PostedDish posted) {
