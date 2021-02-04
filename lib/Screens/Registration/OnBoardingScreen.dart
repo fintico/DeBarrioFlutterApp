@@ -1,8 +1,5 @@
-import 'package:charcode/charcode.dart';
-import 'package:da_brello_ui/Services/FirebaseAuthService.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';

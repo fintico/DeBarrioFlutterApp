@@ -1,8 +1,9 @@
-import 'file:///C:/Users/mubeen/StudioProjects/debarrio/lib/Screens/Registration/otp_verification.dart';
 import 'package:da_brello_ui/ModelClass/UserModel.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+
+import 'otp_verification.dart';
 
 class PhoneNumScreen extends StatefulWidget {
   @override
