@@ -1,10 +1,11 @@
 import 'dart:io';
 
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Screens/OrderActive.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Screens/OrderActive.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -44,7 +45,7 @@ class MisventasState extends State<Misventas> {
   Widget build(BuildContext context) {
     user = Provider.of<User>(context);
     selectedPostedDish = Provider.of<PostedDish>(context);
-    final appBar = AppBar(
+    /* final appBar = AppBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
@@ -53,14 +54,8 @@ class MisventasState extends State<Misventas> {
       ),
       backgroundColor: Colors.black87,
       title: Container(
-        height: MediaQuery
-            .of(context)
-            .size
-            .height * 0.09,
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        height: MediaQuery.of(context).size.height * 0.09,
+        width: MediaQuery.of(context).size.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -98,10 +93,7 @@ class MisventasState extends State<Misventas> {
                 indent: 22,
               ),
               Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.08,
+                height: MediaQuery.of(context).size.height * 0.08,
                 child: Center(
                   child: Text(
                     "Mis ventas",
@@ -115,94 +107,108 @@ class MisventasState extends State<Misventas> {
             ],
           ),
           preferredSize: Size.fromHeight(70)),
-    );
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: appBar,
-        body: LoadingOverlay(
-          color: Colors.black,
-          opacity: .7,
-          isLoading: loading,
-          progressIndicator: LoadingIndicator(
-            indicatorType: Indicator.ballSpinFadeLoader,
-            color: Colors.white,
-          ),
-          child: !loading
-              ? Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
+    ); */
+    final appBar = PreferredSize(
+        child: AppBarOptionSix(
+          headerTitle: 'Mis ventas',
+          leftIconAction: () => Navigator.pop(context),
+        ),
+        preferredSize: Size.fromHeight(56.0));
+    return SafeArea(
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: appBar,
+          body: LoadingOverlay(
+            color: Colors.black,
+            opacity: .7,
+            isLoading: loading,
+            progressIndicator: LoadingIndicator(
+              indicatorType: Indicator.ballSpinFadeLoader,
+              color: Colors.white,
+            ),
+            child: !loading
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
 
-              // the tab bar with two items
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  child: AppBar(
-                    backgroundColor: Colors.white,
-                    elevation: 0.0,
-                    bottom: TabBar(
-                      unselectedLabelColor: Colors.grey,
-                      indicatorColor: Colors.black,
-                      labelColor: Colors.black,
-                      tabs: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Tab(
-                            text: "Activas",
+                      // the tab bar with two items
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          height: 50,
+                          child: AppBar(
+                            backgroundColor: Colors.white,
+                            elevation: 0.0,
+                            bottom: TabBar(
+                              unselectedLabelColor: Colors.grey,
+                              indicatorColor: Colors.black,
+                              labelColor: Colors.black,
+                              tabs: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Tab(
+                                    text: "Activas",
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Tab(
+                                    text: "Finalizadas",
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Tab(
-                            text: "Finalizadas",
-                          ),
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            // first tab bar view widget
+                            if (widget.isCurrentOrders)
+                              CartOrderActive(
+                                  currentOrders: currentOrder.where((input) {
+                                var compare = DateTime(input.salesDate.year,
+                                    input.salesDate.month, input.salesDate.day);
+                                return compare.isAtSameMomentAs(DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day));
+                              }).toList()),
+                            if (widget.isCurrentOrders)
+                              CartOrderActive(
+                                  currentOrders: currentOrder.where((input) {
+                                var compare = DateTime(input.salesDate.year,
+                                    input.salesDate.month, input.salesDate.day);
+                                return compare.isBefore(DateTime(
+                                    DateTime.now().year,
+                                    DateTime.now().month,
+                                    DateTime.now().day));
+                              }).toList()),
+                            if (!widget.isCurrentOrders)
+                              CartActive(
+                                  currentDishes: currentDishes
+                                      .where((input) => input.salesDate
+                                          .isAfter(DateTime.now()))
+                                      .toList()),
+                            if (!widget.isCurrentOrders)
+                              CartActive(
+                                  currentDishes: currentDishes
+                                      .where((input) => input.salesDate
+                                          .isBefore(DateTime.now()))
+                                      .toList())
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    height: 10,
                   ),
-                ),
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    // first tab bar view widget
-                    if (widget.isCurrentOrders)
-                      CartOrderActive(
-                          currentOrders: currentOrder.where((input) {
-                            var compare=DateTime(input.salesDate.year,input.salesDate.month,input.salesDate.day);
-                            return compare.isAtSameMomentAs(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day));
-                          }).toList()),
-                    if (widget.isCurrentOrders)
-                      CartOrderActive(
-                          currentOrders: currentOrder
-                              .where((input) {
-                            var compare=DateTime(input.salesDate.year,input.salesDate.month,input.salesDate.day);
-                            return compare.isBefore(DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day));
-                          }).toList()),
-                    if (!widget.isCurrentOrders)
-                      CartActive(
-                          currentDishes: currentDishes
-                              .where((input) =>
-                              input.salesDate.isAfter(DateTime.now()))
-                              .toList()),
-                    if (!widget.isCurrentOrders)
-                      CartActive(
-                          currentDishes: currentDishes
-                              .where((input) =>
-                              input.salesDate
-                                  .isBefore(DateTime.now()))
-                              .toList())
-                  ],
-                ),
-              ),
-            ],
-          )
-              : SizedBox(
-            height: 10,
           ),
         ),
       ),

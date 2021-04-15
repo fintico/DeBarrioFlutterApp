@@ -1,6 +1,7 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:date_time_picker/date_time_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class AfterRadioCarousal extends StatelessWidget {
@@ -113,9 +114,7 @@ class AfterRadioCarousal extends StatelessWidget {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          onPressed: () => {
-                            Navigator.pop(context)
-                          },
+                          onPressed: () => {Navigator.pop(context)},
                           child: Text(
                             "Acceptar",
                             style: TextStyle(

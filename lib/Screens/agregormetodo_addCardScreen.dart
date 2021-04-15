@@ -1,8 +1,8 @@
-import 'package:da_brello_ui/ModelClass/BankCardModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Screens/payoptbutton.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/BankCardModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Screens/payoptbutton.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +26,7 @@ class _AgregorMetodoState extends State<AgregorMetodo> {
   TextEditingController _cvv = TextEditingController();
   TextEditingController _name = TextEditingController();
   TextEditingController _expiry = TextEditingController();
-  DatabaseService database=DatabaseService();
+  DatabaseService database = DatabaseService();
 
   @override
   void initState() {
@@ -45,7 +45,6 @@ class _AgregorMetodoState extends State<AgregorMetodo> {
     if (widget.card != null && widget.card.cardNumber == null) {
       updateScreen();
       return Container();
-
     } else {
       final appBar = AppBar(
         shape: RoundedRectangleBorder(
@@ -358,7 +357,6 @@ class _AgregorMetodoState extends State<AgregorMetodo> {
                                   user.cards[index] = bankCard;
                                 }
                                 database.setUserData(user);
-
                               }
                               Navigator.pushReplacement(
                                   context,
@@ -515,7 +513,7 @@ class _AgregorMetodoState extends State<AgregorMetodo> {
         });
   }
 
-  void updateScreen()  async{
+  void updateScreen() async {
     WidgetsBinding.instance.addPostFrameCallback((_) => Navigator.pop(context));
   }
 }

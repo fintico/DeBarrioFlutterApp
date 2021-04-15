@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:flutter/material.dart';
 
 import '../utilsFunctions.dart';
@@ -27,7 +27,9 @@ class _ItemListState extends State<ItemList> {
               width: MediaQuery.of(context).size.height * 0.15,
               child: Image(
                 fit: BoxFit.cover,
-                image: cZeroStr(widget.currentRestaurant.pictureUri)?NetworkImage(widget.currentRestaurant.pictureUri):AssetImage('assets/images/listitem.png'),
+                image: cZeroStr(widget.currentRestaurant.pictureUri)
+                    ? NetworkImage(widget.currentRestaurant.pictureUri)
+                    : AssetImage('assets/images/listitem.png'),
               ),
             ),
           ),
@@ -41,7 +43,8 @@ class _ItemListState extends State<ItemList> {
                 child: ListTile(
                   title: Text(widget.currentRestaurant.name,
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle: Text(widget.currentRestaurant.address[0].addressString),
+                  subtitle:
+                      Text(widget.currentRestaurant.address[0].addressString),
                   isThreeLine: true,
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -53,7 +56,9 @@ class _ItemListState extends State<ItemList> {
                           borderRadius: BorderRadius.circular(5),
                           color: Colors.grey[300],
                         ),
-                        child: Center(child: Text("${widget.currentRestaurant.distance} km")),
+                        child: Center(
+                            child: Text(
+                                "${widget.currentRestaurant.distance} km")),
                       ),
                       Container(
                           height: 20,

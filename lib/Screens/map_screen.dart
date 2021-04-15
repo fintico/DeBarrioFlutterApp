@@ -1,13 +1,18 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/ModelClass/foodData.dart';
-import 'package:da_brello_ui/ModelClass/orderList.dart';
-import 'package:da_brello_ui/Screens/cart.dart';
-import 'package:da_brello_ui/Screens/nav_drawer.dart';
-import 'package:da_brello_ui/Screens/search_icon_screen.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
-import 'package:da_brello_ui/WdgetsMapScreen/FoodList.dart';
-import 'package:da_brello_ui/icons/my_flutter_app_icons.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/foodData.dart';
+import 'package:debarrioapp/ModelClass/orderList.dart';
+import 'package:debarrioapp/Screens/calendar_splash.dart';
+import 'package:debarrioapp/Screens/cart.dart';
+import 'package:debarrioapp/Screens/nav_drawer.dart';
+import 'package:debarrioapp/Screens/search_icon_screen.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/WdgetsMapScreen/FoodList.dart';
+import 'package:debarrioapp/icons/my_flutter_app_icons.dart';
+import 'package:debarrioapp/widgets/components/generics/app_bar_opt_three.dart';
+import 'package:debarrioapp/widgets/components/icons/filter.dart';
+import 'package:debarrioapp/widgets/components/transitions/slide_right_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
@@ -76,7 +81,7 @@ class _MapScreenState extends State<MapScreen> {
         longitude: user.address[0].addressLanLon.longitude));
 
     orderList = Provider.of<OrderList>(context);
-    final appBar = AppBar(
+    /* final appBar = AppBar(
       leading: IconButton(
         onPressed: () => {
           Navigator.push(
@@ -195,6 +200,33 @@ class _MapScreenState extends State<MapScreen> {
             ],
           ),
           preferredSize: Size.fromHeight(70)),
+    ); */
+    final appBar = PreferredSize(
+      child: Container(
+        child: AppBarOptionThree(
+          leftIconAction: () {
+            Navigator.push(context, SlideRightRoute(page: NavDrawer()));
+          },
+          rightIconAction: () {
+            if (cZeroStr(orderList.myOrders)) {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => FoodCart()));
+            } else {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => PaySplash()));
+            }
+          },
+          secondaryIconAction: () {
+            Navigator.push(
+                //context, MaterialPageRoute(builder: (_) => CalendarTimeline()));
+                context,
+                MaterialPageRoute(builder: (_) => CalendarSplash()));
+          },
+          subTitleIconAction: () {},
+          subTitle: user.address[0].addressString,
+        ),
+      ),
+      preferredSize: Size.fromHeight(104.0),
     );
     return loading
         ? SizedBox(
@@ -260,7 +292,7 @@ class _MapScreenState extends State<MapScreen> {
                                     },
                                   ),
                                   border: OutlineInputBorder(),
-                                  hintText: "Que se te antoja hoy?",
+                                  hintText: "¿Qué se te antoja hoy?",
                                   hintStyle: TextStyle(color: Colors.grey[400]),
                                 ),
                               ),
@@ -268,9 +300,10 @@ class _MapScreenState extends State<MapScreen> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.2,
                               child: IconButton(
-                                icon: Icon(
-                                  MyFlutterApp.filter,
-                                  color: Colors.grey,
+                                icon: FilterIcon(
+                                  height: 24.0,
+                                  width: 24.0,
+                                  type: 0,
                                 ),
                                 onPressed: () => Navigator.push(
                                   (context),
@@ -373,7 +406,6 @@ class _MapScreenState extends State<MapScreen> {
       postedDishes.addAll(foodData.dishesData);
       restaurants.addAll(foodData.restaurantData);
     }
-
   }
 
   void getAllPostedDish() {

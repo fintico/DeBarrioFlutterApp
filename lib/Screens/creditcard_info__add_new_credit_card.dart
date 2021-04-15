@@ -1,11 +1,11 @@
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Widget_Credit_info_Screen/CreditCard_btn.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Widget_Credit_info_Screen/CreditCard_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Widget_Credit_info_Screen/PayPal_btn.dart';
 import 'orderCompletion_done.dart';
-import 'package:da_brello_ui/ModelClass/BankCardModel.dart';
+import 'package:debarrioapp/ModelClass/BankCardModel.dart';
 
 class CreditInfo extends StatefulWidget {
   final BankCard card;
@@ -22,11 +22,9 @@ class _CreditInfoState extends State<CreditInfo> {
   TextEditingController _name = TextEditingController();
   User user;
 
-
-
   @override
   Widget build(BuildContext context) {
-    user=Provider.of<User>(context);
+    user = Provider.of<User>(context);
     final appBar = AppBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -312,7 +310,8 @@ class _CreditInfoState extends State<CreditInfo> {
                       ),
                       onPressed: () {
                         if (widget.card != null) {
-                          int index=user.cards.indexWhere((element) => element.cardId==widget.card.cardId);
+                          int index = user.cards.indexWhere((element) =>
+                              element.cardId == widget.card.cardId);
                           // widget.
 
                         } else {

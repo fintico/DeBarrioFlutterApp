@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da_brello_ui/ModelClass/AdditionDishModel.dart';
+import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class OrderedDish extends ChangeNotifier {
-  String id='';
+  String id = '';
   String name = '';
   String dishId = '';
   String orderId = '';
   String makerId = '';
   String buyerId = '';
-  String totalService='';
+  String totalService = '';
   List<AdditionDish> additionDish;
   GeoPoint currentLocation;
   String dishPictureURI;
@@ -18,7 +18,6 @@ class OrderedDish extends ChangeNotifier {
   bool isDelivery;
   String status;
   String originalPrice;
-
 
   OrderedDish({
     this.name,
@@ -53,8 +52,8 @@ class OrderedDish extends ChangeNotifier {
       'quantity': quantity,
       'additionDish': additionDish != null
           ? additionDish.map((AdditionDish addition) {
-        return addition.toMap();
-      }).toList()
+              return addition.toMap();
+            }).toList()
           : new List(),
     };
   }
@@ -81,6 +80,7 @@ class OrderedDish extends ChangeNotifier {
     }
     this.notifyListeners();
   }
+
   OrderedDish.doc(value) {
     this.fromMap(value);
   }

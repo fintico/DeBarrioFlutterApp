@@ -1,6 +1,6 @@
-import 'package:da_brello_ui/ModelClass/AdditionDishModel.dart';
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';

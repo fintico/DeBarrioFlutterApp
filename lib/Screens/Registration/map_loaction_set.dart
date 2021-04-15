@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da_brello_ui/ModelClass/AddressModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Screens/map_screen.dart';
-import 'package:da_brello_ui/Screens/search_icon_screen.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/AddressModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Screens/map_screen.dart';
+import 'package:debarrioapp/Screens/search_icon_screen.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/widgets/components/generics/app_bar_opt_two.dart';
+import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder/geocoder.dart';
@@ -48,6 +50,14 @@ class _LocationSetterState extends State<LocationSetter> {
   /// This stores the current position for the selected user
   Position currentPosition;
 
+  TextStyle subtitleStyle = DBStyle.getStyle(
+    DBStyle.GRAY_1,
+    DBStyle.FONT_SYZE_M,
+    DBStyle.FONT_HEIGHT_M,
+    0,
+    DBStyle.FONT_WEIGHT_SEMI_BOLD,
+  );
+
   // Set<Marker> myMarker() {
   //   setState(() {
   //     _markers.add(Marker(
@@ -82,7 +92,7 @@ class _LocationSetterState extends State<LocationSetter> {
   @override
   Widget build(BuildContext context) {
     user = Provider.of<User>(context);
-    final appBar = AppBar(
+    /* final appBar = AppBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(10),
@@ -119,13 +129,21 @@ class _LocationSetterState extends State<LocationSetter> {
               Container(
                   height: MediaQuery.of(context).size.height * 0.08,
                   child: Center(
-                      child: Text("Confirma tu unaniciaon",
+                      child: Text("Confirma tu ubicación",
                           style:
                               TextStyle(color: Colors.amber, fontSize: 20)))),
             ],
           ),
           preferredSize: Size.fromHeight(70)),
-    );
+    ); */
+    final appBar = PreferredSize(
+        child: Container(
+          child: AppBarOptionTwo(
+              leftIconAction: () {},
+              rightIconAction: () {},
+              title: 'Confirma tu ubicación'),
+        ),
+        preferredSize: Size.fromHeight(104.0));
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor("#FBFCFC"),
@@ -155,7 +173,6 @@ class _LocationSetterState extends State<LocationSetter> {
           progressIndicator: LoadingIndicator(
             indicatorType: Indicator.ballSpinFadeLoader,
             color: Colors.white,
-
           ),
           child: Container(
             height: (MediaQuery.of(context).size.height -
@@ -194,9 +211,8 @@ class _LocationSetterState extends State<LocationSetter> {
                         horizontal: 32.0,
                       ),
                       child: Text(
-                        "?Donde te encuentras",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w500),
+                        "¿Dónde te encuentras?",
+                        style: subtitleStyle,
                       ),
                     ),
                   ),
@@ -230,7 +246,7 @@ class _LocationSetterState extends State<LocationSetter> {
                           },
                         ),
                         border: OutlineInputBorder(),
-                        hintText: "Que se te antoja hoy?",
+                        hintText: "Ejemplo: ",
                         hintStyle: TextStyle(color: Colors.grey[400]),
                       ),
                     ),
@@ -246,9 +262,8 @@ class _LocationSetterState extends State<LocationSetter> {
                         horizontal: 32.0,
                       ),
                       child: Text(
-                        "Nro.de Appartmenta/Piso",
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w500),
+                        "Nro.de Apartamento/Piso/Interior",
+                        style: subtitleStyle,
                       ),
                     ),
                   ),
@@ -265,7 +280,7 @@ class _LocationSetterState extends State<LocationSetter> {
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: "Ejemplo:Appartmento",
+                        hintText: "Ejemplo:Apartamento 12",
                         hintStyle: TextStyle(color: Colors.grey[400]),
                       ),
                     ),
@@ -310,7 +325,7 @@ class _LocationSetterState extends State<LocationSetter> {
         if (widget.indexToChange == -1) {
           user.address.add(inAppAddress);
         } else {
-          user.address[widget.indexToChange]=inAppAddress;
+          user.address[widget.indexToChange] = inAppAddress;
           // ignore: invalid_use_of_visible_for_testing_member
           user.notifyListeners();
         }
@@ -323,9 +338,8 @@ class _LocationSetterState extends State<LocationSetter> {
   void gotoMapScreen() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-            builder: (_) => MapScreen()),(Route<dynamic> route)=>false);
-
+        MaterialPageRoute(builder: (_) => MapScreen()),
+        (Route<dynamic> route) => false);
   }
 
   void moveCamera(lat, lng) {
@@ -365,7 +379,6 @@ class _LocationSetterState extends State<LocationSetter> {
       loading = bool;
     });
   }
-
 
   setPosition(Position position) {
     currentPosition = position;

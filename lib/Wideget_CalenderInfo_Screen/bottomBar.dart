@@ -58,7 +58,7 @@ class _BottomBarCalenderInfoState extends State<BottomBarCalenderInfo> {
                         onPressed: () {
                           widget.setPostedDish();
                         },
-                        child: Text("Confirmar venta"),
+                        child: Text("Confirmar ventaa"),
                         elevation: 0.0,
                         color: Colors.red,
                         textColor: Colors.white,

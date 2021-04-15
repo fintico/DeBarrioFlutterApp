@@ -1,7 +1,7 @@
-import 'package:da_brello_ui/ModelClass/OrderedDish.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/ModelClass/orderList.dart';
-import 'package:da_brello_ui/Screens/payoptbutton.dart';
+import 'package:debarrioapp/ModelClass/OrderedDish.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/orderList.dart';
+import 'package:debarrioapp/Screens/payoptbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class FoodCartState extends State<FoodCart> {
   @override
   Widget build(BuildContext context) {
     orderList = Provider.of<OrderList>(context);
-    user=Provider.of<User>(context);
+    user = Provider.of<User>(context);
     final appBar = AppBar(
       leading: IconButton(
         onPressed: () => {},
@@ -136,17 +136,21 @@ class FoodCartState extends State<FoodCart> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5)),
                       onPressed: () {
-                       if(cZeroStr(user.cards))
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => PayOptButton(fromOrder: true,)));
-                       else{
-                         Navigator.push(
-                             context,
-                             MaterialPageRoute(
-                                 builder: (_) => AgregorMetodo(fromOrder: true,)));
-                       }
+                        if (cZeroStr(user.cards))
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => PayOptButton(
+                                        fromOrder: true,
+                                      )));
+                        else {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => AgregorMetodo(
+                                        fromOrder: true,
+                                      )));
+                        }
                       },
                       child: Text("Continuar con el pago"),
                       elevation: 0.0,
@@ -345,24 +349,20 @@ class FoodCartState extends State<FoodCart> {
                       child: Text("?Una propina?"),
                     ),
                     Container(
-                      decoration:orderList.order.tip=="1.00"?
-                        BoxDecoration(
-                        shape: BoxShape.circle,
-                          border: Border.all(
-                          color: Colors.black,
-                          width: 1
-                        )
-                      ):null,
+                      decoration: orderList.order.tip == "1.00"
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1))
+                          : null,
                       child: FloatingActionButton(
                         heroTag: 'btn3',
                         elevation: 0.0,
-
                         backgroundColor: HexColor('52D176'),
                         onPressed: () {
                           orderList.order.tip = '1.00';
                           setState(() {
-                            orderList.order.originalPrice=getCurrentOrderListPrice(orderList);
-
+                            orderList.order.originalPrice =
+                                getCurrentOrderListPrice(orderList);
                           });
                         },
                         child: Center(
@@ -374,14 +374,11 @@ class FoodCartState extends State<FoodCart> {
                       ),
                     ),
                     Container(
-                      decoration:orderList.order.tip=="2.00"?
-                      BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Colors.black,
-                              width: 1
-                          )
-                      ):null,
+                      decoration: orderList.order.tip == "2.00"
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1))
+                          : null,
                       child: FloatingActionButton(
                         heroTag: 'btn4',
                         elevation: 0.0,
@@ -402,14 +399,11 @@ class FoodCartState extends State<FoodCart> {
                       ),
                     ),
                     Container(
-                      decoration:orderList.order.tip=="3.00"?
-                      BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Colors.black,
-                              width: 1
-                          )
-                      ):null,
+                      decoration: orderList.order.tip == "3.00"
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1))
+                          : null,
                       child: FloatingActionButton(
                         heroTag: 'btn5',
                         elevation: 0.0,
@@ -430,14 +424,11 @@ class FoodCartState extends State<FoodCart> {
                       ),
                     ),
                     Container(
-                      decoration:orderList.order.tip=="4.00"?
-                      BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                              color: Colors.black,
-                              width: 1
-                          )
-                      ):null,
+                      decoration: orderList.order.tip == "4.00"
+                          ? BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.black, width: 1))
+                          : null,
                       child: FloatingActionButton(
                         heroTag: 'btn6',
                         elevation: 0.0,
@@ -453,7 +444,8 @@ class FoodCartState extends State<FoodCart> {
                           child: Text(
                             "S/4",
                             style: TextStyle(
-                                color: Colors.black, fontWeight: FontWeight.w700),
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700),
                           ),
                         ),
                       ),

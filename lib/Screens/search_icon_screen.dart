@@ -1,7 +1,7 @@
 import 'package:auto_suggestion_text_field/model/text_field_prop.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
-import 'package:da_brello_ui/Icons/my_flutter_app_icons.dart';
-import 'package:da_brello_ui/ModelClass/foodData.dart';
+import 'package:debarrioapp/Icons/my_flutter_app_icons.dart';
+import 'package:debarrioapp/ModelClass/foodData.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -171,13 +171,16 @@ class _SearchModalSheetState extends State<SearchModalSheet> {
     );
   }
 
-  Future<List<String>> getRestaurantNameFromSearch(String search) async{
-    var value= foodData.restaurantData.where((element) => element.restaurantName.contains(search)).toList().map((e) => e.restaurantName).toList();
-    if(value.length==0)
-      value=['Not Found'];
+  Future<List<String>> getRestaurantNameFromSearch(String search) async {
+    var value = foodData.restaurantData
+        .where((element) => element.restaurantName.contains(search))
+        .toList()
+        .map((e) => e.restaurantName)
+        .toList();
+    if (value.length == 0) value = ['Not Found'];
     return value;
-
   }
+
   Future<List<String>> getAddressFromSearch(String search) async {
     try {
       var address = await Geocoder.local.findAddressesFromQuery(search);
@@ -197,14 +200,18 @@ class _SearchModalSheetState extends State<SearchModalSheet> {
 
   void setRestaurantLocationSuggestion(String value) {
     if (value != null && value != 'Not Found') {
-      var selectedRestaurant=foodData.restaurantData.firstWhere((element) => element.restaurantName==value);
+      var selectedRestaurant = foodData.restaurantData
+          .firstWhere((element) => element.restaurantName == value);
       Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-          builder: (_) => RestaurantCarouselSlider(
-            selectedRestaurant: selectedRestaurant,
-            postedDishes: foodData.dishesData.where((element) => element.makerId==selectedRestaurant.id).toList(),
-      )));
+              builder: (_) => RestaurantCarouselSlider(
+                    selectedRestaurant: selectedRestaurant,
+                    postedDishes: foodData.dishesData
+                        .where((element) =>
+                            element.makerId == selectedRestaurant.id)
+                        .toList(),
+                  )));
     }
   }
 

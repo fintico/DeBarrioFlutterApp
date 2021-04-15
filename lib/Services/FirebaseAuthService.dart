@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,21 +26,20 @@ class AuthService {
     return _auth.onAuthStateChanged.map(_userFromFirebaseUser);
   }
 
-  Future<void> verifyPhone(String userPhoneNumber,
-      Function smsUIUpdate, Function updateUser,{Function phoneNumberNotOkay}) async {
+  Future<void> verifyPhone(
+      String userPhoneNumber, Function smsUIUpdate, Function updateUser,
+      {Function phoneNumberNotOkay}) async {
     final PhoneVerificationCompleted verified =
         (AuthCredential authResult) async {
-
       signInWithPhoneNumber(authResult, '', updateUser);
     };
 
     final PhoneVerificationFailed verificationFailed =
         (AuthException authException) {
       print('${authException.message}');
-      if(phoneNumberNotOkay!=null){
+      if (phoneNumberNotOkay != null) {
         phoneNumberNotOkay(authException.message);
       }
-
     };
 
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
@@ -65,11 +64,9 @@ class AuthService {
       Fluttertoast.showToast(
           msg: "The code is sent to phone number",
           toastLength: Toast.LENGTH_SHORT,
-
           timeInSecForIosWeb: 1,
           fontSize: 16.0);
-    }
-    on Exception catch (e){
+    } on Exception catch (e) {
       print(e);
       Fluttertoast.showToast(
           msg: e.toString(),
@@ -79,20 +76,17 @@ class AuthService {
           backgroundColor: Colors.red,
           textColor: Colors.white,
           fontSize: 16.0);
-
     }
   }
 
   Future<bool> signInWithPhoneNumber(AuthCredential credential,
       String enteredCode, Function updateUser) async {
-    if (credential == null)
-      if (enteredCode != null) {
-        credential = PhoneAuthProvider.getCredential(
-            verificationId: verificationId, smsCode: enteredCode);
-      }
-      else {
-        return false;
-      }
+    if (credential == null) if (enteredCode != null) {
+      credential = PhoneAuthProvider.getCredential(
+          verificationId: verificationId, smsCode: enteredCode);
+    } else {
+      return false;
+    }
     try {
       bool isValid = await FirebaseAuth.instance
           .signInWithCredential(credential)
@@ -106,8 +100,7 @@ class AuthService {
       });
       if (!isValid) return false;
       return true;
-    }
-    on Exception{
+    } on Exception {
       return false;
     }
   }

@@ -1,8 +1,11 @@
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
 import 'package:flutter/material.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
+import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 
+import 'OnBoardingScreen.dart';
 import 'otp_verification.dart';
 
 class PhoneNumScreen extends StatefulWidget {
@@ -14,9 +17,26 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   TextEditingController _phoneCheck = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   User user;
+  bool disable = true;
+  TextStyle subtextStyle = TextStyle(
+    color: HexColor('333333'),
+    fontSize: 14.0,
+    letterSpacing: 0.2,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'OpenSans',
+  );
+  TextStyle richSubtextStyle = TextStyle(
+    color: HexColor('333333'),
+    fontSize: 14.0,
+    letterSpacing: 0.2,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'OpenSans',
+  );
   @override
   Widget build(BuildContext context) {
-    user=Provider.of<User>(context);
+    user = Provider.of<User>(context);
     TextStyle textStyle = TextStyle(
         color: HexColor('4C6072'),
         fontSize: 35.0,
@@ -30,49 +50,50 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
       style: TextStyle(
           color: Colors.green,
           decoration: TextDecoration.underline,
-          fontSize: 15.0,
+          fontSize: 12.0,
           letterSpacing: 1.2,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'RobotoMono'),
+          fontWeight: FontWeight.w600,
+          fontFamily: 'OpenSans'),
     );
 
-    TextStyle subtextStyle = TextStyle(
+    TextStyle termTextStyle = TextStyle(
         color: HexColor('333333'),
-        fontSize: 15.0,
+        fontSize: 12.0,
         letterSpacing: 0.2,
         fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w400,
         fontFamily: 'OpenSans');
     final appBar = PreferredSize(
       child: Container(
-          color: Colors.black,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Image(
-                      image: AssetImage("assets/images/Logo.png"),
-                    ),
+        //color: Colors.black,
+        child:
+            /* Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Image(
+                    image: AssetImage("assets/images/Logo.png"),
                   ),
-                ],
-              ),
-              Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width / 8,
-              ),
-            ],
-          )),
-      preferredSize: Size.fromHeight(50),
+                ),
+              ],
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width / 8,
+            ),
+          ],
+        ),
+       */
+            AppBarOptionOne(leftIconAction: () => gotoIntroScreen()),
+      ),
+      preferredSize: Size.fromHeight(56.0),
     );
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#f2f2f2"),
+        //backgroundColor: HexColor("#f2f2f2"),
         appBar: appBar,
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(32.0),
@@ -82,8 +103,9 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
               Align(
                 alignment: Alignment.bottomLeft,
                 child: Container(
-                  child: Text("AI darle eh Continuar estay aceptando Ios",
-                      style: subtextStyle),
+                  child: Text(
+                      "Al darle en '" 'Continuar' "' estoy aceptando los",
+                      style: termTextStyle),
                 ),
               ),
               Align(
@@ -94,9 +116,11 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
               ),
               Container(
                 height: 20,
-              ),SizedBox(
+              ),
+              //continueButton(),
+              SizedBox(
                 width: double.infinity,
-                height: 70,
+                height: 48.0,
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -104,7 +128,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                   ),
                   child: RaisedButton(
                     elevation: 0.0,
-                    color: _phoneCheck.text.length<=10
+                    color: _phoneCheck.text.length <= 10
                         ? HexColor('E3E3E3')
                         : HexColor('E84A31'),
                     shape: RoundedRectangleBorder(
@@ -128,27 +152,15 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
         body: Form(
           key: _formKey,
           child: Container(
-            height: (MediaQuery
-                .of(context)
-                .size
-                .height -
+            height: (MediaQuery.of(context).size.height -
                 appBar.preferredSize.height -
-                MediaQuery
-                    .of(context)
-                    .padding
-                    .top),
-            width: (MediaQuery
-                .of(context)
-                .size
-                .width),
+                MediaQuery.of(context).padding.top),
+            width: (MediaQuery.of(context).size.width),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .width * 0.3,
+                    height: MediaQuery.of(context).size.width * 0.3,
                   ),
                   Container(
                     child: Text("¡Regístrate", style: textStyle),
@@ -160,13 +172,16 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                     height: 30,
                   ),
                   Container(
-                    child: Text("Así de fácll, solo con to número áccederás a",
-                        style: subtextStyle),
+                    child:
+                        /* Text("Así de fácil, solo con to número accederás a",
+                        style: subtextStyle), */
+                        subTitleDescription(),
                   ),
-                  Container(
-                    child: Text("una variedad de platIllos caseros cerca de U.",
+                  /* Container(
+                    child: Text(
+                        "una variedad de platillos caseros cerca de ti.",
                         style: subtextStyle),
-                  ),
+                  ), */
                   SizedBox(
                     height: 40,
                   ),
@@ -176,7 +191,6 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                       child: TextFormField(
                         onChanged: setInputOnChange,
                         validator: validateChange,
-
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
                           prefixText: '+',
@@ -187,11 +201,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                       ),
                     ),
                   ),
-                  Container(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.16),
-
+                  Container(height: MediaQuery.of(context).size.height * 0.16),
                 ],
               ),
             ),
@@ -204,7 +214,24 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   void setInputOnChange(value) {
     setState(() {
       _phoneCheck.text = value;
+
+      disable = _phoneCheck.text.isNotEmpty
+          ? false
+          : (_phoneCheck.text.length > 10 ? false : true);
+
+      print(_phoneCheck.text);
+      print(_phoneCheck.text.length);
+      print('Disable $disable');
     });
+  }
+
+  void gotoIntroScreen() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => IntroScreen(),
+      ),
+    );
   }
 
   String validateChange(phoneNumber) {
@@ -215,8 +242,8 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   }
 
   Future<dynamic> onSubmit() {
-    if(_formKey.currentState.validate()){
-      user.phoneNumber='+'+_phoneCheck.text;
+    if (_formKey.currentState.validate()) {
+      user.phoneNumber = '+' + _phoneCheck.text;
       return Navigator.push(
         context,
         MaterialPageRoute(
@@ -225,5 +252,43 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
       );
     }
     return null;
+  }
+
+  Widget continueButton() {
+    return GenericButtonOrange(
+        text: 'CONTINUAR',
+        /* disable: _phoneCheck.text.isEmpty
+            ? true
+            : (_phoneCheck.text.length <= 10 ? true : false), */
+        disable: disable,
+        action: onSubmit);
+  }
+
+  Widget subTitleDescription() {
+    return Center(
+      child: RichText(
+        textAlign: TextAlign.center,
+        text: TextSpan(
+          children: [
+            TextSpan(text: 'Así de fácil, ', style: subtextStyle),
+            TextSpan(text: 'solo con tu número ', style: richSubtextStyle),
+            TextSpan(text: 'accederás a\n', style: subtextStyle),
+            TextSpan(
+                text: 'una variedad de platillos caseros cerca de ti.',
+                style: subtextStyle),
+          ],
+        ),
+      ),
+    );
+  }
+
+  bool setButtonDisable() {
+    bool disable;
+    setState(() {
+      disable = _phoneCheck.text.isEmpty ? true : false;
+      print(disable);
+      return disable;
+    });
+    return disable;
   }
 }

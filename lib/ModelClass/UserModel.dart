@@ -1,8 +1,6 @@
-import'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da_brello_ui/ModelClass/AddressModel.dart';
-import 'package:da_brello_ui/ModelClass/BankCardModel.dart';
+import 'package:debarrioapp/ModelClass/AddressModel.dart';
+import 'package:debarrioapp/ModelClass/BankCardModel.dart';
 import 'package:flutter/cupertino.dart';
 
 class User extends ChangeNotifier {
@@ -17,7 +15,6 @@ class User extends ChangeNotifier {
   String _restaurantName = '';
   String _reviews = '';
   int _distance;
-
 
   int get distance => _distance;
 
@@ -56,13 +53,13 @@ class User extends ChangeNotifier {
       'phoneNumber': phoneNumber,
       'cards': cards != null
           ? cards.map((BankCard bankCard) {
-        return bankCard.toMap();
-      }).toList()
+              return bankCard.toMap();
+            }).toList()
           : new List(),
       'address': _address != null
           ? _address.map((InAppAddress _address) {
-        return _address.toMap();
-      }).toList()
+              return _address.toMap();
+            }).toList()
           : new List(),
       'fcmDeviceCode': fcmDeviceCode,
       'pictureUri': pictureUri,
@@ -72,7 +69,7 @@ class User extends ChangeNotifier {
   }
 
   void fromMap(DocumentSnapshot doc) {
-    this.name = doc.data['name'] ;
+    this.name = doc.data['name'];
     this.id = doc.data['id'];
     this.email = doc.data['email'];
     this.phoneNumber = doc.data['phoneNumber'];
@@ -85,7 +82,8 @@ class User extends ChangeNotifier {
       for (var value in doc.data['cards']) {
         this.cards.add(BankCard.doc(value));
       }
-    } if (doc.data['address'] != null) {
+    }
+    if (doc.data['address'] != null) {
       this._address = new List();
       for (var value in doc.data['address']) {
         this._address.add(InAppAddress.doc(value));
@@ -94,7 +92,7 @@ class User extends ChangeNotifier {
     this.notifyListeners();
   }
 
-  void fromUser(User user, {bool isListen:true}) {
+  void fromUser(User user, {bool isListen: true}) {
     this.name = user.name;
     this.id = user.id;
     this.email = user.email;
@@ -106,11 +104,8 @@ class User extends ChangeNotifier {
     this.pictureUri = user.pictureUri;
     this._address = user._address;
     this.cards = user.cards;
-    if(isListen)
-      this.notifyListeners();
+    if (isListen) this.notifyListeners();
   }
-
-
 
   String get name => _name;
 
@@ -136,18 +131,17 @@ class User extends ChangeNotifier {
     _cards = value;
   }
 
-
   String get fcmDeviceCode => _fcmDeviceCode;
 
   set fcmDeviceCode(String value) {
     _fcmDeviceCode = value;
   }
+
   String get pictureUri => _pictureUri;
 
   set pictureUri(String value) {
     _pictureUri = value;
   }
-
 
   List<InAppAddress> get address => _address;
 
@@ -160,14 +154,14 @@ class User extends ChangeNotifier {
     this.pictureUri = pictureUri;
     notifyListeners();
   }
+
   void updateName(String name) {
     this.name = name;
     notifyListeners();
   }
+
   void updatePicture(String pictureUri) {
     this.pictureUri = pictureUri;
     notifyListeners();
   }
-
-
 }

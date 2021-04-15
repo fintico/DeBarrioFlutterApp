@@ -1,15 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
-import 'package:da_brello_ui/ModelClass/OrderedDish.dart';
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/ModelClass/OrderedDish.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
 
 class DatabaseService {
   DatabaseService();
 
   /// collection reference
   final CollectionReference usersCollection =
-  Firestore.instance.collection('Users');
+      Firestore.instance.collection('Users');
+
   ///Set the user data according to user id
   Future<void> setUserData(User user) async {
     return await usersCollection.document(user.id).setData(user.toMap());
@@ -17,8 +18,7 @@ class DatabaseService {
 
   User _userDataFromSnapshot(DocumentSnapshot snapshot) {
     User newUser = User();
-    if (!snapshot.exists)
-      return null;
+    if (!snapshot.exists) return null;
     newUser.fromMap(snapshot);
     return newUser;
   }
@@ -29,6 +29,7 @@ class DatabaseService {
         .snapshots()
         .map(_userDataFromSnapshot);
   }
+
   Stream<List<User>> getAllUserData() {
     return usersCollection.snapshots().map(_userDataListFromSnapshot);
   }
@@ -38,7 +39,10 @@ class DatabaseService {
   }
 
   Stream<List<User>> getOtherUserDataFromPhone(String phoneNumber) {
-    return usersCollection.where( 'phoneNumber',isEqualTo: phoneNumber).snapshots().map(_userDataListFromSnapshot);
+    return usersCollection
+        .where('phoneNumber', isEqualTo: phoneNumber)
+        .snapshots()
+        .map(_userDataListFromSnapshot);
   }
 
   List<User> _userDataListFromSnapshot(QuerySnapshot snapshot) {
@@ -47,17 +51,19 @@ class DatabaseService {
     }).toList();
   }
 
-
   //Fuel Station Queries
   final CollectionReference postedDishCollection =
-  Firestore.instance.collection('postedDishes');
+      Firestore.instance.collection('postedDishes');
 
   Stream<List<PostedDish>> getAllPostedDishes() {
     return postedDishCollection.snapshots().map(_postedDishListFromSnapshot);
   }
+
   Stream<List<PostedDish>> getAllPostedDishesForUser(String id) {
-    return postedDishCollection.where('makerId', isEqualTo: id)
-        .snapshots().map(_postedDishListFromSnapshot);
+    return postedDishCollection
+        .where('makerId', isEqualTo: id)
+        .snapshots()
+        .map(_postedDishListFromSnapshot);
   }
 
   Stream<PostedDish> getSelectedPostedDish(String id) {
@@ -83,15 +89,12 @@ class DatabaseService {
   }
 
   Future<void> setPostedDishData(PostedDish order) async {
-    return await postedDishCollection
-        .document(order.id)
-        .setData(order.toMap());
+    return await postedDishCollection.document(order.id).setData(order.toMap());
   }
-
 
   //Orders Queries
   final CollectionReference ordersCollection =
-  Firestore.instance.collection('Orders');
+      Firestore.instance.collection('Orders');
 
   Stream<List<Order>> getSelectedUserOrders(String id) {
     return ordersCollection
@@ -113,14 +116,12 @@ class DatabaseService {
   }
 
   Future<void> setOrderedData(Order order) async {
-    return await ordersCollection
-        .document(order.id)
-        .setData(order.toMap());
+    return await ordersCollection.document(order.id).setData(order.toMap());
   }
 
   //Ordered Dishes Queries
   final CollectionReference ordersDishesCollection =
-  Firestore.instance.collection('OrderDishes');
+      Firestore.instance.collection('OrderDishes');
 
   Stream<List<OrderedDish>> getSelectedUserOrderDishes(String id) {
     return ordersDishesCollection
@@ -147,11 +148,7 @@ class DatabaseService {
         .setData(order.toMap());
   }
 
-  Future<String> getRandomId() async{
-    return Firestore
-        .instance
-        .collection('')
-        .document()
-        .documentID;
+  Future<String> getRandomId() async {
+    return Firestore.instance.collection('').document().documentID;
   }
 }

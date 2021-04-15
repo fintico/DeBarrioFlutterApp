@@ -1,15 +1,15 @@
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
-import 'package:da_brello_ui/ModelClass/OrderedDish.dart';
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/ModelClass/orderList.dart';
-import 'package:da_brello_ui/Screens/paysplash.dart';
-import 'package:da_brello_ui/Widgets_Food_Carousal_Screen/CarousalAfterRadioText.dart';
-import 'package:da_brello_ui/Widgets_Food_Carousal_Screen/CarousalBottomBar.dart';
-import 'package:da_brello_ui/Widgets_Food_Carousal_Screen/CarousalRadioBtn.dart';
-import 'package:da_brello_ui/Widgets_Food_Carousal_Screen/CarousalSlider.dart';
-import 'package:da_brello_ui/Widgets_Food_Carousal_Screen/listitem.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/ModelClass/OrderedDish.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/orderList.dart';
+import 'package:debarrioapp/Screens/paysplash.dart';
+import 'package:debarrioapp/Widgets_Food_Carousal_Screen/CarousalAfterRadioText.dart';
+import 'package:debarrioapp/Widgets_Food_Carousal_Screen/CarousalBottomBar.dart';
+import 'package:debarrioapp/Widgets_Food_Carousal_Screen/CarousalRadioBtn.dart';
+import 'package:debarrioapp/Widgets_Food_Carousal_Screen/CarousalSlider.dart';
+import 'package:debarrioapp/Widgets_Food_Carousal_Screen/listitem.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -33,12 +33,12 @@ class RestaurantCarouselSlider extends StatefulWidget {
 class _RestaurantCarouselSliderState extends State<RestaurantCarouselSlider> {
   int selectedIndex = 0;
   bool isDelivery = true;
-  OrderedDish orderedDish=OrderedDish();
+  OrderedDish orderedDish = OrderedDish();
   OrderList cartOrder;
 
   @override
   Widget build(BuildContext context) {
-    cartOrder=Provider.of<OrderList>(context);
+    cartOrder = Provider.of<OrderList>(context);
     final appBar = AppBar(
       leading: IconButton(
         iconSize: 25,
@@ -104,7 +104,8 @@ class _RestaurantCarouselSliderState extends State<RestaurantCarouselSlider> {
     return Scaffold(
       backgroundColor: HexColor("#f2f2f2"),
       appBar: appBar,
-      bottomNavigationBar: BottomBarCarousal(widget.postedDishes[selectedIndex],isDelivery,widget.selectedRestaurant),
+      bottomNavigationBar: BottomBarCarousal(widget.postedDishes[selectedIndex],
+          isDelivery, widget.selectedRestaurant),
       body: Container(
         height: (MediaQuery.of(context).size.height -
             appBar.preferredSize.height -
@@ -121,10 +122,7 @@ class _RestaurantCarouselSliderState extends State<RestaurantCarouselSlider> {
                 dotsCount: widget.postedDishes.length,
                 position: selectedIndex.ceilToDouble(),
                 decorator: DotsDecorator(
-                  activeColor: Colors.grey[600],
-                  color: Colors.grey[300]
-
-                ),
+                    activeColor: Colors.grey[600], color: Colors.grey[300]),
               ),
               Align(
                 alignment: Alignment.bottomLeft,
@@ -172,32 +170,39 @@ class _RestaurantCarouselSliderState extends State<RestaurantCarouselSlider> {
                 height: MediaQuery.of(context).size.height * 0.35,
                 child: Column(
                   children: [
-                    if (cZeroStr(widget.postedDishes[selectedIndex].additionDish))
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: widget.postedDishes[selectedIndex].additionDish.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height * 0.05,
-                            child: CheckboxListTile(
-                              title: Text(widget.postedDishes[selectedIndex].additionDish[index].additionName),
-                              value: widget.postedDishes[selectedIndex].additionDish[index].isSelected,
-                              activeColor: Colors.green,
-                              onChanged: (newValue) {
-                                setState(() {
-                                  widget.postedDishes[selectedIndex].additionDish[index].isSelected = newValue;
-                                });
-                              },
-                              controlAffinity: ListTileControlAffinity
-                                  .leading, //  <-- leading Checkbox
+                    if (cZeroStr(
+                        widget.postedDishes[selectedIndex].additionDish))
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: widget
+                            .postedDishes[selectedIndex].additionDish.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.05,
+                              child: CheckboxListTile(
+                                title: Text(widget.postedDishes[selectedIndex]
+                                    .additionDish[index].additionName),
+                                value: widget.postedDishes[selectedIndex]
+                                    .additionDish[index].isSelected,
+                                activeColor: Colors.green,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    widget
+                                        .postedDishes[selectedIndex]
+                                        .additionDish[index]
+                                        .isSelected = newValue;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity
+                                    .leading, //  <-- leading Checkbox
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
+                          );
+                        },
+                      ),
                     // Padding(
                     //   padding: const EdgeInsets.all(8.0),
                     //   child: Container(

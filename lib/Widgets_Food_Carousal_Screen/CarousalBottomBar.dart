@@ -1,11 +1,11 @@
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
-import 'package:da_brello_ui/ModelClass/OrderedDish.dart';
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/ModelClass/orderList.dart';
-import 'package:da_brello_ui/Screens/cart.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/ModelClass/OrderedDish.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/ModelClass/orderList.dart';
+import 'package:debarrioapp/Screens/cart.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -156,7 +156,7 @@ class _BottomBarCarousalState extends State<BottomBarCarousal> {
                               getOrderedFromPosted(widget.postedDish);
                           ordered.buyerId = user.id;
                           ordered.quantity = _increment;
-                          ordered.makerId=widget.selectedRestaurant.id;
+                          ordered.makerId = widget.selectedRestaurant.id;
                           ordered.orderId = orderList.order.id;
                           ordered.additionDish = widget.postedDish.additionDish
                               .where((element) => element.isSelected)

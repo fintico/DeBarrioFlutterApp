@@ -1,5 +1,5 @@
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -13,14 +13,15 @@ class DirectionForm extends StatefulWidget {
 
 class _DirectionFormState extends State<DirectionForm> {
   User user;
-  bool init=false;
-  DatabaseService database=DatabaseService();
+  bool init = false;
+  DatabaseService database = DatabaseService();
   @override
   Widget build(BuildContext context) {
-    if(!init) {
+    if (!init) {
       user = Provider.of<User>(context);
-      init=true;
-    }final appBar = AppBar(
+      init = true;
+    }
+    final appBar = AppBar(
       elevation: 0.0,
       backgroundColor: Colors.grey[100],
       actions: [
@@ -120,29 +121,36 @@ class _DirectionFormState extends State<DirectionForm> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => LocationSetter(fromUserProfile: true,indexToChange: user.address.length >index?index:-1,)));
-
+                                          builder: (_) => LocationSetter(
+                                                fromUserProfile: true,
+                                                indexToChange:
+                                                    user.address.length > index
+                                                        ? index
+                                                        : -1,
+                                              )));
                                 },
                                 decoration: InputDecoration(
                                     hintText: user.address.length > index
                                         ? '${user.address[index].addressString}'
                                         : "no establecido",
                                     border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5))),
+                                        borderRadius:
+                                            BorderRadius.circular(5))),
                               ),
                             ),
                             InkWell(
-                              child: index>0?Icon(Icons.delete):Icon(Icons.more_vert),
+                              child: index > 0
+                                  ? Icon(Icons.delete)
+                                  : Icon(Icons.more_vert),
                               onTap: () {
-                                if(user.address.length>index&&index!=0){
+                                if (user.address.length > index && index != 0) {
                                   setState(() {
-                                    bool isRemoved=user.address.remove(user.address[index]);
+                                    bool isRemoved = user.address
+                                        .remove(user.address[index]);
                                   });
-
                                 }
                               },
                             ),
-
                           ],
                         ),
                       ),

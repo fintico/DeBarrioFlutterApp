@@ -1,16 +1,18 @@
 import 'dart:async';
 
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Screens/Registration/map_loaction_set.dart';
-import 'package:da_brello_ui/Screens/map_screen.dart';
-import 'package:da_brello_ui/Services/FirebaseAuthService.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Screens/Registration/map_loaction_set.dart';
+import 'package:debarrioapp/Screens/map_screen.dart';
+import 'package:debarrioapp/Services/FirebaseAuthService.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
+import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
+import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +29,24 @@ class _Otp_VerificationState extends State<Otp_Verification> {
   bool checkValue = false;
   User user;
   AuthService authService = AuthService();
-  bool loading=false;
-  bool isTimeout=false;
+  bool loading = false;
+  bool isTimeout = false;
+
+  TextStyle timeOutStyle = DBStyle.getStyle(
+    DBStyle.GREEN,
+    DBStyle.FONT_SYZE_M,
+    DBStyle.FONT_HEIGHT_M,
+    0,
+    DBStyle.FONT_WEIGHT_REGULAR,
+  );
+  TextStyle newCodeStyle = DBStyle.getStyle(
+    DBStyle.GREEN,
+    DBStyle.FONT_SYZE_M,
+    DBStyle.FONT_HEIGHT_M,
+    0,
+    DBStyle.FONT_WEIGHT_SEMI_BOLD,
+  );
+
   ///Database service
   DatabaseService database = DatabaseService();
 
@@ -36,12 +54,11 @@ class _Otp_VerificationState extends State<Otp_Verification> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      authService.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser,phoneNumberNotOkay: phoneNumberNotOkay);
+      authService.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser,
+          phoneNumberNotOkay: phoneNumberNotOkay);
     });
     // phoneNumberNotOkay();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +80,9 @@ class _Otp_VerificationState extends State<Otp_Verification> {
         fontFamily: 'OpenSans');
     final appBar = PreferredSize(
       child: Container(
-          color: Colors.black,
-          child: Row(
+        //color: Colors.black,
+        child:
+            /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
@@ -89,8 +107,12 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                 width: MediaQuery.of(context).size.width / 8,
               ),
             ],
-          )),
-      preferredSize: Size.fromHeight(50),
+          ) */
+            AppBarOptionOne(
+          leftIconAction: () => Navigator.pop(context),
+        ),
+      ),
+      preferredSize: Size.fromHeight(56.0),
     );
     return SafeArea(
       child: Scaffold(
@@ -116,19 +138,19 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                     height: MediaQuery.of(context).size.width * 0.4,
                   ),
                   Container(
-                    child: Text("Verificion", style: headingtextStyle),
+                    child: Text("Verificación", style: headingtextStyle),
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   Container(
                     child: Text(
-                      "Ingresa el codlgo de veriticacldn SMS para",
+                      "Ingresa el código de veriticación SMS para",
                       style: subTextStyle,
                     ),
                   ),
                   Container(
-                    child: Text("validar tu numero de celular",
+                    child: Text("validar tu número de celular",
                         style: subTextStyle),
                   ),
                   SizedBox(
@@ -151,32 +173,48 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                   ),
                   checkValue == false
                       ? Container(
-                          child: Text("Ingressa el codigo"),
+                          child: Text("Ingresa el código",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16.0,
+                                  fontFamily: 'OpenSans')),
                         )
                       : GestureDetector(
-                    onTap: (){
-                      if(!isTimeout){
-                        Fluttertoast.showToast(
-                            msg: "Please wait for 45 seconds",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.CENTER,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.red,
-                            textColor: Colors.white,
-                            fontSize: 16.0);
-                      }
-                      else{
-                        authService.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser,phoneNumberNotOkay: phoneNumberNotOkay);
-
-                      }
-                    },
-                        child: Container(
-                            child: Text(
-                              "Codigo vence en: 45 seg\n    Enviar nuevo codigo",
+                          onTap: () {
+                            if (!isTimeout) {
+                              Fluttertoast.showToast(
+                                  msg: "Please wait for 45 seconds",
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.red,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              authService.verifyPhone(
+                                  user.phoneNumber, smsUIUpdate, updateUser,
+                                  phoneNumberNotOkay: phoneNumberNotOkay);
+                            }
+                          },
+                          child: Container(
+                            /* child: Text(
+                              "Código vence en: 45 seg\n    Enviar nuevo codigo",
                               style: TextStyle(color: Colors.green),
-                            ),
+                            ), */
+                            child: RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(children: [
+                                  TextSpan(
+                                    text: 'Código vence en: 45 seg\n',
+                                    style: timeOutStyle,
+                                  ),
+                                  TextSpan(
+                                    text: 'Enviar nuevo código',
+                                    style: newCodeStyle,
+                                  )
+                                ])),
                           ),
-                      ),
+                        ),
                 ],
               ),
             ),
@@ -189,23 +227,22 @@ class _Otp_VerificationState extends State<Otp_Verification> {
   void gotoHomeScreen() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(
-            builder: (_) => MapScreen()),(Route<dynamic> route)=>false);
-
+        MaterialPageRoute(builder: (_) => MapScreen()),
+        (Route<dynamic> route) => false);
   }
 
   void onOtpCompleted(String value) {
     checkValue = true;
-    authService.signInWithPhoneNumber(null, value, updateUser).then((val){
-if(!val)
-      Fluttertoast.showToast(
-          msg: "The otp is not correct",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.red,
-          textColor: Colors.white,
-          fontSize: 16.0);
+    authService.signInWithPhoneNumber(null, value, updateUser).then((val) {
+      if (!val)
+        Fluttertoast.showToast(
+            msg: "The otp is not correct",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
     });
   }
 
@@ -215,11 +252,12 @@ if(!val)
   }
 
   smsUIUpdate(bool showEmpty) {
-    isTimeout=showEmpty;
+    isTimeout = showEmpty;
   }
-  void setLoading(bool value){
+
+  void setLoading(bool value) {
     setState(() {
-      loading=value;
+      loading = value;
     });
   }
 
@@ -227,12 +265,11 @@ if(!val)
     StreamSubscription userSubscription;
     userSubscription = database.getOtherUserData(user.id).listen((event) {
       if (event != null) {
-        if (event.address != null && event.address.length>0) {
+        if (event.address != null && event.address.length > 0) {
           user.fromUser(event);
           gotoHomeScreen();
         } else {
           gotoSelectLocation();
-
         }
       } else {
         gotoSelectLocation();
@@ -245,11 +282,12 @@ if(!val)
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (_) => LocationSetter(fromUserProfile: false,),
+        builder: (_) => LocationSetter(
+          fromUserProfile: false,
+        ),
       ),
     );
   }
-
 }
 
 void phoneNumberNotOkay(String message) {
@@ -260,6 +298,5 @@ void phoneNumberNotOkay(String message) {
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,
       textColor: Colors.white,
-      fontSize: 16.0
-  );
+      fontSize: 16.0);
 }

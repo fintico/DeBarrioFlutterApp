@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:flutter/material.dart';
 
 class FinalCart extends StatefulWidget {
@@ -11,7 +11,6 @@ class FinalCart extends StatefulWidget {
 }
 
 class _FinalCartState extends State<FinalCart> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,7 +19,7 @@ class _FinalCartState extends State<FinalCart> {
       child: ListView.builder(
         itemCount: 1,
         itemBuilder: (BuildContext context, int index) {
-          return  Column(
+          return Column(
             children: [
               Row(
                 children: [
@@ -70,7 +69,9 @@ class _FinalCartState extends State<FinalCart> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.3,
                               child: Divider(
-                                  color: Colors.amber, thickness: 1, indent: 50),
+                                  color: Colors.amber,
+                                  thickness: 1,
+                                  indent: 50),
                             ),
                           ],
                         ),
@@ -128,7 +129,8 @@ class _FinalCartState extends State<FinalCart> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(

@@ -1,12 +1,13 @@
 import 'dart:async';
 
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Services/FirebaseAuthService.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Services/FirebaseAuthService.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'Registration/OnBoardingScreen.dart';
 import 'Registration/map_loaction_set.dart';
@@ -20,12 +21,11 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   Function goToTab;
-  AuthService authService= AuthService();
+  AuthService authService = AuthService();
   User user;
   DatabaseService database = DatabaseService();
   // bool loading=true;
   BuildContext currentContext;
-
 
   @override
   void initState() {
@@ -36,48 +36,59 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    currentContext=context;
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-          statusBarColor: Colors.white,
-          statusBarIconBrightness: Brightness.dark),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Center(
-            child: Image.asset(
-              "assets/images/Logo.png",
-            ),
+    currentContext = context;
+    return SafeArea(
+      child: Scaffold(
+        body: Center(
+          child: SvgPicture.asset(
+            "assets/images/home_logo.svg",
+            height: 124,
+            width: 224,
           ),
         ),
       ),
     );
+    /* return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+          /* statusBarColor: Colors.white,
+          statusBarIconBrightness: Brightness.dark */
+          ),
+      child: SafeArea(
+        child: Scaffold(
+          //backgroundColor: Colors.black,
+          body: Center(
+            //child: Image.asset('assets/images/Logo.png'),
+            child: SvgPicture.asset(
+              "assets/images/home_logo.svg",
+              height: 124,
+              width: 224,
+            ),
+          ),
+        ),
+      ),
+    ); */
   }
-
 
   Future<void> updateView() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String counter = prefs.getString("First_Time") ?? '';
-    if (counter !='') {
+    if (counter != '') {
       String userId = await authService.currentUserIdFromAuth();
       if (userId != '') {
         getUserDataFromDatabase(userId);
-      }
-      else{
+      } else {
         onDonePress();
+        //gotoIntroScreen();
       }
-    }
-    else{
+    } else {
       await prefs.setString("First_Time", 'No');
       setState(() {
         gotoIntroScreen();
-
       });
       return;
-
     }
-
   }
+
   void gotoHomeScreen() {
     Navigator.pushReplacement(
       context,
@@ -86,6 +97,7 @@ class _SplashState extends State<Splash> {
       ),
     );
   }
+
   void gotoSelectLocation() {
     // setUserData();
     Navigator.pushReplacement(
@@ -109,20 +121,20 @@ class _SplashState extends State<Splash> {
     StreamSubscription userSubscription;
     userSubscription = database.getOtherUserData(userId).listen((event) {
       if (event != null) {
-        user=Provider.of<User>(currentContext,listen: false);
+        user = Provider.of<User>(currentContext, listen: false);
         user.fromUser(event);
-        if (event.address != null && event.address.length>0) {
+        if (event.address != null && event.address.length > 0) {
           gotoHomeScreen();
         } else {
           gotoSelectLocation();
         }
-      }
-      else{
+      } else {
         onDonePress();
       }
       userSubscription.cancel();
     });
   }
+
   void onSkipPress() {
     this.goToTab(1);
   }
@@ -135,8 +147,4 @@ class _SplashState extends State<Splash> {
       ),
     );
   }
-
-
-
-
 }

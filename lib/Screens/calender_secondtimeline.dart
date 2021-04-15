@@ -1,7 +1,7 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Services/FirebaseFireStoreService.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -19,11 +19,10 @@ class CalendarSecTimeline extends StatefulWidget {
 }
 
 class _CalendarSecTimelineState extends State<CalendarSecTimeline> {
-  bool loading=true;
-  List<PostedDish> currentDishes=[];
-  DatabaseService database=DatabaseService();
+  bool loading = true;
+  List<PostedDish> currentDishes = [];
+  DatabaseService database = DatabaseService();
   User user;
-
 
   @override
   void initState() {
@@ -31,10 +30,10 @@ class _CalendarSecTimelineState extends State<CalendarSecTimeline> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       database.getAllPostedDishes().listen((event) {
-        currentDishes=[];
+        currentDishes = [];
         currentDishes.addAll(event);
         setState(() {
-          loading=false;
+          loading = false;
         });
       });
     });
@@ -128,32 +127,35 @@ class _CalendarSecTimelineState extends State<CalendarSecTimeline> {
       ),
       body: LoadingOverlay(
         isLoading: loading,
-        child:loading?SizedBox(height: 20,) :Container(
-          height: (MediaQuery.of(context).size.height -
-              appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top),
-          width: (MediaQuery.of(context).size.width),
-          child: Container(
-            height: (MediaQuery.of(context).size.height),
-            width: (MediaQuery.of(context).size.width),
-            child: SfCalendar(
-              onTap:(calendarTapDetails) {
-                if(cZeroStr(calendarTapDetails.appointments)) {
-                  PostedDish posted = calendarTapDetails.appointments[0];
-                  print(posted);
-                }
-              } ,
-              backgroundColor: Colors.grey[200],
-              view: CalendarView.week,
-              dataSource: getCalendarDataSource(),
-              timeSlotViewSettings: TimeSlotViewSettings(
-                timeInterval: Duration(minutes: 120),
-                timeIntervalHeight: 80,
+        child: loading
+            ? SizedBox(
+                height: 20,
+              )
+            : Container(
+                height: (MediaQuery.of(context).size.height -
+                    appBar.preferredSize.height -
+                    MediaQuery.of(context).padding.top),
+                width: (MediaQuery.of(context).size.width),
+                child: Container(
+                  height: (MediaQuery.of(context).size.height),
+                  width: (MediaQuery.of(context).size.width),
+                  child: SfCalendar(
+                    onTap: (calendarTapDetails) {
+                      if (cZeroStr(calendarTapDetails.appointments)) {
+                        PostedDish posted = calendarTapDetails.appointments[0];
+                        print(posted);
+                      }
+                    },
+                    backgroundColor: Colors.grey[200],
+                    view: CalendarView.week,
+                    dataSource: getCalendarDataSource(),
+                    timeSlotViewSettings: TimeSlotViewSettings(
+                      timeInterval: Duration(minutes: 120),
+                      timeIntervalHeight: 80,
+                    ),
+                  ),
+                ),
               ),
-
-            ),
-          ),
-        ),
       ),
     );
   }
@@ -161,15 +163,13 @@ class _CalendarSecTimelineState extends State<CalendarSecTimeline> {
   getCalendarDataSource() {
     return FoodTimingSource(currentDishes);
   }
-
 }
 
-class FoodTimingSource extends CalendarDataSource{
-  FoodTimingSource(List<PostedDish> currentList){
-    appointments=[];
+class FoodTimingSource extends CalendarDataSource {
+  FoodTimingSource(List<PostedDish> currentList) {
+    appointments = [];
     appointments.addAll(currentList);
   }
-
 
   @override
   DateTime getStartTime(int index) {
@@ -188,14 +188,14 @@ class FoodTimingSource extends CalendarDataSource{
   Color getColor(int index) {
     return Colors.redAccent;
   }
+
   @override
   String getSubject(int index) {
     return appointments[index].name;
   }
+
   @override
   DateTime getEndTime(int index) {
     return appointments[index].endTime;
   }
-
-
 }

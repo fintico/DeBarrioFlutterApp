@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -100,10 +100,10 @@ class _CartActiveState extends State<CartActive> {
                                   Align(
                                     alignment: AlignmentDirectional.topStart,
                                     child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.3,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
                                       child: Text(
-                                        "Procion(es):${thisDish.totalService}",
+                                        "Porción(es):${thisDish.totalService}",
                                         textAlign: TextAlign.start,
                                         style: TextStyle(color: Colors.green),
                                       ),
@@ -135,8 +135,12 @@ class _CartActiveState extends State<CartActive> {
                               onTap: () => gotoSelectedPostedDish(index),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    border:
-                                        Border(right: BorderSide(color: Colors.grey[600],width: 1),top:BorderSide(color: Colors.grey[600],width: 1),)),
+                                    border: Border(
+                                  right: BorderSide(
+                                      color: Colors.grey[600], width: 1),
+                                  top: BorderSide(
+                                      color: Colors.grey[600], width: 1),
+                                )),
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Text(
@@ -150,16 +154,20 @@ class _CartActiveState extends State<CartActive> {
                           ),
                           Expanded(
                             child: GestureDetector(
-                              onTap: (){Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => CalenderFill(),
-                                ),
-                              );},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => CalenderFill(),
+                                  ),
+                                );
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
-                                    border:
-                                    Border(top:BorderSide(color: Colors.grey[600],width: 1),)),
+                                    border: Border(
+                                  top: BorderSide(
+                                      color: Colors.grey[600], width: 1),
+                                )),
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Text(

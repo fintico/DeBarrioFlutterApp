@@ -1,0 +1,22 @@
+<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="illustrations/calendar">
+<g id="Group">
+<path id="Rectangle" d="M6 27H62V58C62 60.2091 60.2091 62 58 62H10C7.79086 62 6 60.2091 6 58V27Z" fill="#FCE181"/>
+<path id="Rectangle_2" d="M6 18C6 15.7909 7.79086 14 10 14H58C60.2091 14 62 15.7909 62 18V27H6V18Z" fill="#4D4E59"/>
+<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M47 62H58C60.2091 62 62 60.2091 62 58V27H51V58C51 60.2091 49.2091 62 47 62Z" fill="#FBCC42"/>
+<path id="Combined Shape_2" fill-rule="evenodd" clip-rule="evenodd" d="M51 27H62V18C62 15.7909 60.2091 14 58 14H47C49.2091 14 51 15.7909 51 18V27Z" fill="#42434D"/>
+<rect id="Rectangle_3" x="18" y="38" width="11" height="11" fill="#E84A31"/>
+<rect id="Rectangle_4" x="39" y="49" width="11" height="12" fill="#52D176"/>
+<rect id="Rectangle_5" x="6.5" y="14.5" width="55" height="47" rx="3.5" stroke="#333333"/>
+<rect id="Rectangle_6" x="20" y="6" width="1" height="14" rx="0.5" fill="#333333"/>
+<rect id="Rectangle Copy 3" x="17" y="26" width="1" height="36" rx="0.5" fill="#333333"/>
+<rect id="Rectangle Copy 3_2" x="6" y="38.5" width="1" height="56" rx="0.5" transform="rotate(-90 6 38.5)" fill="#333333"/>
+<rect id="Rectangle Copy 3_3" x="6" y="49.5" width="1" height="56" rx="0.5" transform="rotate(-90 6 49.5)" fill="#333333"/>
+<rect id="Rectangle Copy 4" x="28" y="26" width="1" height="36" rx="0.5" fill="#333333"/>
+<rect id="Rectangle Copy 8" x="39" y="26" width="1" height="36" rx="0.5" fill="#333333"/>
+<rect id="Rectangle Copy 9" x="50" y="26" width="1" height="36" rx="0.5" fill="#333333"/>
+<rect id="Rectangle Copy 2" x="47" y="6" width="1" height="14" rx="0.5" fill="#333333"/>
+<rect id="Rectangle_7" x="6" y="26" width="56" height="1" fill="#333333"/>
+</g>
+</g>
+</svg>

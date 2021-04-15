@@ -1,5 +1,5 @@
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
-import 'package:da_brello_ui/Screens/map_screen.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/Screens/map_screen.dart';
 import 'package:flutter/material.dart';
 
 class OrderConpletion extends StatefulWidget {
@@ -159,7 +159,8 @@ class _OrderConpletionState extends State<OrderConpletion> {
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => MapScreen()),(Route<dynamic> route)=>false);
+                                          builder: (_) => MapScreen()),
+                                      (Route<dynamic> route) => false);
                                 },
                                 child: Text("Mis pedidos"),
                                 color: Colors.white,
@@ -178,8 +179,8 @@ class _OrderConpletionState extends State<OrderConpletion> {
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (_) => MapScreen()),(Route<dynamic> route)=>false);
-
+                                          builder: (_) => MapScreen()),
+                                      (Route<dynamic> route) => false);
                                 },
                                 child: Text("Inicio"),
                                 color: Colors.red,

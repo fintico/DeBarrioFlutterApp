@@ -1,7 +1,7 @@
-import 'package:da_brello_ui/ModelClass/PostedDishModel.dart';
-import 'package:da_brello_ui/ModelClass/UserModel.dart';
-import 'package:da_brello_ui/Screens/food_carousel.dart';
-import 'package:da_brello_ui/utilsFunctions.dart';
+import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/ModelClass/UserModel.dart';
+import 'package:debarrioapp/Screens/food_carousel.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 
 class FoodItemList extends StatefulWidget {

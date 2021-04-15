@@ -25,16 +25,16 @@ class _DropDownCategoryState extends State<DropDownCategory> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 28.0, vertical: 10.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(4.0),
             border: Border.all(color: Colors.grey, width: 2)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: DropDownFormField(
             filled: false,
-            titleText: "Categoria",
+            titleText: " ",
             hintText: 'Selecciona una categoria',
             value: _myCategoria,
             onSaved: (value) {

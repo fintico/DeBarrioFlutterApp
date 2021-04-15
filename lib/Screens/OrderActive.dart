@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/ModelClass/OrderModel.dart';
+import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:flutter/material.dart';
 
 class CartOrderActive extends StatefulWidget {
@@ -43,7 +43,7 @@ class _CartOrderActiveState extends State<CartOrderActive> {
                               image: thisDish.dishPictureURL != null
                                   ? NetworkImage(thisDish.dishPictureURL)
                                   : AssetImage(
-                                  'assets/images/carouselfirst.png'),
+                                      'assets/images/carouselfirst.png'),
                             ),
                           ),
                           Container(
@@ -54,7 +54,7 @@ class _CartOrderActiveState extends State<CartOrderActive> {
                                 Align(
                                   alignment: AlignmentDirectional.topStart,
                                   child: Text(
-                                    "${thisDish.dishName??thisDish.id.substring(thisDish.id.length-12)}",
+                                    "${thisDish.dishName ?? thisDish.id.substring(thisDish.id.length - 12)}",
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,

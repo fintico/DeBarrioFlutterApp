@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:da_brello_ui/ModelClass/AdditionDishModel.dart';
+import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -104,8 +104,9 @@ class PostedDish extends ChangeNotifier {
     this.originalPrice = doc.originalPrice;
     this.priceWithDelivery = doc.priceWithDelivery;
     if (doc.additionDish != null) {
-      this.additionDish=[];
+      this.additionDish = [];
       this.additionDish.addAll(doc.additionDish);
-    }this.notifyListeners();
+    }
+    this.notifyListeners();
   }
 }

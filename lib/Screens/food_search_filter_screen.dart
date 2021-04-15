@@ -1,4 +1,4 @@
-import 'package:da_brello_ui/utilProperties.dart';
+import 'package:debarrioapp/utilProperties.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -37,7 +37,7 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
   bool is5Day = false;
   bool is6Day = false;
   bool is7Day = false;
-  List<DateTime> toSendBack=[];
+  List<DateTime> toSendBack = [];
 
   Widget _fechasButton(String text, Color color, Color bordercolor, int index) {
     return RaisedButton(
@@ -49,28 +49,28 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
         setState(() {
           if (index == 0) {
             is0Day = !is0Day;
-            if(is0Day)toSendBack.add(DateTime.now());
-          }
-          else if (index == 1) {
+            if (is0Day) toSendBack.add(DateTime.now());
+          } else if (index == 1) {
             is1Day = !is1Day;
-            if(is1Day)toSendBack.add(DateTime.now().add(Duration(days: 1)));
-          }else if (index == 2) {
+            if (is1Day) toSendBack.add(DateTime.now().add(Duration(days: 1)));
+          } else if (index == 2) {
             is2Day = !is2Day;
-            if(is2Day)toSendBack.add(DateTime.now().add(Duration(days: 2)));
-          }else if (index == 3) {
+            if (is2Day) toSendBack.add(DateTime.now().add(Duration(days: 2)));
+          } else if (index == 3) {
             is3Day = !is3Day;
-            if(is3Day)toSendBack.add(DateTime.now().add(Duration(days: 3)));
-          }else if (index == 4) {
+            if (is3Day) toSendBack.add(DateTime.now().add(Duration(days: 3)));
+          } else if (index == 4) {
             is4Day = !is4Day;
-            if(is4Day)toSendBack.add(DateTime.now().add(Duration(days: 4)));
-          }else if (index == 5) {
+            if (is4Day) toSendBack.add(DateTime.now().add(Duration(days: 4)));
+          } else if (index == 5) {
             is5Day = !is5Day;
-            if(is5Day)toSendBack.add(DateTime.now().add(Duration(days: 5)));
-          }else if (index == 6) {
+            if (is5Day) toSendBack.add(DateTime.now().add(Duration(days: 5)));
+          } else if (index == 6) {
             is6Day = !is6Day;
-            if(is6Day)toSendBack.add(DateTime.now().add(Duration(days: 6)));
-          }else if (index == 7){ is7Day = !is7Day;
-          if(is7Day)toSendBack.add(DateTime.now().add(Duration(days: 7)));
+            if (is6Day) toSendBack.add(DateTime.now().add(Duration(days: 6)));
+          } else if (index == 7) {
+            is7Day = !is7Day;
+            if (is7Day) toSendBack.add(DateTime.now().add(Duration(days: 7)));
           }
         });
       },
@@ -95,8 +95,7 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
           child: IconButton(
             color: Colors.grey[800],
             icon: Icon(Icons.close),
-            onPressed: () {
-            },
+            onPressed: () {},
           ),
         ),
       ],
@@ -149,9 +148,7 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  onPressed: () => {
-                  updateCategory()
-                  },
+                  onPressed: () => {updateCategory()},
                   child: Text(
                     "Aplicar",
                     style: TextStyle(
@@ -932,22 +929,22 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
   }
 
   void updateCategory() {
-    List<String> selectedCategory=[];
-    if(isAlmuerza) selectedCategory.add(category[0]);
-    if(isPiques) selectedCategory.add(category[1]);
-    if(isCena) selectedCategory.add(category[2]);
-    if(isDesayuno) selectedCategory.add(category[3]);
-    if(isPostres) selectedCategory.add(category[4]);
-    if(isPeruana) selectedCategory.add(category[5]);
-    if(isItaliana) selectedCategory.add(category[6]);
-    if(isJaponesa) selectedCategory.add(category[7]);
-    if(isChaina) selectedCategory.add(category[8]);
-    if(isFusion) selectedCategory.add(category[9]);
-    if(isCarnivoro) selectedCategory.add(category[10]);
-    if(isVegetariano) selectedCategory.add(category[11]);
-    if(isVegano) selectedCategory.add(category[12]);
-    if(isSinGluten) selectedCategory.add(category[13]);
-    widget.setCategory(selectedCategory,toSendBack);
+    List<String> selectedCategory = [];
+    if (isAlmuerza) selectedCategory.add(category[0]);
+    if (isPiques) selectedCategory.add(category[1]);
+    if (isCena) selectedCategory.add(category[2]);
+    if (isDesayuno) selectedCategory.add(category[3]);
+    if (isPostres) selectedCategory.add(category[4]);
+    if (isPeruana) selectedCategory.add(category[5]);
+    if (isItaliana) selectedCategory.add(category[6]);
+    if (isJaponesa) selectedCategory.add(category[7]);
+    if (isChaina) selectedCategory.add(category[8]);
+    if (isFusion) selectedCategory.add(category[9]);
+    if (isCarnivoro) selectedCategory.add(category[10]);
+    if (isVegetariano) selectedCategory.add(category[11]);
+    if (isVegano) selectedCategory.add(category[12]);
+    if (isSinGluten) selectedCategory.add(category[13]);
+    widget.setCategory(selectedCategory, toSendBack);
     Navigator.pop(context);
   }
 }
