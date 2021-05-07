@@ -1,0 +1,10 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/placeholder">
+<g id="placeholder (1)">
+<rect id="Rectangle" x="11" y="11" width="2" height="11" rx="1" fill="#333333"/>
+<path id="Path" fill-rule="evenodd" clip-rule="evenodd" d="M12 14C8.68629 14 6 11.3138 6 8C6 4.68625 8.68629 2 12 2V14Z" fill="#E84A31"/>
+<path id="Path_2" fill-rule="evenodd" clip-rule="evenodd" d="M12 2C15.3137 2 18 4.68625 18 8C18 11.3138 15.3137 14 12 14V2Z" fill="#CD402A"/>
+<circle id="Oval" cx="12" cy="8" r="2" fill="white"/>
+</g>
+</g>
+</svg>

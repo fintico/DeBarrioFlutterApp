@@ -12,6 +12,8 @@ const Color GRAY_1 = const Color(0xFF4C6072);
 const Color BLACK = const Color(0xFF333333);
 const Color WHITE = const Color(0xFFFFFFFF);
 
+const double FONT_SYZE_H1 = 28;
+const double FONT_HEIGHT_H1 = 1.3333333333333333;
 const double FONT_SYZE_H2 = 24;
 const double FONT_HEIGHT_H2 = 1.3333333333333333;
 const double FONT_SYZE_H3 = 20;

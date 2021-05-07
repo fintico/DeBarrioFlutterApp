@@ -1,9 +1,15 @@
+import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/Services/register_service.dart';
+import 'package:debarrioapp/routers/router.dart';
+import 'package:debarrioapp/utils/user_app_data.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import 'OnBoardingScreen.dart';
 import 'otp_verification.dart';
@@ -18,6 +24,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   User user;
   bool disable = true;
+  var isActive = false;
   TextStyle subtextStyle = TextStyle(
     color: HexColor('333333'),
     fontSize: 14.0,
@@ -128,7 +135,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                   ),
                   child: RaisedButton(
                     elevation: 0.0,
-                    color: _phoneCheck.text.length <= 10
+                    color: !userAppData.registrationArgs.isReady
                         ? HexColor('E3E3E3')
                         : HexColor('E84A31'),
                     shape: RoundedRectangleBorder(
@@ -138,7 +145,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                     child: Text(
                       "CONTINUAR",
                       style: TextStyle(
-                        color: _phoneCheck.text.isEmpty
+                        color: !userAppData.registrationArgs.isReady
                             ? Colors.blueGrey[700]
                             : Colors.white,
                       ),
@@ -193,9 +200,9 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                         validator: validateChange,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          prefixText: '+',
+                          //prefixText: '+',
                           border: OutlineInputBorder(),
-                          hintText: "ingresa tu número de celular",
+                          hintText: "Ingresa tu número de celular",
                           hintStyle: TextStyle(color: Colors.grey[500]),
                         ),
                       ),
@@ -212,17 +219,39 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   }
 
   void setInputOnChange(value) {
-    setState(() {
-      _phoneCheck.text = value;
+    //_phoneCheck.text = value;
 
-      disable = _phoneCheck.text.isNotEmpty
+    /* disable = _phoneCheck.text.isNotEmpty
           ? false
-          : (_phoneCheck.text.length > 10 ? false : true);
+          : (_phoneCheck.text.length > 10 ? false : true); */
+    if (value.length < 9) {
+      userAppData.registrationArgs.isReady = false;
+      userAppData.registrationArgs.alreadyExist = false;
+      userAppData.registrationArgs.errorMessage = '';
+      setState(() {
+        this.isActive = true;
+        _phoneCheck.text = value;
+      });
+      print('<9');
+      print(value);
+      print(userAppData.registrationArgs.phoneNumber);
+    }
+    if (value.length == 9) {
+      userAppData.registrationArgs.phoneNumber = '51' + value;
+      userAppData.registrationArgs.isReady = true;
+      setState(() {
+        _phoneCheck.text = value;
+        this.isActive = false;
+      });
+      FocusScope.of(context).requestFocus(FocusNode());
+      print('==9');
+      print(value);
+      print(userAppData.registrationArgs.phoneNumber);
+    }
 
-      print(_phoneCheck.text);
+    /* print(_phoneCheck.text);
       print(_phoneCheck.text.length);
-      print('Disable $disable');
-    });
+      print('Disable $disable'); */
   }
 
   void gotoIntroScreen() {
@@ -235,14 +264,28 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   }
 
   String validateChange(phoneNumber) {
-    if (phoneNumber.length <= 10) {
-      return 'Please enter a Valid Number';
+    if (phoneNumber.length < 9) {
+      return 'El número ingresado no es válido';
     }
     return null;
   }
 
-  Future<dynamic> onSubmit() {
-    if (_formKey.currentState.validate()) {
+  Future<dynamic> onSubmit() async {
+    if (userAppData.registrationArgs.isReady) {
+      userAppData.phoneNumber = userAppData.registrationArgs.phoneNumber;
+      userAppData.signCode = await SmsAutoFill().getAppSignature;
+
+      /* Response<dynamic> res =
+          await Provider.of<RegisterService>(context, listen: false)
+              .postUserRegister(userAppData.signCode, userAppData.phoneNomber);
+      print(res.bodyString); */
+      Routes.sailor.navigate(Routes.SPLASH_LOADING_REGISTRATION_SCREEN,
+          navigationType: NavigationType.pushReplace);
+    } else {
+      print('No esta ready');
+    }
+
+    /* if (_formKey.currentState.validate()) {
       user.phoneNumber = '+' + _phoneCheck.text;
       return Navigator.push(
         context,
@@ -250,7 +293,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
           builder: (_) => Otp_Verification(),
         ),
       );
-    }
+    } */
     return null;
   }
 

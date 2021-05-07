@@ -984,7 +984,7 @@ class _CalenderFillState extends State<CalenderFill> {
     postedDish.additionDish = [];
     postedDish.notifyListeners();
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (_) => Dish()));
+        context, MaterialPageRoute(builder: (_) => DishConfirm()));
   }
 
   void categoryBottomSheet(BuildContext context) {

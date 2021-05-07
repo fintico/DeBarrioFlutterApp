@@ -15,10 +15,10 @@ android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-    
+        android:usesCleartextTraffic="true"
         android:name="io.flutter.app.FlutterApplication"
         android:label="Debarrio"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher_put_round">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAt0geE6EQ3UIVQvWMu8HhkD1I83o1yULM"/>
         <activity

@@ -77,8 +77,8 @@ class _SplashState extends State<Splash> {
       if (userId != '') {
         getUserDataFromDatabase(userId);
       } else {
-        onDonePress();
-        //gotoIntroScreen();
+//        onDonePress();
+        gotoIntroScreen();
       }
     } else {
       await prefs.setString("First_Time", 'No');

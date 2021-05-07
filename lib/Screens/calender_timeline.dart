@@ -3,6 +3,7 @@ import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/ModelClass/foodData.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_four.dart';
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
+import 'package:debarrioapp/widgets/dish/dish_publish_page.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -170,7 +171,9 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
             disable: false,
             action: () {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => CalenderFill()));
+                  //context, MaterialPageRoute(builder: (_) => CalenderFill()));
+                  context,
+                  MaterialPageRoute(builder: (_) => DishPublish()));
             },
           ),
         ),

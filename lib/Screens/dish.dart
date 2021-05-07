@@ -1,23 +1,26 @@
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
+import 'package:debarrioapp/widgets/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
+import 'package:sailor/sailor.dart';
 
 import 'calender_timeline.dart';
 import 'fullproductinfo.dart';
 import 'map_screen.dart';
 
-class Dish extends StatefulWidget {
+class DishConfirm extends StatefulWidget {
   @override
-  _DishState createState() => _DishState();
+  _DishConfirmState createState() => _DishConfirmState();
 }
 
-class _DishState extends State<Dish> {
+class _DishConfirmState extends State<DishConfirm> {
   PostedDish postedDish;
 
   TextStyle titleStyle = DBStyles.getStyle(
@@ -75,7 +78,7 @@ class _DishState extends State<Dish> {
     final appBar = PreferredSize(
         child: Container(
           child: AppBarOptionOne(
-            leftIconAction: () => Navigator.pop(context),
+            leftIconAction: () => {} /* Navigator.pop(context) */,
           ),
         ),
         preferredSize: Size.fromHeight(52.0));
@@ -165,10 +168,11 @@ class _DishState extends State<Dish> {
                         text: 'VER PUBLICACIÓN',
                         disable: false,
                         action: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => FullInfoProd()));
+                          Routes.sailor.navigate(
+                            Routes.DISH_DETAIL_SCREEN,
+                            navigationType: NavigationType.pushReplace,
+                            removeUntilPredicate: (route) => true,
+                          );
                         }),
                   ),
                   /* Row(

@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 class User extends ChangeNotifier {
   String _name = '';
   String _email = '';
-  String _id = '';
-  String _phoneNumber = '';
+  String _id = 'Gm0rOpIULVSbma9pnM9CPEUt0v33';
+  String _phoneNumber = '+51123123456';
   List<BankCard> _cards = new List<BankCard>();
   List<InAppAddress> _address = new List<InAppAddress>();
   String _fcmDeviceCode = '';

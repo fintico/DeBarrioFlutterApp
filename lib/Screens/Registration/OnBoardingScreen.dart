@@ -6,6 +6,9 @@ import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'package:debarrioapp/constants/colors.dart' as DBColors;
+import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
+
 import 'phonenumber.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -17,25 +20,29 @@ class IntroScreen extends StatefulWidget {
 
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
-  TextStyle titleStyle = TextStyle(
-      fontFamily: 'OpenSans',
-      fontSize: 30,
-      fontWeight: FontWeight.w700,
-      fontStyle: FontStyle.normal,
-      color: Colors.white);
 
-  TextStyle descriptionStyle = GoogleFonts.openSans(
-    fontSize: 20,
-    fontWeight: FontWeight.w400,
-    fontStyle: FontStyle.normal,
-    color: Colors.white,
+  TextStyle titleStyle = DBStyles.getStyle(
+    DBStyles.WHITE,
+    DBStyles.FONT_SYZE_H1,
+    DBStyles.FONT_HEIGHT_H1,
+    0,
+    DBStyles.FONT_WEIGHT_BOLD,
   );
 
-  TextStyle _descriptionStyle = GoogleFonts.openSans(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    fontStyle: FontStyle.normal,
-    color: Colors.white,
+  TextStyle descriptionStyle = DBStyles.getStyle(
+    DBStyles.WHITE,
+    DBStyles.FONT_SYZE_H3,
+    DBStyles.FONT_HEIGHT_H3,
+    0,
+    DBStyles.FONT_WEIGHT_REGULAR,
+  );
+
+  TextStyle _descriptionStyle = DBStyles.getStyle(
+    DBStyles.WHITE,
+    DBStyles.FONT_SYZE_H3,
+    DBStyles.FONT_HEIGHT_H3,
+    0,
+    DBStyles.FONT_WEIGHT_SEMI_BOLD,
   );
 
   @override
@@ -43,18 +50,19 @@ class IntroScreenState extends State<IntroScreen> {
     super.initState();
     slides.add(
       new Slide(
-        title: "\n\n¿Con deseos de \n comer algo o cocinar \n para tu gente?",
-        maxLineTitle: 5,
+        title: "¿Con deseos de \n comer algo o cocinar \n para tu gente?",
+        marginTitle: EdgeInsets.only(top: 175.0),
+        maxLineTitle: 3,
         styleTitle: titleStyle,
         description: "Conéctate con las personas\nde tu comunidad cercana.",
-        marginDescription: EdgeInsets.only(top: 0.0),
+        marginDescription: EdgeInsets.only(top: 40.0),
         maxLineTextDescription: 2,
         styleDescription: descriptionStyle,
-        backgroundColor: Colors.amber,
+        //backgroundColor: Colors.amber,
         backgroundImageFit: BoxFit.cover,
         backgroundImage: 'assets/images/firstslide.png',
         backgroundOpacity: 0.7,
-        backgroundOpacityColor: Colors.grey[900],
+        backgroundOpacityColor: DBColors.BLACK,
       ),
     );
     slides.add(
@@ -144,7 +152,8 @@ class IntroScreenState extends State<IntroScreen> {
             isShowSkipBtn: false,
             shouldHideStatusBar: true,
             isShowDoneBtn: false,
-            sizeDot: 10,
+            isScrollable: true,
+            sizeDot: 16,
             typeDotAnimation: dotSliderAnimation.DOT_MOVEMENT,
           ),
           // Positioned(

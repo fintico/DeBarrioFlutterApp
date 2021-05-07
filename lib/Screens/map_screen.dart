@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
@@ -10,6 +12,7 @@ import 'package:debarrioapp/Screens/search_icon_screen.dart';
 import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/WdgetsMapScreen/FoodList.dart';
 import 'package:debarrioapp/icons/my_flutter_app_icons.dart';
+import 'package:debarrioapp/utils/user_app_data.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_three.dart';
 import 'package:debarrioapp/widgets/components/icons/filter.dart';
 import 'package:debarrioapp/widgets/components/transitions/slide_right_transition.dart';
@@ -26,6 +29,13 @@ import 'calender_timeline.dart';
 import 'food_search_filter_screen.dart';
 import 'paysplash.dart';
 
+class Customer {
+  String name;
+  int age;
+
+  Customer(this.name, this.age);
+}
+
 class MapScreen extends StatefulWidget {
   @override
   _MapScreenState createState() => _MapScreenState();
@@ -41,6 +51,14 @@ class _MapScreenState extends State<MapScreen> {
   List<User> restaurants = [];
   FoodData foodData;
   Map<String, List<PostedDish>> restaurantName = Map();
+  List customers = [];
+  //List<String> post = [];
+
+  List<String> litems = [
+    "1",
+    "2",
+    "Third",
+  ];
 
   /// This stores the current position for the selected user
   Position currentPosition;
@@ -66,9 +84,14 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
     getAllPostedDish();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setPosition(Position(
-          latitude: user.address[0].addressLanLon.latitude,
-          longitude: user.address[0].addressLanLon.longitude));
+      setPosition(
+        Position(
+          /* latitude: user.address[0].addressLanLon.latitude,
+          longitude: user.address[0].addressLanLon.longitude, */
+          latitude: userAppData.latitude,
+          longitude: userAppData.longitude,
+        ),
+      );
     });
   }
 
@@ -76,11 +99,24 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     user = Provider.of<User>(context);
     foodData = Provider.of<FoodData>(context, listen: false);
-    setPosition(Position(
-        latitude: user.address[0].addressLanLon.latitude,
-        longitude: user.address[0].addressLanLon.longitude));
+    setPosition(
+      Position(
+        /* latitude: user.address[0].addressLanLon.latitude,
+        longitude: user.address[0].addressLanLon.longitude, */
+        latitude: userAppData.latitude,
+        longitude: userAppData.longitude,
+      ),
+    );
 
     orderList = Provider.of<OrderList>(context);
+    //var address = user.address[0].addressString;
+    var address = userAppData.address;
+    //var addressShort = address.split(",");
+    //print(addressShort[0]);
+    customers.add(Customer('Jack', 23));
+    customers.add(Customer('Adam', 27));
+    customers.add(Customer('Katherin', 25));
+    inspect(customers);
     /* final appBar = AppBar(
       leading: IconButton(
         onPressed: () => {
@@ -223,7 +259,7 @@ class _MapScreenState extends State<MapScreen> {
                 MaterialPageRoute(builder: (_) => CalendarSplash()));
           },
           subTitleIconAction: () {},
-          subTitle: user.address[0].addressString,
+          subTitle: address,
         ),
       ),
       preferredSize: Size.fromHeight(104.0),
@@ -317,20 +353,19 @@ class _MapScreenState extends State<MapScreen> {
                             ),
                           ],
                         ),
-                        if (restaurants.isNotEmpty)
+                        if (litems.isNotEmpty)
                           ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: restaurants.length,
+                            itemCount: litems.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return FoodItemList(
-                                restaurant: restaurants[index],
-                                postedDishes: postedDishes
+                              return Text(litems[index]);
+                              /* return FoodItemList(customer: customers[index]
+                                  /*  postedDishes: postedDishes
                                     .where((element) =>
-                                        element.makerId ==
-                                        restaurants[index].id)
-                                    .toList(),
-                              );
+                                        element.makerId == customers[index].age)
+                                    .toList(), */
+                                  ); */
                             },
                           ),
                       ],
@@ -381,6 +416,10 @@ class _MapScreenState extends State<MapScreen> {
                   .indexWhere((posted) => posted.makerId == element.id) !=
               -1)
           .toList();
+
+      inspect(restaurants);
+      print('Aea');
+      print(restaurants);
     } else if (categories.length > 0) {
       postedDishes = foodData.dishesData
           .where((element) => categories.contains(element.category))
@@ -427,6 +466,13 @@ class _MapScreenState extends State<MapScreen> {
           setRestaurantMarker(currentRestaurant, posted);
         });
       }
+
+      print(restaurants);
+      print(postedDishes);
+      print('all');
+      inspect(restaurants);
+      inspect(postedDishes);
+
       if (foodData.dishesData.isEmpty)
         setState(() {
           loading = false;

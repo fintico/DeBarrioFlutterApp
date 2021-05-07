@@ -6,7 +6,10 @@ import 'package:debarrioapp/Screens/search_icon_screen.dart';
 import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_two.dart';
 import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
+import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
+import 'package:debarrioapp/widgets/components/generics/button_white.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geolocator/geolocator.dart';
@@ -58,6 +61,22 @@ class _LocationSetterState extends State<LocationSetter> {
     DBStyle.FONT_WEIGHT_SEMI_BOLD,
   );
 
+  TextStyle titleAlert = DBStyle.getStyle(
+    DBStyle.BLACK,
+    DBStyle.FONT_SYZE_H3,
+    DBStyle.FONT_HEIGHT_H3,
+    0.0,
+    DBStyle.FONT_WEIGHT_SEMI_BOLD,
+  );
+
+  TextStyle subTitleAlert = DBStyle.getStyle(
+    DBStyle.GRAY_1,
+    DBStyle.FONT_SYZE_M,
+    DBStyle.FONT_HEIGHT_M,
+    0.0,
+    DBStyle.FONT_WEIGHT_REGULAR,
+  );
+
   // Set<Marker> myMarker() {
   //   setState(() {
   //     _markers.add(Marker(
@@ -78,15 +97,20 @@ class _LocationSetterState extends State<LocationSetter> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _phoneNumberAlert(context);
+    });
+    //_phoneNumberAlert(context);
     getLocationPermission(setPosition);
-    Fluttertoast.showToast(
-        msg: "Please click on the map where you want to set up location",
+
+    /* Fluttertoast.showToast(
+        msg: "Please click on the map where you want to set up location aaaaa",
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 16.0);
+        fontSize: 16.0); */
   }
 
   @override
@@ -140,7 +164,7 @@ class _LocationSetterState extends State<LocationSetter> {
         child: Container(
           child: AppBarOptionTwo(
               leftIconAction: () {},
-              rightIconAction: () {},
+              //rightIconAction: () {},
               title: 'Confirma tu ubicación'),
         ),
         preferredSize: Size.fromHeight(104.0));
@@ -149,13 +173,18 @@ class _LocationSetterState extends State<LocationSetter> {
         backgroundColor: HexColor("#FBFCFC"),
         appBar: appBar,
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(28.0),
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16),
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: /* MediaQuery.of(context).size.height * 0.08 */ 48.0,
             width: MediaQuery.of(context).size.width,
-            child: RaisedButton(
-              color: Colors.redAccent,
+            child: GenericButtonOrange(
+              action: () {},
+              disable: false,
+              text: 'CONFIRMAR',
+            ),
+            /* child: RaisedButton(
+              color: DBStyle.RED,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
               onPressed: () {
@@ -163,12 +192,12 @@ class _LocationSetterState extends State<LocationSetter> {
               },
               child: Text("CONFIRMAR"),
               textColor: Colors.white,
-            ),
+            ), */
           ),
         ),
         body: LoadingOverlay(
-          color: Colors.black,
-          opacity: .7,
+          color: DBStyle.BLACK,
+          opacity: 0.7,
           isLoading: loading,
           progressIndicator: LoadingIndicator(
             indicatorType: Indicator.ballSpinFadeLoader,
@@ -216,6 +245,9 @@ class _LocationSetterState extends State<LocationSetter> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
                   Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32.0,
@@ -252,7 +284,7 @@ class _LocationSetterState extends State<LocationSetter> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 40,
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -266,6 +298,9 @@ class _LocationSetterState extends State<LocationSetter> {
                         style: subtitleStyle,
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    height: 5.0,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -286,7 +321,7 @@ class _LocationSetterState extends State<LocationSetter> {
                     ),
                   ),
                   SizedBox(
-                    height: 60,
+                    height: 30,
                   )
                 ],
               ),
@@ -316,7 +351,11 @@ class _LocationSetterState extends State<LocationSetter> {
 
   void setUserLocation() {
     if (inAppAddress != null) {
-      if (!widget.fromUserProfile) {
+      user.address = [];
+      user.address.add(inAppAddress);
+      //database.setUserData(user);
+      gotoMapScreen();
+      /* if (!widget.fromUserProfile) {
         user.address = [];
         user.address.add(inAppAddress);
         database.setUserData(user);
@@ -331,7 +370,7 @@ class _LocationSetterState extends State<LocationSetter> {
         }
         database.setUserData(user);
         Navigator.pop(context);
-      }
+      } */
     }
   }
 
@@ -386,5 +425,67 @@ class _LocationSetterState extends State<LocationSetter> {
     setState(() {
       moveCamera(position.latitude, position.longitude);
     });
+  }
+
+  Future _phoneNumberAlert(BuildContext context) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                'assets/images/place.svg',
+                height: 68.0,
+                width: 68.0,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                '!Cuéntanos!',
+                style: titleAlert,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(
+                'De Barrio quiere utlizar tu \n ubicación actual para mostrarte \n las mejores opciones cerca de ti.',
+                style: subTitleAlert,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 32.0,
+              ),
+              Flexible(
+                child: GenericButtonOrange(
+                  text: 'ACEPTAR',
+                  disable: false,
+                  action: () => Navigator.of(context).pop(),
+                ),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Flexible(
+                child: GenericButtonWhite(
+                  text: 'CANCELAR',
+                  disable: false,
+                  action: () => Navigator.of(context).pop(),
+                ),
+              ),
+              //FlutterLogo(size: 100.0),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
