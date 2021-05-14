@@ -5,6 +5,9 @@ import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_eight.dart';
 import 'package:debarrioapp/widgets/components/icons/angle_right.dart';
+import 'package:debarrioapp/widgets/components/icons/bag.dart';
+import 'package:debarrioapp/widgets/components/icons/edit.dart';
+import 'package:debarrioapp/widgets/components/icons/trash.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -38,7 +41,7 @@ class _DishDetailState extends State<DishDetail> {
                 Routes.DISH_LIST_SCREEN,
                 navigationType: NavigationType.pushReplace),
             headerTitle: 'Detalle de la publicación',
-            rightIconAction: () => {}),
+            rightIconAction: () => {detailsBottomSheet(context)}),
         preferredSize: Size.fromHeight(56.0));
     return SafeArea(
       child: Scaffold(
@@ -437,5 +440,68 @@ class _DishDetailState extends State<DishDetail> {
         ),
       ),
     );
+  }
+
+  void detailsBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            topRight: Radius.circular(8.0),
+          ),
+        ),
+        builder: (context) {
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.25,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 34.0, top: 44.0, bottom: 20.0),
+                      child: EditIcon(
+                          height: 20.0, width: 20.0, color: DBColors.GRAY_2),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 14.0, top: 44.0, bottom: 20.0),
+                      child: Text(
+                        'Editar publicación',
+                        style: bottonDetailModalStyle,
+                      ),
+                    ),
+                  ],
+                ),
+                Divider(
+                  color: DBColors.GRAY_12,
+                  thickness: 1.0,
+                  indent: 28.0,
+                  endIndent: 28.0,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 34.0, top: 20.0, bottom: 20.0),
+                      child: TrashIcon(
+                          height: 20.0, width: 20.0, color: DBColors.GRAY_2),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 14.0, top: 20.0, bottom: 20.0),
+                      child: Text(
+                        'Eliminar publicación',
+                        style: bottonDetailModalStyle,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 }

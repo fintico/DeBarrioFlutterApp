@@ -115,6 +115,13 @@ TextStyle descriptionStyle = DBStyle.getStyle(
   DBStyle.FONT_WEIGHT_REGULAR,
 );
 
+TextStyle bottonDetailModalStyle = DBStyle.getStyle(
+    DBStyle.BLACK,
+    DBStyle.FONT_SYZE_M,
+    DBStyle.FONT_HEIGHT_M,
+    0.0,
+    DBStyle.FONT_WEIGHT_SEMI_BOLD);
+
 //dish statistics card
 TextStyle titleCardStyle = DBStyle.getStyle(
   DBStyle.BLACK,

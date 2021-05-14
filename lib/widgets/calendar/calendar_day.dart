@@ -16,7 +16,7 @@ class CalendarDay extends StatelessWidget {
     final calendarBloc = Provider.of<CalendarBloc>(context, listen: false);
     final dishProvider = Provider.of<DishProvider>(context);
     return Container(
-      padding: const EdgeInsets.only(top: 64.0),
+      padding: const EdgeInsets.only(top: 84.0),
       child: SfCalendar(
         backgroundColor: DBColors.WHITE,
         view: CalendarView.day,

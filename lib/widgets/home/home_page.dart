@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _placeFLoatingActionButton() {
     return Container(
-      padding: const EdgeInsets.only(right: 20.0, bottom: 140.0),
+      padding: const EdgeInsets.only(right: 20.0, bottom: 270.0),
       alignment: Alignment.bottomRight,
       child: FloatingActionButton(
         onPressed: () {
