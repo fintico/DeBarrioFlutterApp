@@ -15,15 +15,26 @@ class _$LocationService extends LocationService {
   final definitionType = LocationService;
 
   Future<Response> postUserLocation(
-      String addressName, bool isActive, double longitude, double latitude) {
+      String addressName,
+      String addressDescription,
+      bool isActive,
+      double longitude,
+      double latitude) {
     final $url = '/location/create/';
     final $body = {
       'address_name': addressName,
+      'address_description': addressDescription,
       'is_active': isActive,
       'longitude': longitude,
       'latitude': latitude
     };
     final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> getLocationList() {
+    final $url = '/location/list/';
+    final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 }

@@ -9,7 +9,7 @@ class RadioCarousal extends StatefulWidget {
 }
 
 class _RadioCarousalState extends State<RadioCarousal> {
-  int selectedRadio=0;
+  int selectedRadio = 0;
 
   @override
   void initState() {

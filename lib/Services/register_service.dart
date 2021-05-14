@@ -1,11 +1,13 @@
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/constants/url_base.dart' as Url;
 part 'register_service.chopper.dart';
 
-//flutter packages pub run build_runner watch
+//flutter packages pub run build_runner watch --delete-conflicting-outputs
 
 @ChopperApi(baseUrl: '/auth')
 abstract class RegisterService extends ChopperService {
-  static const API_BASE_URL = 'http://10.0.2.2:8000';
+  //static const API_BASE_URL = 'http://10.0.2.2:8000';
+  //static const API_BASE_URL = 'http://e1a24879338c.ngrok.io';
   static var customHeaders = {
     'Accept': '*/*',
     'Cache-Control': 'no-cache',
@@ -30,7 +32,7 @@ abstract class RegisterService extends ChopperService {
 
   static RegisterService create() {
     final client = ChopperClient(
-      baseUrl: API_BASE_URL,
+      baseUrl: Url.API_BASE_URL,
       services: [_$RegisterService()],
       interceptors: [HeadersInterceptor(customHeaders), CurlInterceptor()],
       converter: FormUrlEncodedConverter(),

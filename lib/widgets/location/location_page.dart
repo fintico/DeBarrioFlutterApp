@@ -32,7 +32,7 @@ class _LocationPageState extends State<LocationPage> {
   GoogleMapController myMapController;
   Set<Marker> _markers = new Set();
   BitmapDescriptor customMark;
-  TextEditingController _textLocation = TextEditingController();
+  TextEditingController _address = TextEditingController();
 
   static const LatLng _mainLocation = const LatLng(-12.0630149, -77.0296179);
 
@@ -191,7 +191,7 @@ class _LocationPageState extends State<LocationPage> {
       ),
     );
     setState(() {
-      _textLocation.text = addressUser;
+      _address.text = addressUser;
     });
     _createMarker(lat, lng);
     _setAddress(addressUser, lat, lng);
@@ -343,7 +343,7 @@ class _LocationPageState extends State<LocationPage> {
               child: Container(
                 width: screenWidth(context, dividedBy: 1.165),
                 child: TextFormField(
-                  controller: _textLocation,
+                  controller: _address,
                   readOnly: true,
                   onFieldSubmitted: (value) {
                     getLocationCoOrdinatesWithAddress(value);
@@ -406,10 +406,8 @@ class _LocationPageState extends State<LocationPage> {
             height: screenHeight(context, dividedBy: 15.8),
             child: TextFormField(
               readOnly: false,
-              onChanged: (value) {
-                //inAppAddress.addressDescription = value;
-              },
-              keyboardType: TextInputType.phone,
+              onChanged: (value) => userAppData.addressDescription = value,
+              //keyboardType: TextInputType.streetAddress,
               style: textFieldStyle,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),

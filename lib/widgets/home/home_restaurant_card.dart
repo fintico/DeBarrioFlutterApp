@@ -1,3 +1,5 @@
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/widgets/components/icons/comment.dart';
 import 'package:debarrioapp/widgets/components/icons/star.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +7,13 @@ import 'package:debarrioapp/utils/screen_size_reducers.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'home_style.dart';
 
 class RestaurantCard extends StatefulWidget {
-  RestaurantCard({Key key}) : super(key: key);
+  final index;
+  RestaurantCard({Key key, this.index}) : super(key: key);
 
   @override
   _RestaurantCardState createState() => _RestaurantCardState();
@@ -18,13 +22,16 @@ class RestaurantCard extends StatefulWidget {
 class _RestaurantCardState extends State<RestaurantCard> {
   @override
   Widget build(BuildContext context) {
+    final dishProvider = Provider.of<DishProvider>(context);
+    //print('card');
+    //print(dishBloc.deliveryDate);
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           width: MediaQuery.of(context).size.width,
           color: DBColors.GRAY_8,
-          height: screenHeight(context, dividedBy: 7.5),
+          height: screenHeight(context, dividedBy: 7.0),
           child: InkWell(
             /* onTap: () => Navigator.push(
             context,
@@ -103,7 +110,8 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           padding: const EdgeInsets.only(left: 16.0, top: 2.0),
                           child: Text(
                             //widget.restaurant.restaurantName,
-                            'Comida Peruana',
+                            //'Comida Peruana',
+                            dishProvider.list[widget.index].dishName,
                             style: subtitleCardStyle,
                           ),
                         ),

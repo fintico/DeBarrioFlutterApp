@@ -138,3 +138,36 @@ TextStyle numberCardStyle = DBStyle.getStyle(
   0,
   DBStyle.FONT_WEIGHT_REGULAR,
 );
+
+//location dish
+TextStyle titleLocationStyle = DBStyle.getStyle(
+  DBStyle.BLACK,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0,
+  DBStyle.FONT_WEIGHT_REGULAR,
+);
+
+TextStyle titleLocationButtonStyle = DBStyle.getStyle(
+  DBStyle.BLACK,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0,
+  DBStyle.FONT_WEIGHT_SEMI_BOLD,
+);
+
+TextStyle textFieldLocationStyle = DBStyle.getStyle(
+  DBStyle.BLACK,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0,
+  DBStyle.FONT_WEIGHT_REGULAR,
+);
+
+TextStyle textHintLocationStyle = DBStyle.getStyle(
+  DBStyle.GRAY_2,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0,
+  DBStyle.FONT_WEIGHT_REGULAR,
+);

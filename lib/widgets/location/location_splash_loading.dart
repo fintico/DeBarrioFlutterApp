@@ -73,8 +73,8 @@ class _LocationSplashState extends State<LocationSplash> {
   Future setLocation() async {
     try {
       Response<dynamic> res = await Provider.of<LocationService>(context)
-          .postUserLocation(userAppData.address, true, userAppData.longitude,
-              userAppData.latitude);
+          .postUserLocation(userAppData.address, userAppData.addressDescription,
+              true, userAppData.longitude, userAppData.latitude);
       print(res.bodyString);
       Routes.sailor.navigate(
         Routes.HOME_SCREEN,

@@ -1,9 +1,11 @@
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/constants/url_base.dart' as Url;
 part 'dish_service.chopper.dart';
 
 @ChopperApi(baseUrl: '/dish')
 abstract class DishService extends ChopperService {
-  static const API_BASE_URL = 'http://10.0.2.2:8000';
+  //static const API_BASE_URL = 'http://10.0.2.2:8000';
+  //static const API_BASE_URL = API_BASE_URL;
   static var customHeaders = {
     'Accept': '*/*',
     'Cache-Control': 'no-cache',
@@ -32,9 +34,12 @@ abstract class DishService extends ChopperService {
     @Field('is_free') bool isFree,
   );
 
+  @Get(path: '/list/')
+  Future<Response> getDishList();
+
   static DishService create() {
     final client = ChopperClient(
-      baseUrl: API_BASE_URL,
+      baseUrl: Url.API_BASE_URL,
       services: [_$DishService()],
       interceptors: [HeadersInterceptor(customHeaders), CurlInterceptor()],
       converter: JsonConverter(),

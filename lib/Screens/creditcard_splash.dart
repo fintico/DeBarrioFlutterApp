@@ -49,7 +49,7 @@ class _CreditSplashState extends State<CreditSplash> {
                 Container(
                   height: MediaQuery.of(context).size.height * 0.1,
                 ),
-               CircleAvatar(
+                CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 80,
                   child: Image(

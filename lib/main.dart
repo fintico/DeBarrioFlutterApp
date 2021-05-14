@@ -4,7 +4,14 @@ import 'package:debarrioapp/Screens/Registration/OnBoardingScreen.dart';
 import 'package:debarrioapp/Services/dish_service.dart';
 import 'package:debarrioapp/Services/location_service.dart';
 import 'package:debarrioapp/Services/register_service.dart';
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/providers/dish_provider.dart';
+import 'package:debarrioapp/providers/location_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
+import 'package:debarrioapp/widgets/calendar/calendar_bloc.dart';
+import 'package:debarrioapp/widgets/calendar/calendar_page.dart';
+import 'package:debarrioapp/widgets/dish/dish_location_page.dart';
+import 'package:debarrioapp/widgets/menu/publish/publish_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart' as symbolLocal;
 import 'package:intl/intl.dart';
@@ -50,6 +57,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (BuildContext context) => Order()),
           ChangeNotifierProvider(create: (BuildContext context) => FoodData()),
           ChangeNotifierProvider(create: (BuildContext context) => OrderList()),
+          ChangeNotifierProvider(create: (_) => CalendarBloc()),
+          ChangeNotifierProvider(create: (_) => DishProvider()),
+          ChangeNotifierProvider(create: (_) => LocationProvider()),
           Provider(
             create: (_) => RegisterService.create(),
             dispose: (_, value) => value.client.dispose(),
@@ -84,6 +94,9 @@ class MyApp extends StatelessWidget {
               initScreen == 0 || initScreen == null ? 'onBoard' : 'home',
           routes: {
             'home': (context) => LocationPage(),
+            //'home': (context) => CalendarPage(),
+            //'home': (context) => DishLocation(),
+            //'home': (context) => PublishPage(),
             'onBoard': (context) => IntroScreen(),
           },
           onGenerateRoute: Routes.sailor.generator(),

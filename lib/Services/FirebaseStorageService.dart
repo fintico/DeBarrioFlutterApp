@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 class StorageService {
   FirebaseStorage storage = FirebaseStorage.instance;
 
-
   ///Path is the main folder
   ///FileName is the sub folder
   ///Upload file to path path/fileName

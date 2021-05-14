@@ -3,12 +3,16 @@ import 'dart:core';
 class BankCard {
   ///Card unique Id
   String cardId;
+
   ///Card holder name
   String cardName;
+
   ///Card Expiry date MM/YY
   String cardExpiry;
+
   ///Card number printed on card
   String cardNumber;
+
   ///Card secret key written on card's Back
   String cardKey;
 
@@ -21,15 +25,16 @@ class BankCard {
       'cardKey': cardKey,
     };
   }
-  BankCard.doc(var doc){
+
+  BankCard.doc(var doc) {
     this.fromMap(doc);
   }
   BankCard(
       {this.cardId,
-        this.cardName,
-        this.cardExpiry,
-        this.cardNumber,
-        this.cardKey});
+      this.cardName,
+      this.cardExpiry,
+      this.cardNumber,
+      this.cardKey});
 
   void fromMap(var doc) {
     this.cardId = doc['cardId'] ?? '';
@@ -39,5 +44,3 @@ class BankCard {
     this.cardKey = doc['cardKey'] ?? '';
   }
 }
-
-

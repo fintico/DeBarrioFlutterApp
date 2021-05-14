@@ -14,6 +14,9 @@ import 'calender_info_add_new_dish_to_publish.dart';
 import 'calenderfilters_btn.dart';
 import 'food_carousel.dart';
 
+import 'package:debarrioapp/constants/colors.dart' as DBColors;
+import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
+
 /// The app which hosts the home page which contains the calendar on it.
 
 /// The hove page which hosts the calendar
@@ -35,6 +38,14 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
   List<PostedDish> postedDishes;
   List<User> restaurants;
   FoodData foodData;
+
+  TextStyle timeSlot = DBStyle.getStyle(
+    DBStyle.GRAY_2,
+    DBStyle.FONT_SYZE_S,
+    DBStyle.FONT_HEIGHT_S,
+    0.0,
+    DBStyle.FONT_WEIGHT_SEMI_BOLD,
+  );
 
   @override
   void initState() {
@@ -208,8 +219,10 @@ class _CalendarTimelineState extends State<CalendarTimeline> {
                 }
               },
               timeSlotViewSettings: TimeSlotViewSettings(
-                timeInterval: Duration(minutes: 120),
-                timeIntervalHeight: 80,
+                startHour: 7,
+                timeInterval: Duration(minutes: 60),
+                timeIntervalHeight: 40.0,
+                timeTextStyle: timeSlot,
               ),
             ),
           ),

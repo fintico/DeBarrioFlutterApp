@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -5,8 +6,11 @@ import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
 import 'package:debarrioapp/ModelClass/OrderedDish.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/utilProperties.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
 import 'ModelClass/orderList.dart';
@@ -86,6 +90,48 @@ Future<void> getLocationPermission(Function setPosition) async {
   if (permission == LocationPermission.always ||
       permission == LocationPermission.whileInUse)
     getCurrentLocation(setPosition);
+}
+
+// get state dish (Active or Finish)
+bool getDishState(DishModel dish) {
+  bool isActive;
+  DateTime today = DateTime.now().subtract(Duration(hours: 5));
+  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
+  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  DateTime dateFrom = DateTime.parse(dishFrom);
+  DateTime dateTo = DateTime.parse(dishTo);
+
+  if (today.isAfter(dateFrom)) {
+    //print('Finalizado');
+    isActive = false;
+  } else {
+    //print('Activo');
+    isActive = true;
+  }
+
+  return isActive;
+}
+
+String dateTimeString(DishModel dish) {
+  String dateString;
+  final formatter = new DateFormat('dd/MM/yyyy');
+  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
+  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  DateTime dateFrom = DateTime.parse(dishFrom);
+  DateTime dateTo = DateTime.parse(dishTo);
+  String dishDate = formatter.format(dateFrom);
+  //dayTime[dateFrom.hour];
+
+  dateString = dishDate +
+      ' ' +
+      dayTime[dateFrom.hour] +
+      ' ' +
+      '-' +
+      ' ' +
+      dayTime[dateTo.hour];
+
+  //print(dateString);
+  return dateString;
 }
 
 //assets to bytes

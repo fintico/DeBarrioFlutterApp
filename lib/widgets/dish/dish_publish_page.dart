@@ -26,6 +26,7 @@ import 'package:sailor/sailor.dart';
 
 import '../../utilProperties.dart';
 import '../../utilsFunctions.dart';
+import 'dish_location_page.dart';
 import 'dish_style.dart';
 
 class DishPublish extends StatefulWidget {
@@ -60,7 +61,9 @@ class _DishPublishState extends State<DishPublish> {
     final appBar = PreferredSize(
         child: AppBarOptionSix(
           headerTitle: 'Publicar venta',
-          leftIconAction: () => Navigator.pop(context),
+          leftIconAction: () {
+            Navigator.pop(context);
+          },
         ),
         preferredSize: Size.fromHeight(56.0));
     return SafeArea(
@@ -483,7 +486,14 @@ class _DishPublishState extends State<DishPublish> {
           left: 28.0, right: 28.0, top: 32.0, bottom: 32.0),
       child: TextField(
         readOnly: true,
-        //onTap: () => categoryBottomSheet(context),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => DishLocation(),
+            ),
+          );
+        },
         style: labelInput,
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -528,7 +538,7 @@ class _DishPublishState extends State<DishPublish> {
       //height: 200.0,
       height: dish.dishAdditional != null
           ? screenHeight(context, dividedBy: 2.225)
-          : screenHeight(context, dividedBy: 4.81),
+          : screenHeight(context, dividedBy: 4.35),
       child: Column(
         children: [
           Container(

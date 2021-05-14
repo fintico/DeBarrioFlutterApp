@@ -5,7 +5,7 @@ class AdditionDish {
   String price;
 
   //Do not upload
-  bool isSelected=false;
+  bool isSelected = false;
 
   Map<String, dynamic> toMap() {
     return {
@@ -13,18 +13,17 @@ class AdditionDish {
       'price': price,
     };
   }
-  AdditionDish.doc(var doc){
+
+  AdditionDish.doc(var doc) {
     this.fromMap(doc);
   }
-  AdditionDish(
-      {this.additionName,
-        this.price,
-      });
+  AdditionDish({
+    this.additionName,
+    this.price,
+  });
 
   void fromMap(var doc) {
     this.additionName = doc['additionName'] ?? '';
     this.price = doc['price'] ?? '';
   }
 }
-
-

@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 class InAppAddress {
   String addressId;
   GeoPoint addressLanLon;
@@ -15,15 +16,15 @@ class InAppAddress {
       'addressDescription': addressDescription,
     };
   }
-  InAppAddress.doc(var doc){
+
+  InAppAddress.doc(var doc) {
     this.fromMap(doc);
   }
   InAppAddress(
       {this.addressId,
-        this.addressLanLon,
-        this.addressDescription,
-        this.addressString
-      });
+      this.addressLanLon,
+      this.addressDescription,
+      this.addressString});
 
   void fromMap(var doc) {
     this.addressId = doc['addressId'] ?? '';
@@ -32,5 +33,3 @@ class InAppAddress {
     this.addressDescription = doc['addressDescription'] ?? '';
   }
 }
-
-

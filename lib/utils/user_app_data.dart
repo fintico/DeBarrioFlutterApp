@@ -11,6 +11,7 @@ class UserAppData {
   String verificationCode = '';
   String signCode = '';
   String address = '';
+  String addressDescription = '';
   bool isActive = true;
   double latitude;
   double longitude;

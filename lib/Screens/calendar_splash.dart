@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
+import 'package:debarrioapp/widgets/calendar/calendar_page.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
@@ -93,7 +94,7 @@ class _CalendarSplashState extends State<CalendarSplash> {
                       disable: false,
                       action: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => CalendarTimeline()),
+                        MaterialPageRoute(builder: (_) => CalendarPage()),
                       ),
                     ),
                   ),

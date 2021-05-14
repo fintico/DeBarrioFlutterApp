@@ -34,7 +34,8 @@ class _DishDetailState extends State<DishDetail> {
   Widget build(BuildContext context) {
     final appBar = PreferredSize(
         child: AppBarOptionEight(
-            leftIconAction: () => Routes.sailor.navigate(Routes.HOME_SCREEN,
+            leftIconAction: () => Routes.sailor.navigate(
+                Routes.DISH_LIST_SCREEN,
                 navigationType: NavigationType.pushReplace),
             headerTitle: 'Detalle de la publicación',
             rightIconAction: () => {}),
