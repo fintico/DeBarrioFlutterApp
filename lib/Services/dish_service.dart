@@ -37,6 +37,9 @@ abstract class DishService extends ChopperService {
   @Get(path: '/list/')
   Future<Response> getDishList();
 
+  @Get(path: '/detail/{id}')
+  Future<Response> getDishById(@Path("id") int dishId);
+
   static DishService create() {
     final client = ChopperClient(
       baseUrl: Url.API_BASE_URL,

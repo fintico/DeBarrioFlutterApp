@@ -3,7 +3,7 @@ import 'package:debarrioapp/ModelClass/AddressModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/map_screen.dart';
 import 'package:debarrioapp/Screens/search_icon_screen.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_two.dart';
 import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';

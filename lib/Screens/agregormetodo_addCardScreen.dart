@@ -1,7 +1,7 @@
 import 'package:debarrioapp/ModelClass/BankCardModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/payoptbutton.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';

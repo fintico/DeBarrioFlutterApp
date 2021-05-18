@@ -9,6 +9,8 @@ import 'package:debarrioapp/widgets/dish/dish_publish_splash.dart';
 import 'package:debarrioapp/widgets/home/home_page.dart';
 import 'package:debarrioapp/widgets/location/location_page.dart';
 import 'package:debarrioapp/widgets/location/location_splash_loading.dart';
+import 'package:debarrioapp/widgets/menu/menu_page.dart';
+import 'package:debarrioapp/widgets/menu/publish/publish_detail_page.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_page.dart';
 import 'package:debarrioapp/widgets/registration/registration_splash.dart';
 import 'package:debarrioapp/widgets/verify/verify_sms_page.dart';
@@ -27,7 +29,13 @@ class Routes {
   static const DISH_ADDITIONAL_SCREEN = '/dish_additional_screen';
   static const DISH_PUBLISH_SCREEN = '/dish_publish_screen';
   static const DISH_DETAIL_SCREEN = '/dish_detail_screen';
+
+  //myposts
   static const DISH_LIST_SCREEN = '/dish_list_screen';
+  static const DISH_PUBLISH_DETAIL = '/dish_publish_detail_screen';
+
+  //Menu
+  static const MENU_SCREEN = '/menu_screen';
 
   static const SPLASH_LOADING_REGISTRATION_SCREEN = '/splash_loading_screen';
   static const SPLASH_LOADING_VERIFICATION_SMS_SCREEN =
@@ -77,6 +85,27 @@ class Routes {
         name: DISH_LIST_SCREEN,
         builder: (_, __, ___) {
           return PublishPage();
+        },
+      ),
+      SailorRoute(
+        name: DISH_PUBLISH_DETAIL,
+        builder: (_, __, params) {
+          final id = params.param<int>('id');
+          return PublishDetail(
+            dishId: id,
+          );
+        },
+        params: [
+          SailorParam<int>(
+            name: 'id',
+            defaultValue: 1,
+          ),
+        ],
+      ),
+      SailorRoute(
+        name: MENU_SCREEN,
+        builder: (_, __, ___) {
+          return MenuPage();
         },
       ),
     ];

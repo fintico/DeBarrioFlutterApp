@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
 import 'package:debarrioapp/ModelClass/OrderedDish.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/utilProperties.dart';
 import 'package:flutter/services.dart';

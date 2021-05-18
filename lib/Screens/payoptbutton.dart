@@ -3,7 +3,7 @@ import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:debarrioapp/ModelClass/OrderedDish.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/ModelClass/orderList.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';

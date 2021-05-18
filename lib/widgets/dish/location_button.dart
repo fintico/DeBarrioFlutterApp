@@ -106,7 +106,7 @@ class LocationButton extends StatelessWidget {
       ),
     );
   }
-  /* Widget iconPress() {
+  /* Widget iconState() {
     return state
         ? RadioActiveIcon(
             height: 20.0,

@@ -1,12 +1,14 @@
 import 'dart:math';
 
 import 'package:debarrioapp/providers/dish_provider.dart';
+import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/icons/angle_right.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
 
 import '../../../utilsFunctions.dart';
 import 'publish_style.dart';
@@ -24,7 +26,11 @@ class PublishCard extends StatelessWidget {
     return Column(
       children: [
         InkWell(
-          onTap: () => {print('card')},
+          onTap: () => {
+            Routes.sailor.navigate(Routes.DISH_PUBLISH_DETAIL,
+                params: {'id': dishProvider.list[index].id}),
+            //print('${dishProvider.list[index].id}')
+          },
           child: Container(
               color: DBColors.WHITE,
               child: Column(
@@ -39,7 +45,7 @@ class PublishCard extends StatelessWidget {
                         children: [
                           Text(
                             "PUBLICACIÓN #0${dishProvider.list[index].id}",
-                            style: publishtitleDetailStyle,
+                            style: publishCardtitleStyle,
                           ),
                           getDishState(dishProvider.list[index])
                               ? stateOnBox()
@@ -51,42 +57,45 @@ class PublishCard extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                          padding: const EdgeInsets.only(
-                              left: 28.0, top: 18.0, bottom: 40.0),
-                          child: cZeroStr(dishProvider.list[index].image)
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                  child: Image(
-                                    image: NetworkImage(
-                                        dishProvider.list[index].image),
-                                    height: 56.0,
-                                    width: 56.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : ClipRRect(
-                                  borderRadius: BorderRadius.circular(4.0),
-                                  child: SvgPicture.asset(
-                                    'assets/images/empty.svg',
-                                    height: 56.0,
-                                    width: 56.0,
-                                  ),
-                                )
-
-                          /* Image(
-                            /* SvgPicture.asset(
-                          'assets/images/graph_bar.svg',
-                          height: 56.0,
-                          width: 56.0,
-                        ), */
-                            image: cZeroStr(dishProvider.list[index].image)
-                                ? NetworkImage(dishProvider.list[index].image)
-                                : SvgPicture.asset('assets/images/empty.svg'),
-                            fit: BoxFit.cover,
-                            height: 56.0,
-                            width: 56.0,
-                          ) */
-                          ),
+                        padding: const EdgeInsets.only(
+                            left: 28.0, top: 18.0, bottom: 40.0),
+                        child: cZeroStr(dishProvider.list[index].image)
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(4.0),
+                                child: Image(
+                                  image: NetworkImage(
+                                      dishProvider.list[index].image),
+                                  height: 56.0,
+                                  width: 56.0,
+                                  fit: BoxFit.cover,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes
+                                            : null,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(4.0),
+                                child: SvgPicture.asset(
+                                  'assets/images/empty.svg',
+                                  height: 46.0,
+                                  width: 46.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                      ),
                       Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,

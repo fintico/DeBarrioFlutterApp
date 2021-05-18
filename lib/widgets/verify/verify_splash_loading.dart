@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
-import 'package:debarrioapp/Services/register_service.dart';
+import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
 import 'package:flutter/material.dart';

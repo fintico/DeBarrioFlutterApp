@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
-import 'package:debarrioapp/Services/dish_service.dart';
+import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +18,12 @@ class PublishPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBar = PreferredSize(
         child: AppBarOptionSix(
-            leftIconAction: () => Routes.sailor.navigate(Routes.HOME_SCREEN,
-                navigationType: NavigationType.pushReplace),
+            leftIconAction: () => Routes.sailor.navigate(Routes.MENU_SCREEN,
+                    navigationType: NavigationType.pushReplace,
+                    transitions: [
+                      SailorTransition.fade_in,
+                      SailorTransition.slide_from_left
+                    ]),
             headerTitle: 'Mis publicaciones'),
         preferredSize: Size.fromHeight(56.0));
     final dishProvider = Provider.of<DishProvider>(context);

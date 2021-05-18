@@ -1,3 +1,4 @@
+import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/icons/bag.dart';
 import 'package:debarrioapp/widgets/components/icons/credit_card.dart';
 import 'package:debarrioapp/widgets/components/icons/money.dart';
@@ -17,6 +18,7 @@ import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
 
 import 'calender_info_add_new_dish_to_publish.dart';
 import 'misventas__currentOrders.dart';
@@ -463,12 +465,8 @@ class _NavDrawerState extends State<NavDrawer> {
   Widget _myPosts() {
     return ListTitleButton(
       action: () {
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => CalenderFill(),
-          ),
-        ); */
+        Routes.sailor.navigate(Routes.DISH_LIST_SCREEN,
+            navigationType: NavigationType.pushReplace);
       },
       title: 'Mis publicaciones',
       icon: PostIcon(

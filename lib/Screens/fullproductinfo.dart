@@ -1,8 +1,8 @@
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/Adicionalas.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
-import 'package:debarrioapp/Services/FirebaseStorageService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_eight.dart';
 import 'package:intl/intl.dart';

@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:debarrioapp/ModelClass/UserModel.dart';
-import 'package:debarrioapp/Services/FirebaseAuthService.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseAuthService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

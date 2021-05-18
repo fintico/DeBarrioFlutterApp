@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
-import 'package:debarrioapp/Services/dish_service.dart';
+import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
 //import 'package:debarrioapp/services/dish_service.dart';

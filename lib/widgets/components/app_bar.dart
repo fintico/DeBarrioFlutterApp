@@ -236,21 +236,6 @@ class AppBarWidget extends StatelessWidget {
     user = Provider.of<User>(context);
     return Column(
       children: [
-        /* ClipRRect(
-          borderRadius: BorderRadius.circular(1120.0),
-          child: CircleAvatar(
-                          radius: 60.0,
-                          backgroundColor: Colors.white,
-                          child: Container(
-                            child: Image(
-                              fit: BoxFit.fitWidth,
-                              image: cZeroStr(user.pictureUri)
-                                  ? NetworkImage(user.pictureUri)
-                                  : AssetImage('assets/images/User.png'),
-                            ),
-                          ),
-                        ),
-        ), */
         Padding(
           padding: const EdgeInsets.all(14.0),
           child: CircleAvatar(
@@ -258,25 +243,15 @@ class AppBarWidget extends StatelessWidget {
             radius: 60.0,
             backgroundImage: cZeroStr(user.pictureUri)
                 ? NetworkImage(user.pictureUri)
+                : null,
+            child: cZeroStr(user.pictureUri)
+                ? null
                 : SvgPicture.asset(
                     'assets/images/user.svg',
                     height: 88.0,
                     width: 88.0,
                     fit: BoxFit.fitWidth,
                   ),
-            /* child: Center(
-              child: cZeroStr(user.pictureUri)
-                  ? Image(
-                      image: NetworkImage(user.pictureUri),
-                      fit: BoxFit.fitWidth,
-                    )
-                  : SvgPicture.asset(
-                      'assets/images/user.svg',
-                      height: 88.0,
-                      width: 88.0,
-                      fit: BoxFit.fitWidth,
-                    ),
-            ), */
           ),
         ),
         Padding(

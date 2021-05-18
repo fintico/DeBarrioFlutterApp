@@ -1,9 +1,9 @@
 import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/Screens/Registration/OnBoardingScreen.dart';
-import 'package:debarrioapp/Services/dish_service.dart';
-import 'package:debarrioapp/Services/location_service.dart';
-import 'package:debarrioapp/Services/register_service.dart';
+import 'package:debarrioapp/services/dish_service.dart';
+import 'package:debarrioapp/services/location_service.dart';
+import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/providers/location_provider.dart';
@@ -19,8 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'ModelClass/foodData.dart';
 import 'ModelClass/orderList.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
-import 'package:debarrioapp/Services/FirebaseAuthService.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseAuthService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:provider/provider.dart';
@@ -93,10 +93,10 @@ class MyApp extends StatelessWidget {
           initialRoute:
               initScreen == 0 || initScreen == null ? 'onBoard' : 'home',
           routes: {
-            'home': (context) => LocationPage(),
+            //'home': (context) => LocationPage(),
             //'home': (context) => CalendarPage(),
             //'home': (context) => DishLocation(),
-            //'home': (context) => PublishPage(),
+            'home': (context) => PublishPage(),
             'onBoard': (context) => IntroScreen(),
           },
           onGenerateRoute: Routes.sailor.generator(),

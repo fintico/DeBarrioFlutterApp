@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:debarrioapp/Services/FirebaseStorageService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:debarrioapp/models/additionalDish.dart';
 import 'package:debarrioapp/models/dish.dart';
 import 'package:debarrioapp/routers/router.dart';

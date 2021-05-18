@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/fullproductinfo.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/Wideget_CalenderInfo_Screen/DateTime.dart';
 import 'package:debarrioapp/Wideget_CalenderInfo_Screen/DropDownCategories.dart';
 import 'package:debarrioapp/Wideget_CalenderInfo_Screen/bottomBar.dart';

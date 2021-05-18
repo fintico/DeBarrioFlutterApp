@@ -19,18 +19,19 @@ class DishProvider extends ChangeNotifier {
     return _dishModel;
   }
 
+  set dish(DishModel dish) {
+    _dishModel = dish;
+    isLoading = false;
+    notifyListeners();
+  }
+
   void setList(List<DishModel> list) {
     _list = list;
+    isLoading = true;
     notifyListeners();
   }
 
   List<DishModel> get list {
     return _list;
-  }
-
-  set dish(DishModel dish) {
-    _dishModel = dish;
-    isLoading = false;
-    notifyListeners();
   }
 }

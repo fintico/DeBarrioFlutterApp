@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/widgets/dish/location_button.dart';
 import 'package:flutter/material.dart';
-import 'package:debarrioapp/Services/location_service.dart';
+import 'package:debarrioapp/services/location_service.dart';
 import 'package:debarrioapp/models/location_model.dart';
 import 'package:debarrioapp/widgets/components/icons/search.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_five.dart';
@@ -29,7 +29,7 @@ class DishLocation extends StatelessWidget {
       ),
       preferredSize: Size.fromHeight(56.0),
     );
-    //getLocation(context, locationProvider);
+    getLocation(context, locationProvider);
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
@@ -79,7 +79,14 @@ class DishLocation extends StatelessWidget {
                 thickness: 1.0,
               ),
               Expanded(
-                child: FutureBuilder<Response>(
+                child: ListView.builder(
+                  itemCount: locationProvider.list.length,
+                  itemBuilder: (context, index) => LocationButton(
+                    index: index,
+                  ),
+                ),
+
+                /* FutureBuilder<Response>(
                   future:
                       Provider.of<LocationService>(context).getLocationList(),
                   builder: (context, snapshot) {
@@ -100,7 +107,7 @@ class DishLocation extends StatelessWidget {
                       );
                     }
                   },
-                ),
+                ), */
 
                 /* ListView.builder(
                     itemCount: locationProvider.list.length,
@@ -145,7 +152,7 @@ class DishLocation extends StatelessWidget {
     );
   }
 
-  Future setLocationProvider(AsyncSnapshot<Response> snapshot,
+  /* Future setLocationProvider(AsyncSnapshot<Response> snapshot,
       LocationProvider locationProvider) async {
     await Future.delayed(Duration(seconds: 0));
     try {
@@ -168,20 +175,20 @@ class DishLocation extends StatelessWidget {
     } catch (e) {
       print(e);
     }
-  }
+  } */
 
   Future getLocation(
       BuildContext context, LocationProvider locationProvider) async {
     try {
-      print('hola');
+      //print('hola');
       Response<dynamic> res =
           await Provider.of<LocationService>(context).getLocationList();
-      print(res.bodyString);
+      //print(res.bodyString);
       //List<dynamic> jsonBody = json.decode(res.bodyString);
       List<LocationModel> locationModel = (json.decode(res.bodyString) as List)
           .map((e) => LocationModel.fromJson(e))
           .toList();
-      inspect(locationModel);
+      //inspect(locationModel);
       locationProvider.location(locationModel);
       //inspect(dishModel);
       //inspect(dishModel[0]);

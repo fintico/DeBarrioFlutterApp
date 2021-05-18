@@ -1,6 +1,6 @@
 import 'package:debarrioapp/ModelClass/UserModel.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
-import 'package:debarrioapp/Services/FirebaseStorageService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;

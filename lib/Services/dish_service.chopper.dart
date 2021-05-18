@@ -61,4 +61,10 @@ class _$DishService extends DishService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  Future<Response> getDishById(int dishId) {
+    final $url = '/dish/detail/${dishId}';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

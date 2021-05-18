@@ -9,7 +9,7 @@ import 'package:debarrioapp/Screens/calendar_splash.dart';
 import 'package:debarrioapp/Screens/cart.dart';
 import 'package:debarrioapp/Screens/nav_drawer.dart';
 import 'package:debarrioapp/Screens/search_icon_screen.dart';
-import 'package:debarrioapp/Services/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/WdgetsMapScreen/FoodList.dart';
 import 'package:debarrioapp/icons/my_flutter_app_icons.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
