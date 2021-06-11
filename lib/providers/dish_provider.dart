@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 class DishProvider extends ChangeNotifier {
   bool isLoading = true;
+  bool isActive = false;
 
   DishModel _dishModel = new DishModel();
   List<DishModel> _list = [];
@@ -33,5 +34,10 @@ class DishProvider extends ChangeNotifier {
 
   List<DishModel> get list {
     return _list;
+  }
+
+  void onActive(bool isActive) {
+    isActive = isActive;
+    notifyListeners();
   }
 }

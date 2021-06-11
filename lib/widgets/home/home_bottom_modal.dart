@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
@@ -12,18 +13,34 @@ import 'package:flutter/material.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
 
 import 'home_style.dart';
 import 'home_restaurant_card.dart';
 
-class BottomModal extends StatelessWidget {
+class BottomModal extends StatefulWidget {
+  @override
+  _BottomModalState createState() => _BottomModalState();
+}
+
+class _BottomModalState extends State<BottomModal>
+/* with AutomaticKeepAliveClientMixin */ {
+  /* var dishes;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dishes = Provider.of<DishService>(context).getDishList();
+  } */
+
   @override
   Widget build(BuildContext context) {
+    //super.build(context);
     //_getDish(context);
     return DraggableScrollableSheet(
       initialChildSize: 0.4,
       minChildSize: 0.2,
-      maxChildSize: 0.7,
+      maxChildSize: 0.98,
       builder: (context, scrollController) {
         return Container(
           child: Column(
@@ -35,9 +52,11 @@ class BottomModal extends StatelessWidget {
                 controller: scrollController,
                 child: searchDish(),
               ),
-              Expanded(
+              //_buildBody(context, scrollController),
+              Expanded(child: _buildBody(context))
+              /* Expanded(
                 child: ListaItems(scrollController),
-              )
+              ) */
             ],
           ),
           decoration: BoxDecoration(
@@ -71,25 +90,38 @@ class BottomModal extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.only(
                       right: 16.0, left: 16.0, top: 20.0, bottom: 24.0),
-                  child: TextFormField(
-                    //controller: _textLocation,
-                    readOnly: true,
-                    onFieldSubmitted: (value) {},
-                    style: textFieldStyle,
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        icon: SearchIcon(
-                          height: 24.0,
-                          width: 24.0,
-                          color: DBColors.GRAY_2,
+                  child: InkWell(
+                    onTap: () {
+                      Routes.sailor.navigate(
+                        Routes.SEARCH_SCREEN,
+                        navigationType: NavigationType.pushReplace,
+                      );
+                    },
+                    child: TextFormField(
+                      //controller: _textLocation,
+                      readOnly: true,
+                      onFieldSubmitted: (value) {},
+                      style: textFieldStyle,
+                      decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: SearchIcon(
+                            height: 24.0,
+                            width: 24.0,
+                            color: DBColors.GRAY_2,
+                          ),
+                          onPressed: () => {
+                            Routes.sailor.navigate(
+                              Routes.SEARCH_SCREEN,
+                              navigationType: NavigationType.pushReplace,
+                            )
+                          },
                         ),
-                        onPressed: () => {print('search')},
+                        border: OutlineInputBorder(),
+                        hintText: "¿Qué se te antoja hoy?",
+                        hintStyle: textHintStyle,
+                        contentPadding: EdgeInsets.only(
+                            left: 12.0, top: 14.0, bottom: 14.0),
                       ),
-                      border: OutlineInputBorder(),
-                      hintText: "¿Qué se te antoja hoy?",
-                      hintStyle: textHintStyle,
-                      contentPadding:
-                          EdgeInsets.only(left: 12.0, top: 14.0, bottom: 14.0),
                     ),
                   ),
                 ),
@@ -116,31 +148,49 @@ class BottomModal extends StatelessWidget {
     );
   }
 
-  /* FutureBuilder<Response> _getDish(BuildContext context) {
-    return FutureBuilder<Response>(
+  FutureBuilder<Response> _buildBody(BuildContext context) {
+    return FutureBuilder(
       future: Provider.of<DishService>(context).getDishList(),
+      //future: dishes,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          print('date incoming');
-          inspect(snapshot);
-          return Text('aea');
+          if (snapshot.hasError) {
+            print(snapshot.error.toString());
+          }
+          final List<DishModel> dishes =
+              (json.decode(snapshot.data.bodyString) as List)
+                  .map((e) => DishModel.fromJson(e))
+                  .toList();
+          return _buildCard(context, dishes);
         } else {
-          print('nel');
           return Center(
             child: CircularProgressIndicator(),
           );
         }
       },
     );
-  } */
+  }
 
-  /* Future dishes() async {
-    try {
-      Response<dynamic> res =
-          await Provider.of(context).
-    } catch (e) {}
-  } */
+  Widget _buildCard(BuildContext context, List<DishModel> dishes) {
+    print(dishes.length);
+    return Container(
+      color: DBColors.WHITE,
+      //width: double.infinity,
 
+      child: ListView.builder(
+        itemCount: dishes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return RestaurantCard(
+            dish: dishes[index],
+          );
+        },
+      ),
+    );
+  }
+
+  /* @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true; */
 }
 
 class ListaItems extends StatelessWidget {
@@ -157,7 +207,7 @@ class ListaItems extends StatelessWidget {
     return ListView.builder(
       controller: this.scrollController,
       itemCount: dishProvider.list.length,
-      itemBuilder: (context, index) => RestaurantCard(index: index),
+      //itemBuilder: (context, index) => RestaurantCard(index: index),
     );
     //final dishBloc = Provider.of<DishModel>(context);
     /* return FutureBuilder<Response>(

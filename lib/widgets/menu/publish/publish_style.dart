@@ -106,6 +106,21 @@ TextStyle bottonDetailModalStyle = DBStyle.getStyle(
     0.0,
     DBStyle.FONT_WEIGHT_SEMI_BOLD);
 
+TextStyle bottonDetailDeleteTitleModalStyle = DBStyle.getStyle(
+  DBStyle.BLACK,
+  DBStyle.FONT_SYZE_H3,
+  DBStyle.FONT_HEIGHT_H3,
+  0.0,
+  DBStyle.FONT_WEIGHT_SEMI_BOLD,
+);
+TextStyle bottonDetailDeleteSubTitleModalStyle = DBStyle.getStyle(
+  DBStyle.GRAY_2,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0.0,
+  DBStyle.FONT_WEIGHT_REGULAR,
+);
+
 //dish statistics card
 TextStyle titleCardStatStyle = DBStyle.getStyle(
   DBStyle.BLACK,
@@ -160,4 +175,24 @@ TextStyle bNavbarDescriptionStyle = DBStyle.getStyle(
   DBStyle.FONT_HEIGHT_S,
   0.0,
   DBStyle.FONT_WEIGHT_REGULAR,
+);
+
+//detail delete modal botton
+
+//republish image
+TextStyle addPhotoStyle = DBStyle.getStyle(
+  DBStyle.GREEN,
+  DBStyle.FONT_SYZE_S,
+  DBStyle.FONT_HEIGHT_S,
+  0.0,
+  DBStyle.FONT_WEIGHT_BOLD,
+);
+
+//republish additional
+TextStyle addAdditionalStyle = DBStyle.getStyle(
+  DBStyle.GREEN,
+  DBStyle.FONT_SYZE_S,
+  DBStyle.FONT_HEIGHT_S,
+  0.8,
+  DBStyle.FONT_WEIGHT_BOLD,
 );

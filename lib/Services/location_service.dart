@@ -14,7 +14,7 @@ abstract class LocationService extends ChopperService {
 
   @Post(path: '/create/')
   Future<Response> postUserLocation(
-    @Field('address_name') String addressName,
+    @Field('address_name') String address,
     @Field('address_description') String addressDescription,
     @Field('is_active') bool isActive,
     @Field('longitude') double longitude,

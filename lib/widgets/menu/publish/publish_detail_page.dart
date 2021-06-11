@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/models/dish.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
+import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
+import 'package:debarrioapp/widgets/components/generics/button_white.dart';
 import 'package:debarrioapp/widgets/components/icons/angle_right.dart';
 import 'package:debarrioapp/widgets/components/icons/edit.dart';
 import 'package:debarrioapp/widgets/components/icons/trash.dart';
@@ -24,93 +27,131 @@ import 'publish_style.dart';
 
 class PublishDetail extends StatelessWidget {
   final int dishId;
-  const PublishDetail({Key key, this.dishId}) : super(key: key);
+  final bool isActive;
+  final DishModel dishModel;
+  const PublishDetail({Key key, this.dishId, this.isActive, this.dishModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dishProvider = Provider.of<DishProvider>(context);
-    getDishById(context, dishProvider);
+    //  final dishProvider = Provider.of<DishProvider>(context);
+    //getDishById(context, dishProvider);
     final appBar = PreferredSize(
         child: AppBarOptionEight(
             leftIconAction: () => Routes.sailor.navigate(
                 Routes.DISH_LIST_SCREEN,
                 navigationType: NavigationType.push),
             headerTitle: 'Detalle de la publicación',
-            rightIconAction: () => {detailsBottomSheet(context)}),
+            rightIconAction: () => {detailsBottomSheet(context, dishModel)}),
         preferredSize: Size.fromHeight(56.0));
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
         backgroundColor: DBColors.GRAY_12,
-        body: Container(
-          color: DBColors.WHITE,
-          width: screenWidth(context),
-          //height: screenHeight(context, dividedBy: 1.63),
-          height: dishProvider.dish.additional != null
-              ? screenHeight(context, dividedBy: 1.63)
-              : screenHeight(context, dividedBy: 1),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 26.0, left: 28.0, right: 28.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "PUBLICACIÓN #0${dishProvider.dish.id}",
-                          style: publishtitleDetailStyle,
-                        ),
-                        //stateOnBox(),
-                      ],
+        body: _buildBody(context),
+        bottomNavigationBar: _bottomNavBar(dishModel),
+      ),
+    );
+  }
+
+  FutureBuilder<Response> _buildBody(BuildContext context) {
+    return FutureBuilder(
+      future:
+          Provider.of<DishService>(context, listen: false).getDishById(dishId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+                textAlign: TextAlign.center,
+                textScaleFactor: 1.3,
+              ),
+            );
+          }
+          DishModel dish =
+              DishModel.fromJson(json.decode(snapshot.data.bodyString));
+          //dishProvider.onActive(true);
+          //isActive = dish.isActive;
+          return _buildDish(context, dish);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildDish(BuildContext context, DishModel dish) {
+    return Container(
+      color: DBColors.WHITE,
+      width: screenWidth(context),
+      //height: screenHeight(context, dividedBy: 1.63),
+      /* height: dish.additional != null
+          ? screenHeight(context, dividedBy: 1.63)
+          : screenHeight(context, dividedBy: 1), */
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 26.0, left: 28.0, right: 28.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "PUBLICACIÓN #0${dish.id}",
+                      style: publishtitleDetailStyle,
                     ),
-                  ),
+                    getDishState(dish) && dish.isActive
+                        ? stateOnBox()
+                        : stateOffBox(),
+                  ],
                 ),
-                _dishImage(context, dishProvider),
-                DishStatisticsCard(),
-                detailsDish(
-                  title: 'TÍTULO DE LA VENTA',
-                  description: dishProvider.dish.dishName,
-                  descriptionStyle: descriptionDishStyle,
-                ),
-                detailsDish(
-                  title: 'CATEGORÍA',
-                  description: dishProvider.dish.dishCategory.toString(),
-                  descriptionStyle: descriptionStyle,
-                ),
-                detailsDish(
-                  title: 'STOCK DE PORCIONES',
-                  description: dishProvider.dish.stock.toString(),
-                  descriptionStyle: descriptionStyle,
-                ),
-                gridDetailDish(
-                  titleLeft: 'FECHA DE ENTREGA',
-                  descriptionLeft: dishProvider.dish.deliveryDate,
-                  titleRight: 'HORARIO',
-                  descriptionRight:
-                      '${dishProvider.dish.deliveryTimeFrom} - ${dishProvider.dish.deliveryTimeTo}',
-                  descriptionStyle: descriptionStyle,
-                ),
-                gridDetailDish(
-                  titleLeft: 'PRECIO DELIVERY',
-                  descriptionLeft: dishProvider.dish.priceDelivery.toString(),
-                  titleRight: 'PRECIO CON RECOJO',
-                  descriptionRight: dishProvider.dish.pricePickup.toString(),
-                  descriptionStyle: descriptionStyle,
-                ),
-                detailsDish(
-                  title: 'UBICACIÓN ACTUAL',
-                  description: dishProvider.dish.createdAt,
-                  descriptionStyle: descriptionStyle,
-                ),
-              ],
+              ),
             ),
-          ),
+            _dishImage(context, dish),
+            DishStatisticsCard(),
+            detailsDish(
+              title: 'TÍTULO DE LA VENTA',
+              description: dish.dishName,
+              descriptionStyle: descriptionDishStyle,
+            ),
+            detailsDish(
+              title: 'CATEGORÍA',
+              description: dish.dishCategory.dishCategoryDescription,
+              descriptionStyle: descriptionStyle,
+            ),
+            detailsDish(
+              title: 'STOCK DE PORCIONES',
+              description: dish.stock.toString(),
+              descriptionStyle: descriptionStyle,
+            ),
+            gridDetailDish(
+              titleLeft: 'FECHA DE ENTREGA',
+              descriptionLeft: dateTimeDetail(dish),
+              titleRight: 'HORARIO',
+              descriptionRight: timeDetail(dish),
+              descriptionStyle: descriptionStyle,
+            ),
+            gridDetailDish(
+              titleLeft: 'PRECIO DELIVERY',
+              descriptionLeft: 'S/ ${dish.priceDelivery.toString()}',
+              titleRight: 'PRECIO CON RECOJO',
+              descriptionRight: 'S/ ${dish.pricePickup.toString()}',
+              descriptionStyle: descriptionStyle,
+            ),
+            detailsDish(
+              title: 'UBICACIÓN ACTUAL',
+              description: dish.address.address,
+              descriptionStyle: descriptionStyle,
+            ),
+            _additionalDetail(context, dish),
+          ],
         ),
-        bottomNavigationBar: _botomNavBar(context, dishProvider),
       ),
     );
   }
@@ -134,15 +175,15 @@ class PublishDetail extends StatelessWidget {
     }
   }
 
-  Widget _dishImage(context, DishProvider dishProvider) {
+  Widget _dishImage(context, DishModel dish) {
     return Container(
       width: screenWidth(context),
       height: screenHeight(context, dividedBy: 4.0),
       child: Container(
         padding: const EdgeInsets.only(left: 0.0, top: 18.0, bottom: 24.0),
-        child: cZeroStr(dishProvider.dish.image)
+        child: cZeroStr(dish.image)
             ? Image(
-                image: NetworkImage(dishProvider.dish.image),
+                image: NetworkImage(dish.image),
                 //height: 56.0,
                 //width: 56.0,
                 fit: BoxFit.cover,
@@ -335,12 +376,11 @@ class PublishDetail extends StatelessWidget {
     );
   }
 
-  Widget _botomNavBar(context, DishProvider dishProvider) {
+  Widget _additionalDetail(context, DishModel dish) {
     return Container(
       //height: 200.0,
-      height: dishProvider.dish.additional != null
-          ? screenHeight(context, dividedBy: 3.72)
-          : 1,
+      height:
+          dish.additional != null ? screenHeight(context, dividedBy: 3.72) : 1,
       child: Column(
         children: [
           Container(
@@ -348,7 +388,7 @@ class PublishDetail extends StatelessWidget {
             color: DBColors.WHITE,
             child: Column(
               children: [
-                dishProvider.dish.additional != null
+                dish.additional != null
                     ? Container(
                         child: Column(
                           //mainAxisAlignment: MainAxisAlignment.start,
@@ -388,9 +428,7 @@ class PublishDetail extends StatelessWidget {
                                           top: 20.0,
                                         ),
                                         child: Text(
-                                          dishProvider.dish.additional != null
-                                              ? 'additionalDish.additionalDescription'
-                                              : "",
+                                          dish.additional.additionalDescription,
                                           style: bNavbarSubTitleStyle,
                                         ),
                                       ),
@@ -400,9 +438,7 @@ class PublishDetail extends StatelessWidget {
                                           bottom: 20.0,
                                         ),
                                         child: Text(
-                                          dishProvider.dish.additional != null
-                                              ? 'S/ "S"{additionalDish.price.toString()}'
-                                              : "",
+                                          'S/ ${dish.additional.price.toString()}',
                                           style: bNavbarDescriptionStyle,
                                         ),
                                       ),
@@ -446,7 +482,87 @@ class PublishDetail extends StatelessWidget {
     );
   }
 
-  void detailsBottomSheet(BuildContext context) {
+  Widget stateOnBox() {
+    return Flexible(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+        width: 62.0,
+        height: 20.0,
+        decoration: BoxDecoration(
+          color: DBColors.GREEN_LIGHT,
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 6.0,
+              width: 6.0,
+              decoration: BoxDecoration(
+                color: DBColors.GREEN,
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+            ),
+            Text(
+              'ACTIVA',
+              style: stateOnStyle,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget stateOffBox() {
+    return Flexible(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+        width: 86.0,
+        height: 20.0,
+        decoration: BoxDecoration(
+          color: DBColors.GRAY_4,
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 6.0,
+              width: 6.0,
+              decoration: BoxDecoration(
+                color: DBColors.GRAY_2,
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+            ),
+            Text(
+              'FINALIZADA',
+              style: stateOFFStyle,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _bottomNavBar(DishModel dishModel) {
+    return getDishState(dishModel) && dishModel.isActive
+        ? SizedBox(height: 1.0)
+        : Container(
+            color: DBColors.WHITE,
+            padding: const EdgeInsets.only(
+                top: 20.0, left: 28.0, right: 28.0, bottom: 24.0),
+            child: GenericButtonOrange(
+                text: 'VOLVER A PUBLICAR',
+                disable: false,
+                action: () {
+                  Routes.sailor.navigate(Routes.DISH_REPUBLISH_SCREEN,
+                      navigationType: NavigationType.push,
+                      params: {'dishModel': dishModel});
+                }),
+          );
+  }
+
+  void detailsBottomSheet(BuildContext context, DishModel dishModel) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -457,27 +573,35 @@ class PublishDetail extends StatelessWidget {
         ),
         builder: (context) {
           return Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+            //height: MediaQuery.of(context).size.height * 0.25,
+            height: getDishState(dishModel) && dishModel.isActive
+                ? screenHeight(context, dividedBy: 4.0)
+                : screenHeight(context, dividedBy: 7.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 34.0, top: 44.0, bottom: 20.0),
-                      child: EditIcon(
-                          height: 20.0, width: 20.0, color: DBColors.GRAY_2),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 14.0, top: 44.0, bottom: 20.0),
-                      child: Text(
-                        'Editar publicación',
-                        style: bottonDetailModalStyle,
+                InkWell(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 34.0, top: 44.0, bottom: 20.0),
+                        child: EditIcon(
+                            height: 20.0, width: 20.0, color: DBColors.GRAY_2),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 14.0, top: 44.0, bottom: 20.0),
+                        child: Text(
+                          'Editar publicación',
+                          style: bottonDetailModalStyle,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Divider(
                   color: DBColors.GRAY_12,
@@ -485,24 +609,92 @@ class PublishDetail extends StatelessWidget {
                   indent: 28.0,
                   endIndent: 28.0,
                 ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 34.0, top: 20.0, bottom: 20.0),
-                      child: TrashIcon(
-                          height: 20.0, width: 20.0, color: DBColors.GRAY_2),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 14.0, top: 20.0, bottom: 20.0),
-                      child: Text(
-                        'Eliminar publicación',
-                        style: bottonDetailModalStyle,
-                      ),
-                    ),
-                  ],
+                getDishState(dishModel) && dishModel.isActive
+                    ? InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          deleteBottomSheet(context);
+                        },
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 34.0, top: 20.0, bottom: 20.0),
+                              child: TrashIcon(
+                                  height: 20.0,
+                                  width: 20.0,
+                                  color: DBColors.GRAY_2),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 14.0, top: 20.0, bottom: 20.0),
+                              child: Text(
+                                'Eliminar publicación',
+                                style: bottonDetailModalStyle,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(
+                        height: 1.0,
+                      )
+              ],
+            ),
+          );
+        });
+  }
+
+  void deleteBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            topRight: Radius.circular(8.0),
+          ),
+        ),
+        builder: (context) {
+          return Container(
+            height: screenHeight(context, dividedBy: 2.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 32.0, left: 28.0, right: 28.0),
+                  child: Text(
+                    '¿Estás seguro de eliminar esta \n publicación?',
+                    style: bottonDetailDeleteTitleModalStyle,
+                  ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0, left: 28.0),
+                  child: Text(
+                    'No podrás revertir esta acción',
+                    style: bottonDetailDeleteSubTitleModalStyle,
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 30.0, left: 28.0, right: 28.0),
+                  child: GenericButtonOrange(
+                      text: 'SÍ, ELIMINAR',
+                      disable: false,
+                      action: () {
+                        Routes.sailor.navigate(
+                          Routes.SPLASH_LOADING_DISH_DELETE_SCREEN,
+                          navigationType: NavigationType.pushReplace,
+                          params: {'id': dishId},
+                        );
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 16.0, left: 28.0, right: 28.0, bottom: 24.0),
+                  child: GenericButtonWhite(
+                      text: 'CANCELAR', disable: false, action: () {}),
+                )
               ],
             ),
           );

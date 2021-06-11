@@ -85,6 +85,7 @@ class _DishSplashState extends State<DishSplash> {
         27,
         dish.dishCategory,
         dish.dishAdditional,
+        dish.dishAddress,
       );
       print(res.bodyString);
       Routes.sailor.navigate(

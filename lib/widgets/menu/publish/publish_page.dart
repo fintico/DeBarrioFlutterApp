@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/dishModel.dart';
@@ -26,31 +27,66 @@ class PublishPage extends StatelessWidget {
                     ]),
             headerTitle: 'Mis publicaciones'),
         preferredSize: Size.fromHeight(56.0));
-    final dishProvider = Provider.of<DishProvider>(context);
-    getDish(context, dishProvider);
+    //final dishProvider = Provider.of<DishProvider>(context);
+    //getDish(context, dishList);
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
-        body: Container(
-          child: ListView.builder(
-            itemCount: dishProvider.list.length,
-            itemBuilder: (context, index) => PublishCard(index: index),
-          ),
-        ),
+        body: _buildBody(context),
       ),
     );
   }
 
-  Future getDish(BuildContext context, DishProvider dishProvider) async {
+  FutureBuilder<Response> _buildBody(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of<DishService>(context).getDishList(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          /* if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+                textAlign: TextAlign.center,
+                textScaleFactor: 1.3,
+              ),
+            );
+          } */
+          final List<DishModel> dishes =
+              (json.decode(snapshot.data.bodyString) as List)
+                  .map((e) => DishModel.fromJson(e))
+                  .toList();
+          return _buildDishes(context, dishes);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  ListView _buildDishes(BuildContext context, List<DishModel> dishes) {
+    return ListView.builder(
+      itemCount: dishes.length,
+      itemBuilder: (BuildContext context, int index) {
+        return PublishCard(
+          index: index,
+          dish: dishes[index],
+        );
+      },
+    );
+  }
+
+  Future getDish(BuildContext context, dishList) async {
     try {
       Response<dynamic> res =
           await Provider.of<DishService>(context, listen: false).getDishList();
       //List<dynamic> jsonBody = json.decode(res.bodyString);
-      List<DishModel> dishModel = (json.decode(res.bodyString) as List)
+      dishList = (json.decode(res.bodyString) as List)
           .map((e) => DishModel.fromJson(e))
           .toList();
-
-      dishProvider.setList(dishModel);
+      inspect(dishList);
+      //dishProvider.setList(dishModel);
     } catch (e) {
       print(e);
     }

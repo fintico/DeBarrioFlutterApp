@@ -14,15 +14,11 @@ class _$LocationService extends LocationService {
 
   final definitionType = LocationService;
 
-  Future<Response> postUserLocation(
-      String addressName,
-      String addressDescription,
-      bool isActive,
-      double longitude,
-      double latitude) {
+  Future<Response> postUserLocation(String address, String addressDescription,
+      bool isActive, double longitude, double latitude) {
     final $url = '/location/create/';
     final $body = {
-      'address_name': addressName,
+      'address_name': address,
       'address_description': addressDescription,
       'is_active': isActive,
       'longitude': longitude,

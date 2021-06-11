@@ -25,6 +25,7 @@ abstract class DishService extends ChopperService {
     @Field('seller') int sellerId,
     @Field('dish_category') int categoryId,
     @Field('additional') int additionalId,
+    @Field('address') int addressId,
   );
 
   @Post(path: '/additional/create/')
@@ -34,8 +35,34 @@ abstract class DishService extends ChopperService {
     @Field('is_free') bool isFree,
   );
 
+  @Patch(path: '/delete/state/{id}')
+  Future<Response> deleteDish(
+      @Path("id") int dishId, @Field('is_active') bool isActive);
+
+  @Put(path: '/update/{id}')
+  Future<Response> updateDish(
+    @Path("id") int dishId,
+    @Field('dish_name') String dishName,
+    @Field('image') String urlImage,
+    @Field('stock') int stock,
+    @Field('delivery_date') String deliveryDate,
+    @Field('delivery_time_from') String deliveryFromTime,
+    @Field('delivery_time_to') String deliveryToTime,
+    @Field('price_delivery') double deliveryPrice,
+    @Field('price_pickup') double pickUpPrice,
+    @Field('is_active') bool isActive,
+    @Field('is_deleted') bool isDeleted,
+    @Field('seller') int sellerId,
+    @Field('dish_category') int categoryId,
+    @Field('additional') int additionalId,
+    @Field('address') int addressId,
+  );
+
   @Get(path: '/list/')
   Future<Response> getDishList();
+
+  @Get(path: '/list/{dish_name}/')
+  Future<Response> getDishByName(@Path("dish_name") String dishName);
 
   @Get(path: '/detail/{id}')
   Future<Response> getDishById(@Path("id") int dishId);

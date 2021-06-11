@@ -124,14 +124,17 @@ class MenuPage extends StatelessWidget {
   Widget _myBilling() {
     return ListTitleButton(
       action: () {
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PayOptButton(
-              fromOrder: false,
-            ),
-          ),
-        ); */
+        Routes.sailor.navigate(
+          Routes.PAYMENT_METHOD_LIST_SCREEN,
+          navigationType: NavigationType.pushReplace,
+          transitions: [
+            SailorTransition.fade_in,
+            SailorTransition.slide_from_right
+          ],
+          params: {
+            'isCreated': false,
+          },
+        );
       },
       title: 'Métodos de pago',
       icon: CreditCardIcon(
@@ -164,14 +167,14 @@ class MenuPage extends StatelessWidget {
   Widget _mySales() {
     return ListTitleButton(
       action: () {
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => Misventas(
-              isCurrentOrders: false,
-            ),
-          ),
-        ); */
+        Routes.sailor.navigate(
+          Routes.SALE_LIST_SCREEN,
+          navigationType: NavigationType.pushReplace,
+          transitions: [
+            SailorTransition.fade_in,
+            SailorTransition.slide_from_right
+          ],
+        );
       },
       title: 'Mis ventas',
       icon: WalletIcon(

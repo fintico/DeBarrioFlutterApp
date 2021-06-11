@@ -56,11 +56,17 @@ class _ListTitleButtonState extends State<ListTitleButton> {
                   Row(
                     children: [
                       Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.zero,
-                            color: Colors.transparent,
-                          ),
-                          child: widget.icon),
+                        height: 44.0,
+                        width: 44.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.zero,
+                          //color: Colors.green,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: widget.icon,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: Text(

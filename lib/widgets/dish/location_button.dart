@@ -1,4 +1,11 @@
+import 'dart:developer';
+
+import 'package:debarrioapp/models/address.dart';
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/models/seller_address.dart';
 import 'package:debarrioapp/providers/location_provider.dart';
+import 'package:debarrioapp/routers/router.dart';
+import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/widgets/components/icons/pointer.dart';
 import 'package:debarrioapp/widgets/components/icons/radio_active.dart';
@@ -8,15 +15,29 @@ import 'package:flutter/material.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
 
 class LocationButton extends StatelessWidget {
   final int index;
-  const LocationButton({Key key, this.index}) : super(key: key);
+  final DishModel dishModel;
+  final SellerAddress sellerAddress;
+  const LocationButton(
+      {Key key, this.index, this.sellerAddress, this.dishModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final locationProvider = Provider.of<LocationProvider>(context);
+    /* final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false); */
     return InkWell(
+      onTap: () async {
+        inspect(sellerAddress.address);
+        inspect(dishModel);
+        await setAddres(context);
+        Routes.sailor.navigate(Routes.DISH_REPUBLISH_SCREEN,
+            navigationType: NavigationType.pushReplace,
+            params: {'dishModel': dishModel, 'address': sellerAddress.address});
+      },
       child: Container(
         width: double.infinity,
         //height: 64.0,
@@ -54,7 +75,7 @@ class LocationButton extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: 14.0, top: 20.0),
                             child: Text(
-                              locationProvider.list[index].addressName,
+                              sellerAddress.address.address,
                               textAlign: TextAlign.left,
                               style: DBStyles.getStyle(
                                 DBStyles.BLACK,
@@ -70,8 +91,7 @@ class LocationButton extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: 14.0, bottom: 20.0),
                             child: Text(
-                              locationProvider.list[index].addressDescription ??
-                                  '-',
+                              sellerAddress.address.addressDescription ?? '-',
                               textAlign: TextAlign.left,
                               style: DBStyles.getStyle(
                                 DBStyles.GRAY_2,
@@ -87,10 +107,11 @@ class LocationButton extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(
                         left: 16.0, top: 34.0, right: 34.0, bottom: 34.0),
-                    child: RadioActiveIcon(
+                    child: iconState(),
+                    /* child: RadioActiveIcon(
                       height: 20.0,
                       width: 20.0,
-                    ),
+                    ), */
                   )
                 ],
               ),
@@ -106,12 +127,32 @@ class LocationButton extends StatelessWidget {
       ),
     );
   }
-  /* Widget iconState() {
-    return state
+
+  Widget iconState() {
+    return sellerAddress.isActive
         ? RadioActiveIcon(
             height: 20.0,
             width: 20.0,
           )
-        : RadioInactiveIcon(height: 20.0, width: 20.0);
-  } */
+        : RadioInactiveIcon(
+            height: 20.0,
+            width: 20.0,
+          );
+  }
+
+  Future setAddres(BuildContext context) async {
+    if (sellerAddress.id == 1) {
+      final res = await Provider.of<SellerService>(context, listen: false)
+          .updateStateBySeller(1, true);
+      final restwo = await Provider.of<SellerService>(context, listen: false)
+          .updateStateBySeller(2, false);
+    } else {
+      final res = await Provider.of<SellerService>(context, listen: false)
+          .updateStateBySeller(2, true);
+      final restwo = await Provider.of<SellerService>(context, listen: false)
+          .updateStateBySeller(1, false);
+    }
+
+    //print(res.bodyString);
+  }
 }

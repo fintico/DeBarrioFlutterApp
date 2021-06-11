@@ -30,12 +30,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   GoogleMapController myMapController;
   static const LatLng _mainLocation = const LatLng(-12.0630149, -77.0296179);
+  CameraPosition _initialLocation;
   double latitude = userAppData.latitude;
   double longitude = userAppData.longitude;
 
   @override
   void initState() {
     super.initState();
+    _initialLocation =
+        CameraPosition(target: LatLng(latitude, longitude), zoom: 16.0);
     print('Home Page');
     print(latitude);
     print(longitude);
@@ -106,14 +109,16 @@ class _HomePageState extends State<HomePage> {
       height: screenHeight(context, dividedBy: 1),
       child: GoogleMap(
         initialCameraPosition:
-            CameraPosition(target: _mainLocation, zoom: 10.0),
+            //CameraPosition(target: _mainLocation, zoom: 10.0),
+            _initialLocation,
         myLocationEnabled: true,
         zoomControlsEnabled: false,
         myLocationButtonEnabled: false,
         mapToolbarEnabled: false,
+        buildingsEnabled: true,
+        mapType: MapType.terrain,
         //markers: _markers,
         //onTap: setCurrentMarkerFromCoordinates,
-        mapType: MapType.normal,
         onMapCreated: (controller) {
           setState(() {
             myMapController = controller;

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/icons/angle_right.dart';
@@ -15,11 +16,12 @@ import 'publish_style.dart';
 
 class PublishCard extends StatelessWidget {
   final int index;
-  const PublishCard({Key key, this.index}) : super(key: key);
+  final DishModel dish;
+  const PublishCard({Key key, this.index, this.dish}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dishProvider = Provider.of<DishProvider>(context);
+    //final dishProvider = Provider.of<DishProvider>(context);
     /* Random random = new Random();
     int randomNumber;
     randomNumber = random.nextInt(900000); */
@@ -28,7 +30,13 @@ class PublishCard extends StatelessWidget {
         InkWell(
           onTap: () => {
             Routes.sailor.navigate(Routes.DISH_PUBLISH_DETAIL,
-                params: {'id': dishProvider.list[index].id}),
+                //params: {'id': dishProvider.list[index].id}),
+                navigationType: NavigationType.pushReplace,
+                params: {
+                  'id': dish.id,
+                  'isActive': dish.isActive,
+                  'dishModel': dish
+                }),
             //print('${dishProvider.list[index].id}')
           },
           child: Container(
@@ -44,10 +52,12 @@ class PublishCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "PUBLICACIÓN #0${dishProvider.list[index].id}",
+                            //"PUBLICACIÓN #0${dishProvider.list[index].id}",
+                            "PUBLICACIÓN #0${dish.id}",
                             style: publishCardtitleStyle,
                           ),
-                          getDishState(dishProvider.list[index])
+                          //getDishState(dishProvider.list[index])
+                          getDishState(dish) && dish.isActive
                               ? stateOnBox()
                               : stateOffBox(),
                         ],
@@ -59,42 +69,45 @@ class PublishCard extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.only(
                             left: 28.0, top: 18.0, bottom: 40.0),
-                        child: cZeroStr(dishProvider.list[index].image)
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(4.0),
-                                child: Image(
-                                  image: NetworkImage(
-                                      dishProvider.list[index].image),
-                                  height: 56.0,
-                                  width: 56.0,
-                                  fit: BoxFit.cover,
-                                  loadingBuilder:
-                                      (context, child, loadingProgress) {
-                                    if (loadingProgress == null) return child;
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        value: loadingProgress
-                                                    .expectedTotalBytes !=
-                                                null
-                                            ? loadingProgress
-                                                    .cumulativeBytesLoaded /
-                                                loadingProgress
-                                                    .expectedTotalBytes
-                                            : null,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(4.0),
-                                child: SvgPicture.asset(
-                                  'assets/images/empty.svg',
-                                  height: 46.0,
-                                  width: 46.0,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
+                        child: //cZeroStr(dishProvider.list[index].image)
+                            cZeroStr(dish.image)
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          //dishProvider.list[index].image),
+                                          dish.image),
+                                      height: 56.0,
+                                      width: 56.0,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            value: loadingProgress
+                                                        .expectedTotalBytes !=
+                                                    null
+                                                ? loadingProgress
+                                                        .cumulativeBytesLoaded /
+                                                    loadingProgress
+                                                        .expectedTotalBytes
+                                                : null,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(4.0),
+                                    child: SvgPicture.asset(
+                                      'assets/images/empty.svg',
+                                      height: 46.0,
+                                      width: 46.0,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
                       ),
                       Container(
                         child: Column(
@@ -105,7 +118,8 @@ class PublishCard extends StatelessWidget {
                               padding:
                                   const EdgeInsets.only(left: 16.0, top: 18.0),
                               child: Text(
-                                dishProvider.list[index].dishName,
+                                //dishProvider.list[index].dishName,
+                                dish.dishName,
                                 style: titleCardStyle,
                               ),
                             ),
@@ -116,7 +130,8 @@ class PublishCard extends StatelessWidget {
                                 /*  dishProvider.list[index].deliveryDate +
                                     dishProvider.list[index].deliveryTimeFrom +
                                     dishProvider.list[index].deliveryTimeTo, */
-                                'Entrega ${dateTimeString(dishProvider.list[index])}',
+                                //'Entrega ${dateTimeString(dishProvider.list[index])}',
+                                'Entrega ${dateTimeString(dish)}',
                                 style: subtitleCardStyle,
                               ),
                             ),
@@ -124,8 +139,8 @@ class PublishCard extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   left: 16.0, top: 4.0, bottom: 24.0),
                               child: Text(
-                                'S/ ${dishProvider.list[index].priceDelivery}'
-                                    .toString(),
+                                //'S/ ${dishProvider.list[index].priceDelivery}'
+                                'S/ ${dish.priceDelivery}'.toString(),
                                 style: priceCardStyle,
                               ),
                             ),

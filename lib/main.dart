@@ -1,17 +1,27 @@
 import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/Screens/Registration/OnBoardingScreen.dart';
+import 'package:debarrioapp/providers/sale_provider.dart';
+import 'package:debarrioapp/providers/search_provider.dart';
+import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/services/location_service.dart';
+import 'package:debarrioapp/services/order_service.dart';
+import 'package:debarrioapp/services/payment_service.dart';
 import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/providers/location_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
+import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/widgets/calendar/calendar_bloc.dart';
 import 'package:debarrioapp/widgets/calendar/calendar_page.dart';
 import 'package:debarrioapp/widgets/dish/dish_location_page.dart';
+import 'package:debarrioapp/widgets/menu/menu_page.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_page.dart';
+import 'package:debarrioapp/widgets/menu/sale/sale_details_page.dart';
+import 'package:debarrioapp/widgets/menu/sale/sale_route_delivery_page.dart';
+import 'package:debarrioapp/widgets/search/search_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart' as symbolLocal;
 import 'package:intl/intl.dart';
@@ -24,6 +34,7 @@ import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:provider/provider.dart';
+import 'package:logging/logging.dart';
 
 import 'Screens/Registration/phonenumber.dart';
 import 'Screens/splash_screen.dart';
@@ -35,6 +46,7 @@ int initScreen;
 
 Future<void> main() async {
   Routes.createRoutes();
+  _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   initScreen = preferences.getInt('initScreen');
@@ -58,6 +70,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (BuildContext context) => FoodData()),
           ChangeNotifierProvider(create: (BuildContext context) => OrderList()),
           ChangeNotifierProvider(create: (_) => CalendarBloc()),
+          ChangeNotifierProvider(create: (_) => SaleBloc()),
+          ChangeNotifierProvider(create: (_) => SearchBloc()),
           ChangeNotifierProvider(create: (_) => DishProvider()),
           ChangeNotifierProvider(create: (_) => LocationProvider()),
           Provider(
@@ -70,6 +84,22 @@ class MyApp extends StatelessWidget {
           ),
           Provider(
             create: (_) => DishService.create(),
+            dispose: (_, value) => value.client.dispose(),
+          ),
+          Provider(
+            create: (_) => SellerService.create(),
+            dispose: (_, value) => value.client.dispose(),
+          ),
+          Provider(
+            create: (_) => OrderService.create(),
+            dispose: (_, value) => value.client.dispose(),
+          ),
+          Provider(
+            create: (_) => PaymentService.create(),
+            dispose: (_, value) => value.client.dispose(),
+          ),
+          Provider(
+            create: (_) => CustomerService.create(),
             dispose: (_, value) => value.client.dispose(),
           )
         ],
@@ -93,10 +123,14 @@ class MyApp extends StatelessWidget {
           initialRoute:
               initScreen == 0 || initScreen == null ? 'onBoard' : 'home',
           routes: {
-            //'home': (context) => LocationPage(),
+            'home': (context) => LocationPage(),
             //'home': (context) => CalendarPage(),
             //'home': (context) => DishLocation(),
-            'home': (context) => PublishPage(),
+            //'home': (context) => PublishPage(),
+            //'home': (context) => MenuPage(),
+            //'home': (context) => SaleDetails(),
+            //'home': (context) => RouteDeliveryPage(),
+            //'home': (context) => SearchPage(),
             'onBoard': (context) => IntroScreen(),
           },
           onGenerateRoute: Routes.sailor.generator(),
@@ -105,5 +139,11 @@ class MyApp extends StatelessWidget {
   }
 }
 
+void _setupLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((rec) {
+    print('${rec.level.name}: ${rec.time}: ${rec.message}');
+  });
+}
 // TODO: you need to get user name and picture
 // TODO: user picture and restaurant picture would be the same?

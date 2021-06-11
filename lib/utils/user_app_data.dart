@@ -15,6 +15,7 @@ class UserAppData {
   bool isActive = true;
   double latitude;
   double longitude;
+  String dishName;
 
   //Placemark userCurrentLocation;
   RegistrationArgs registrationArgs =

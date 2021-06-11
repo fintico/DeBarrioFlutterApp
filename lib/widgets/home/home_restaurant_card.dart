@@ -12,8 +12,8 @@ import 'package:provider/provider.dart';
 import 'home_style.dart';
 
 class RestaurantCard extends StatefulWidget {
-  final index;
-  RestaurantCard({Key key, this.index}) : super(key: key);
+  final DishModel dish;
+  const RestaurantCard({Key key, this.dish}) : super(key: key);
 
   @override
   _RestaurantCardState createState() => _RestaurantCardState();
@@ -111,7 +111,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           child: Text(
                             //widget.restaurant.restaurantName,
                             //'Comida Peruana',
-                            dishProvider.list[widget.index].dishName,
+                            widget.dish.dishCategory.dishCategoryDescription,
                             style: subtitleCardStyle,
                           ),
                         ),

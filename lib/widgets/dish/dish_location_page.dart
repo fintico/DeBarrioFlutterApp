@@ -2,6 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/models/address.dart';
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/models/seller_address.dart';
+import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/widgets/dish/location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/services/location_service.dart';
@@ -17,11 +21,12 @@ import 'package:provider/provider.dart';
 import 'dish_style.dart';
 
 class DishLocation extends StatelessWidget {
-  const DishLocation({Key key}) : super(key: key);
+  final DishModel dishModel;
+  const DishLocation({Key key, this.dishModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final locationProvider = Provider.of<LocationProvider>(context);
+/*     final locationProvider = Provider.of<LocationProvider>(context); */
     final appBar = PreferredSize(
       child: AppBarOptionFive(
         leftIconAction: () => Navigator.pop(context),
@@ -29,7 +34,6 @@ class DishLocation extends StatelessWidget {
       ),
       preferredSize: Size.fromHeight(56.0),
     );
-    getLocation(context, locationProvider);
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
@@ -79,45 +83,7 @@ class DishLocation extends StatelessWidget {
                 thickness: 1.0,
               ),
               Expanded(
-                child: ListView.builder(
-                  itemCount: locationProvider.list.length,
-                  itemBuilder: (context, index) => LocationButton(
-                    index: index,
-                  ),
-                ),
-
-                /* FutureBuilder<Response>(
-                  future:
-                      Provider.of<LocationService>(context).getLocationList(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      setLocationProvider(snapshot, locationProvider);
-                      return ListView.builder(
-                          itemCount: locationProvider.list.length,
-                          itemBuilder: (context, index) {
-                            return LocationButton(index: index);
-                            /* return ListTile(
-                        title: Text(locationProvider.list[index].addressName),
-                        //title: Text('aea'),
-                      ); */
-                          });
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ), */
-
-                /* ListView.builder(
-                    itemCount: locationProvider.list.length,
-                    itemBuilder: (context, index) {
-                      return LocationButton(index: index);
-                      /* return ListTile(
-                        title: Text(locationProvider.list[index].addressName),
-                        //title: Text('aea'),
-                      ); */
-                    }), */
+                child: _buildBody(context),
               )
             ],
           ),
@@ -152,37 +118,13 @@ class DishLocation extends StatelessWidget {
     );
   }
 
-  /* Future setLocationProvider(AsyncSnapshot<Response> snapshot,
-      LocationProvider locationProvider) async {
-    await Future.delayed(Duration(seconds: 0));
-    try {
-      if (snapshot.data.bodyBytes != null) {
-        List<LocationModel> locationModel =
-            (json.decode(utf8.decode(snapshot.data.bodyBytes)) as List)
-                .map((e) => LocationModel.fromJson(e))
-                .toList();
-        //inspect(locationModel);
-        locationProvider.location(locationModel);
-      } else {
-        print('no hay data');
-      }
-      /* List<LocationModel> locationModel =
-          (json.decode(utf8.decode(snapshot.data.bodyBytes)) as List)
-              .map((e) => LocationModel.fromJson(e))
-              .toList();
-      //inspect(locationModel);
-      locationProvider.location(locationModel); */
-    } catch (e) {
-      print(e);
-    }
-  } */
-
   Future getLocation(
       BuildContext context, LocationProvider locationProvider) async {
     try {
       //print('hola');
       Response<dynamic> res =
-          await Provider.of<LocationService>(context).getLocationList();
+          await Provider.of<LocationService>(context, listen: false)
+              .getLocationList();
       //print(res.bodyString);
       //List<dynamic> jsonBody = json.decode(res.bodyString);
       List<LocationModel> locationModel = (json.decode(res.bodyString) as List)
@@ -201,5 +143,38 @@ class DishLocation extends StatelessWidget {
     } catch (e) {
       print(e);
     }
+  }
+
+  FutureBuilder<Response> _buildBody(BuildContext context) {
+    return FutureBuilder(
+        future: Provider.of<SellerService>(context).addressbySeller(27),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.hasError) {
+              print(snapshot.error.toString());
+            }
+            final List<SellerAddress> sellerAddress =
+                (json.decode(snapshot.data.bodyString) as List)
+                    .map((e) => SellerAddress.fromJson(e))
+                    .toList();
+            return _buildAddress(context, sellerAddress);
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
+
+  ListView _buildAddress(
+      BuildContext context, List<SellerAddress> sellerAddress) {
+    return ListView.builder(
+      itemCount: sellerAddress.length,
+      itemBuilder: (context, index) => LocationButton(
+        index: index,
+        sellerAddress: sellerAddress[index],
+        dishModel: dishModel,
+      ),
+    );
   }
 }

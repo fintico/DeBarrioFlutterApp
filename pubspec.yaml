@@ -51,7 +51,7 @@ dependencies:
 
   google_maps_flutter: ^1.0.6
 
-  flutter_svg: ^0.21.0-nullsafety.0
+  flutter_svg: ^0.22.0
 
   location: ^3.0.0
 
@@ -104,6 +104,14 @@ dependencies:
   chopper: ^2.4.0
 
   sms_autofill: ^1.2.5
+
+  flutter_slidable: ^0.6.0
+
+  flutter_search_bar: ^2.1.0
+
+  flutter_credit_card:
+    git:
+      url: https://github.com/Dreadds/flutter_credit_card
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

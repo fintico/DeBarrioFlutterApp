@@ -1,5 +1,12 @@
+import 'additional.dart';
+import 'dish_category.dart';
+import 'address.dart';
+
 class DishModel {
   int id;
+  Additional additional;
+  DishCategory dishCategory;
+  Address address;
   String dishName;
   String image;
   int stock;
@@ -13,11 +20,12 @@ class DishModel {
   String createdAt;
   String updatedAt;
   int seller;
-  int dishCategory;
-  int additional;
 
   DishModel({
     this.id,
+    this.additional,
+    this.dishCategory,
+    this.address,
     this.dishName,
     this.image,
     this.stock,
@@ -31,13 +39,21 @@ class DishModel {
     this.createdAt,
     this.updatedAt,
     this.seller,
-    this.dishCategory,
-    this.additional,
   });
 
   factory DishModel.fromJson(Map<String, dynamic> json) {
     return DishModel(
       id: json['id'] as int,
+      additional: json['additional'] == null
+          ? null
+          : Additional.fromJson(json['additional'] as Map<String, dynamic>),
+      dishCategory: json['dish_category'] == null
+          ? null
+          : DishCategory.fromJson(
+              json['dish_category'] as Map<String, dynamic>),
+      address: json['address'] == null
+          ? null
+          : Address.fromJson(json['address'] as Map<String, dynamic>),
       dishName: json['dish_name'] as String,
       image: json['image'] as String,
       stock: json['stock'] as int,
@@ -51,14 +67,15 @@ class DishModel {
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String,
       seller: json['seller'] as int,
-      dishCategory: json['dish_category'] as int,
-      additional: json['additional'] as int,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'additional': additional?.toJson(),
+      'dish_category': dishCategory?.toJson(),
+      'address': address?.toJson(),
       'dish_name': dishName,
       'image': image,
       'stock': stock,
@@ -72,8 +89,6 @@ class DishModel {
       'created_at': createdAt,
       'updated_at': updatedAt,
       'seller': seller,
-      'dish_category': dishCategory,
-      'additional': additional,
     };
   }
 }

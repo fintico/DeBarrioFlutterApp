@@ -363,6 +363,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_credit_card:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: e6d680fc085cc29ebc432dc44b9e0beb9626decd
+      url: "https://github.com/Dreadds/flutter_credit_card"
+    source: git
+    version: "2.0.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -375,13 +384,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.11"
+  flutter_search_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_search_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
+  flutter_slidable:
+    dependency: "direct main"
+    description:
+      name: flutter_slidable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   flutter_svg:
     dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.21.0+1"
+    version: "0.22.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
