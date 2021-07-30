@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/UserModel.dart';
+/* import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Widget_Credit_info_Screen/CreditCard_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -343,3 +343,4 @@ class _CreditInfoState extends State<CreditInfo> {
     );
   }
 }
+ */

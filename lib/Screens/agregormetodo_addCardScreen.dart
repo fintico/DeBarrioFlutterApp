@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/BankCardModel.dart';
+/* import 'package:debarrioapp/ModelClass/BankCardModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/payoptbutton.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
@@ -517,3 +517,4 @@ class _AgregorMetodoState extends State<AgregorMetodo> {
     WidgetsBinding.instance.addPostFrameCallback((_) => Navigator.pop(context));
   }
 }
+ */

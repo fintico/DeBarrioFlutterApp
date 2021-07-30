@@ -31,7 +31,7 @@ class GenericButtonWhite extends StatelessWidget {
         ],
         disable: this.disable,
         action: action,
-        border: true,
+        border: Border.all(color: DBColors.BLACK),
       ),
     );
   }

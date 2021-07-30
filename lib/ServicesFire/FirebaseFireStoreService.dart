@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/* import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:debarrioapp/ModelClass/OrderedDish.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
@@ -152,3 +152,4 @@ class DatabaseService {
     return Firestore.instance.collection('').document().documentID;
   }
 }
+ */

@@ -31,7 +31,8 @@ const FontWeight FONT_WEIGHT_SEMI_BOLD = FontWeight.w600;
 const FontWeight FONT_WEIGHT_REGULAR = FontWeight.w400;
 
 TextStyle getStyle(Color color, double fontSize, double height,
-    double letterSpacing, FontWeight fontWeight) {
+    double letterSpacing, FontWeight fontWeight,
+    [TextDecoration textDecoration]) {
   return TextStyle(
     color: color,
     fontFamily: FONT_FAMILY,
@@ -39,5 +40,6 @@ TextStyle getStyle(Color color, double fontSize, double height,
     letterSpacing: letterSpacing,
     fontWeight: fontWeight,
     height: height,
+    decoration: textDecoration,
   );
 }

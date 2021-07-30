@@ -1,4 +1,4 @@
-import 'dart:async';
+/* import 'dart:async';
 
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/Registration/map_loaction_set.dart';
@@ -27,8 +27,8 @@ class Otp_Verification extends StatefulWidget {
 class _Otp_VerificationState extends State<Otp_Verification> {
   int otp;
   bool checkValue = false;
-  User user;
-  AuthService authService = AuthService();
+  //User user;
+  //AuthService authService = AuthService();
   bool loading = false;
   bool isTimeout = false;
 
@@ -48,7 +48,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
   );
 
   ///Database service
-  DatabaseService database = DatabaseService();
+  //DatabaseService database = DatabaseService();
 
   @override
   void initState() {
@@ -300,3 +300,4 @@ void phoneNumberNotOkay(String message) {
       textColor: Colors.white,
       fontSize: 16.0);
 }
+ */

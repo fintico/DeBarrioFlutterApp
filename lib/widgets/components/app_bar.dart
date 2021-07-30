@@ -144,13 +144,13 @@ class AppBarWidget extends StatelessWidget {
                     height: 12.0,
                   ),
           ),
-          Container(
+          /* Container(
             child: args.profileLogo
                 ? _getProfile(context)
                 : Container(
                     height: 0.0,
                   ),
-          )
+          ) */
         ],
       ),
     );
@@ -231,7 +231,7 @@ class AppBarWidget extends StatelessWidget {
     );
   }
 
-  Widget _getProfile(BuildContext context) {
+  /*  Widget _getProfile(BuildContext context) {
     User user;
     user = Provider.of<User>(context);
     return Column(
@@ -270,5 +270,5 @@ class AppBarWidget extends StatelessWidget {
         ),
       ],
     );
-  }
+  } */
 }

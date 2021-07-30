@@ -76,7 +76,7 @@ class RepublishSplash extends StatelessWidget {
               dishModel.pricePickup,
               dishModel.isActive,
               dishModel.isDeleted,
-              dishModel.seller,
+              dishModel.seller.id,
               dishModel.dishCategory.id,
               dishModel.additional.id,
               dishModel.address.id);

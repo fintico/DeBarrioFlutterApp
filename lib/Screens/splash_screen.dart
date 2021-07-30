@@ -21,9 +21,9 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   Function goToTab;
-  AuthService authService = AuthService();
-  User user;
-  DatabaseService database = DatabaseService();
+  //AuthService authService = AuthService();
+  //User user;
+  //DatabaseService database = DatabaseService();
   // bool loading=true;
   BuildContext currentContext;
 
@@ -73,13 +73,13 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String counter = prefs.getString("First_Time") ?? '';
     if (counter != '') {
-      String userId = await authService.currentUserIdFromAuth();
-      if (userId != '') {
+      //String userId = await authService.currentUserIdFromAuth();
+      /*  if (userId != '') {
         getUserDataFromDatabase(userId);
-      } else {
+      } else  { */
 //        onDonePress();
-        gotoIntroScreen();
-      }
+      gotoIntroScreen();
+      //}
     } else {
       await prefs.setString("First_Time", 'No');
       setState(() {
@@ -89,16 +89,16 @@ class _SplashState extends State<Splash> {
     }
   }
 
-  void gotoHomeScreen() {
+  /*  void gotoHomeScreen() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (_) => MapScreen(),
       ),
     );
-  }
+  } */
 
-  void gotoSelectLocation() {
+  /* void gotoSelectLocation() {
     // setUserData();
     Navigator.pushReplacement(
       context,
@@ -106,7 +106,7 @@ class _SplashState extends State<Splash> {
         builder: (_) => LocationSetter(fromUserProfile: false),
       ),
     );
-  }
+  } */
 
   void onDonePress() {
     Navigator.pushReplacement(
@@ -117,12 +117,12 @@ class _SplashState extends State<Splash> {
     );
   }
 
-  void getUserDataFromDatabase(String userId) {
+  /*  void getUserDataFromDatabase(String userId) {
     StreamSubscription userSubscription;
-    userSubscription = database.getOtherUserData(userId).listen((event) {
+    //userSubscription = database.getOtherUserData(userId).listen((event) {
       if (event != null) {
-        user = Provider.of<User>(currentContext, listen: false);
-        user.fromUser(event);
+        //user = Provider.of<User>(currentContext, listen: false);
+        //user.fromUser(event);
         if (event.address != null && event.address.length > 0) {
           gotoHomeScreen();
         } else {
@@ -133,7 +133,7 @@ class _SplashState extends State<Splash> {
       }
       userSubscription.cancel();
     });
-  }
+  } */
 
   void onSkipPress() {
     this.goToTab(1);

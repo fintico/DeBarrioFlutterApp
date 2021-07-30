@@ -10,10 +10,36 @@ abstract class OrderService extends ChopperService {
     'Connection': 'keep-alive',
   };
 
+  @Post(path: '/create/')
+  Future<Response> postOrder(
+    @Field('is_delivery') bool isDelivery,
+    @Field('is_pickup') bool isPickup,
+    @Field('total_price') double totalPrice,
+    @Field('subtotal_price') double subtotalPrice,
+    @Field('tip') double tip,
+    @Field('state') int state,
+    @Field('portion') int portion,
+    @Field('delivery_date') String deliveryDate,
+    @Field('delivery_time') String deliveryTime,
+    @Field('is_active') bool isActive,
+    @Field('is_deleted') bool isDeleted,
+    @Field('customer_address') int customerAddress,
+    @Field('credit_card') int creditCard,
+  );
+
+  @Post(path: '/detail/create/')
+  Future<Response> postOrderDish(
+    @Field('order') int orderId,
+    @Field('dish') int dishId,
+  );
+
   @Get(path: '/detail/list/{seller_id}/')
   Future<Response> ordersDetailbySeller(@Path("seller_id") int sellerId);
 
-  @Get(path: '/detail/seller/order/{id}/')
+  @Get(path: '/detail/customer/list/{customer_id}/')
+  Future<Response> ordersDetailbyCustomer(@Path("customer_id") int customerId);
+
+  @Get(path: '/detail/{id}/')
   Future<Response> ordersDetailbyId(@Path("id") int orderDetailId);
 
   @Put(path: '/update/state/{id}/')

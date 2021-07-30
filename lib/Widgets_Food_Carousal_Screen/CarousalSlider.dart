@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+/* import 'package:carousel_slider/carousel_slider.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
@@ -49,3 +49,4 @@ class CarousalSliderWidget extends StatelessWidget {
     setIndex(index);
   }
 }
+ */

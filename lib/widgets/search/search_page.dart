@@ -111,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
 
   FutureBuilder<Response> _buildHistoryBody(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<CustomerService>(context).customerSearchById(26),
+      future: Provider.of<CustomerService>(context).customerSearchById(28),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

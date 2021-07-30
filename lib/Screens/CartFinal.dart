@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+/* import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:flutter/material.dart';
 
 class FinalCart extends StatefulWidget {
@@ -162,3 +162,4 @@ class _FinalCartState extends State<FinalCart> {
     );
   }
 }
+ */

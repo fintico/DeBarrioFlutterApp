@@ -57,3 +57,21 @@ TextStyle notifySubTitleStyle = DBStyle.getStyle(
   0,
   DBStyle.FONT_WEIGHT_REGULAR,
 );
+
+//alert
+
+TextStyle titleAlert = DBStyle.getStyle(
+  DBStyle.BLACK,
+  DBStyle.FONT_SYZE_H3,
+  DBStyle.FONT_HEIGHT_H3,
+  0.0,
+  DBStyle.FONT_WEIGHT_SEMI_BOLD,
+);
+
+TextStyle subTitleAlert = DBStyle.getStyle(
+  DBStyle.GRAY_1,
+  DBStyle.FONT_SYZE_M,
+  DBStyle.FONT_HEIGHT_M,
+  0.0,
+  DBStyle.FONT_WEIGHT_REGULAR,
+);

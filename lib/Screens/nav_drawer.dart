@@ -1,4 +1,4 @@
-import 'package:debarrioapp/routers/router.dart';
+/* import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/icons/bag.dart';
 import 'package:debarrioapp/widgets/components/icons/credit_card.dart';
 import 'package:debarrioapp/widgets/components/icons/money.dart';
@@ -30,7 +30,7 @@ class NavDrawer extends StatefulWidget {
 }
 
 class _NavDrawerState extends State<NavDrawer> {
-  User user;
+  //User user;
 
   TextStyle titleStyle = DBStyle.getStyle(
     DBStyle.GRAY_1,
@@ -543,3 +543,4 @@ class _NavDrawerState extends State<NavDrawer> {
     );
   }
 }
+ */

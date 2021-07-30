@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/widgets/components/icons/cross.dart';
 import 'package:debarrioapp/widgets/components/icons/plus_circle.dart';
 import 'package:debarrioapp/widgets/components/icons/radio_active.dart';
@@ -70,13 +71,14 @@ class PaymentMethodPage extends StatelessWidget {
 
   Widget _buildCreditCard(BuildContext context, List<CreditCard> creditCard) {
     return Container(
+      height: screenHeight(context),
       color: DBColors.WHITE,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.start,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(height: 16.0),
-          Expanded(
-            flex: 1,
+          Flexible(
             child: ListView.builder(
               itemCount: creditCard.length,
               itemBuilder: (BuildContext context, int index) {
@@ -86,55 +88,55 @@ class PaymentMethodPage extends StatelessWidget {
               },
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Routes.sailor.navigate(
-                        Routes.PAYMENT_METHOD_ADD_CARD_SCREEN,
-                        navigationType: NavigationType.pushReplace,
-                        transitions: [
-                          SailorTransition.fade_in,
-                          SailorTransition.slide_from_right
-                        ],
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 28.0, top: 16.0),
-                      child: PlusCircleIcon(
-                        height: 16.0,
-                        width: 16.0,
-                        color: DBColors.GREEN,
-                      ),
+          /* Flexible(
+            child: */
+          Container(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Routes.sailor.navigate(
+                      Routes.PAYMENT_METHOD_ADD_CARD_SCREEN,
+                      navigationType: NavigationType.pushReplace,
+                      transitions: [
+                        SailorTransition.fade_in,
+                        SailorTransition.slide_from_right
+                      ],
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 28.0, top: 16.0),
+                    child: PlusCircleIcon(
+                      height: 16.0,
+                      width: 16.0,
+                      color: DBColors.GREEN,
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Routes.sailor.navigate(
-                        Routes.PAYMENT_METHOD_ADD_CARD_SCREEN,
-                        navigationType: NavigationType.pushReplace,
-                        transitions: [
-                          SailorTransition.fade_in,
-                          SailorTransition.slide_from_right
-                        ],
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 16.0),
-                      child: Text(
-                        'AGREGAR MÉTODO DE COBRO',
-                        style: addPaymentMethodStyle,
-                      ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Routes.sailor.navigate(
+                      Routes.PAYMENT_METHOD_ADD_CARD_SCREEN,
+                      navigationType: NavigationType.pushReplace,
+                      transitions: [
+                        SailorTransition.fade_in,
+                        SailorTransition.slide_from_right
+                      ],
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 16.0),
+                    child: Text(
+                      'AGREGAR MÉTODO DE COBRO',
+                      style: addPaymentMethodStyle,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+          //),
           Padding(
             padding:
                 const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),

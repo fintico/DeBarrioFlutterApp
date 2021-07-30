@@ -1,8 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/services/seller_service.dart';
+import 'package:debarrioapp/models/auth.dart';
 import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/verify/verify_sms_args.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,6 +26,8 @@ class RegistrationSplash extends StatefulWidget {
 }
 
 class _RegistrationSplashState extends State<RegistrationSplash> {
+  final prefs = new UserPreferences();
+
   TextStyle title = DBStyles.getStyle(
     DBStyles.WHITE,
     DBStyles.FONT_SYZE_L,
@@ -76,7 +84,16 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
   Future register() async {
     Response<dynamic> res = await Provider.of<RegisterService>(context)
         .postUserRegister(userAppData.signCode, userAppData.phoneNumber);
-    print(res.bodyString);
+    //print(res.bodyString);
+
+    Auth auth = Auth.fromRawJson(res.bodyString);
+
+    await Provider.of<SellerService>(context, listen: false)
+        .postSeller(auth.data.id);
+
+    inspect(auth);
+    prefs.username = auth.data.username;
+    prefs.userId = auth.data.id;
     Routes.sailor.navigate(
       Routes.VERIFY_SMS,
       args:

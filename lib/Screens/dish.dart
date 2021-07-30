@@ -21,7 +21,7 @@ class DishConfirm extends StatefulWidget {
 }
 
 class _DishConfirmState extends State<DishConfirm> {
-  PostedDish postedDish;
+  //PostedDish postedDish;
 
   TextStyle titleStyle = DBStyles.getStyle(
     DBStyles.YELLOW,
@@ -49,7 +49,7 @@ class _DishConfirmState extends State<DishConfirm> {
 
   @override
   Widget build(BuildContext context) {
-    postedDish = Provider.of<PostedDish>(context);
+    //postedDish = Provider.of<PostedDish>(context);
     /* final appBar = AppBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(

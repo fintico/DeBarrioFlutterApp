@@ -107,7 +107,9 @@ class PickupDetail extends StatelessWidget {
                                     dishProvider.list[index].deliveryTimeTo, */
                         //'Entrega ${dateTimeString(dishProvider.list[index])}',
                         //'Entrega ${dateTimeString(dish)}',
-                        '+ ${orderDetail.dish.additional.additionalDescription}',
+                        orderDetail.dish.additional == null
+                            ? '-'
+                            : '+ ${orderDetail.dish.additional.additionalDescription}',
                         style: subtitleCardPickupStyle,
                       ),
                     ),

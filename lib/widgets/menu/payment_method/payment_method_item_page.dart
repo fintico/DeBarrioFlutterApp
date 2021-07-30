@@ -29,50 +29,51 @@ class PaymentMethodItem extends StatelessWidget {
         actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.15,
         child: Container(
-            child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 28.0, top: 20.0, bottom: 20.0),
-                      child: SvgPicture.asset(
-                        creditCard.cardType.id == 1
-                            ? 'assets/images/visa.svg'
-                            : 'assets/images/mastercard.svg',
-                        height: 24.0,
-                        width: 40.0,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 28.0, top: 20.0, bottom: 20.0),
+                        child: SvgPicture.asset(
+                          creditCard.cardType.id == 1
+                              ? 'assets/images/visa.svg'
+                              : 'assets/images/mastercard.svg',
+                          height: 24.0,
+                          width: 40.0,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16.0, top: 20.0, bottom: 20.0),
-                      child: Text(
-                        '**** ${creditCard.cardNumber.substring(creditCard.cardNumber.length - 5)}',
-                        style: numberStyle,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 16.0, top: 20.0, bottom: 20.0),
+                        child: Text(
+                          '**** ${creditCard.cardNumber.substring(creditCard.cardNumber.length - 5)}',
+                          style: numberStyle,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      right: 28.0, top: 22.0, bottom: 22.0),
-                  child: OptionHorizontalIcon(
-                      height: 20.0, width: 20.0, color: DBColors.GRAY_1),
-                )
-              ],
-            ),
-            Divider(
-              color: DBColors.BLUE_LIGHT_5,
-              thickness: 1.0,
-              indent: 28.0,
-              endIndent: 28.0,
-            ),
-          ],
-        )),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        right: 28.0, top: 22.0, bottom: 22.0),
+                    child: OptionHorizontalIcon(
+                        height: 20.0, width: 20.0, color: DBColors.GRAY_1),
+                  )
+                ],
+              ),
+              Divider(
+                color: DBColors.BLUE_LIGHT_5,
+                thickness: 1.0,
+                indent: 28.0,
+                endIndent: 28.0,
+              ),
+            ],
+          ),
+        ),
         secondaryActions: <Widget>[
           IconSlideAction(
             color: DBColors.RED,

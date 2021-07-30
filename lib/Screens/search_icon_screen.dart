@@ -1,4 +1,4 @@
-import 'package:auto_suggestion_text_field/model/text_field_prop.dart';
+/* import 'package:auto_suggestion_text_field/model/text_field_prop.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:debarrioapp/Icons/my_flutter_app_icons.dart';
 import 'package:debarrioapp/ModelClass/foodData.dart';
@@ -242,3 +242,4 @@ class _SearchModalSheetState extends State<SearchModalSheet> {
     });
   }
 }
+ */

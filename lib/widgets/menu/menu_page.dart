@@ -24,7 +24,11 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBar = PreferredSize(
       child: AppBarOptionSeven(
-        leftIconAction: () => Navigator.pop(context),
+        leftIconAction: () => /* Navigator.pop(context) */
+            Routes.sailor.navigate(
+          Routes.HOME_SCREEN,
+          navigationType: NavigationType.pushReplace,
+        ),
         title: '¡Bienvenido!',
       ),
       preferredSize: Size.fromHeight(328.0),
@@ -84,12 +88,14 @@ class MenuPage extends StatelessWidget {
   Widget _myAccount() {
     return ListTitleButton(
       action: () {
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProfileScreen(),
-          ),
-        ); */
+        Routes.sailor.navigate(
+          Routes.PROFILE_HOME_SCREEN,
+          navigationType: NavigationType.pushReplace,
+          transitions: [
+            SailorTransition.fade_in,
+            SailorTransition.slide_from_right
+          ],
+        );
       },
       title: 'Mi cuenta',
       icon: UserIcon(
@@ -103,14 +109,14 @@ class MenuPage extends StatelessWidget {
   Widget _myBag() {
     return ListTitleButton(
       action: () {
-        /* Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => Misventas(
-              isCurrentOrders: true,
-            ),
-          ),
-        ); */
+        Routes.sailor.navigate(
+          Routes.ORDER_HOME_PAGE_SCREEN,
+          navigationType: NavigationType.pushReplace,
+          transitions: [
+            SailorTransition.fade_in,
+            SailorTransition.slide_from_right
+          ],
+        );
       },
       title: 'Mis pedidos',
       icon: BagIcon(

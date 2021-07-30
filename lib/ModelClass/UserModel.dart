@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+/* import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:debarrioapp/ModelClass/AddressModel.dart';
 import 'package:debarrioapp/ModelClass/BankCardModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -165,3 +165,4 @@ class User extends ChangeNotifier {
     notifyListeners();
   }
 }
+ */

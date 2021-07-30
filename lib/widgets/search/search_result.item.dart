@@ -57,7 +57,7 @@ class SearchResultItem extends StatelessWidget {
   Future _createSearch(BuildContext context) async {
     try {
       await Provider.of<CustomerService>(context, listen: false)
-          .postCustomerSearchCreate(26, dish.id);
+          .postCustomerSearchCreate(28, dish.id);
     } catch (e) {
       print(e);
     }

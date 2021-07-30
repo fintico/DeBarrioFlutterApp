@@ -5,6 +5,8 @@ import 'package:debarrioapp/models/address.dart';
 import 'package:debarrioapp/models/dish.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/order_detail.dart';
+import 'package:debarrioapp/models/seller_detail.dart';
+import 'package:debarrioapp/models/seller_dish.dart';
 import 'package:debarrioapp/widgets/calendar/calendar_page.dart';
 import 'package:debarrioapp/widgets/dish/dish_additional_page.dart';
 import 'package:debarrioapp/widgets/dish/dish_detail_page.dart';
@@ -15,9 +17,17 @@ import 'package:debarrioapp/widgets/home/home_page.dart';
 import 'package:debarrioapp/widgets/location/location_page.dart';
 import 'package:debarrioapp/widgets/location/location_splash_loading.dart';
 import 'package:debarrioapp/widgets/menu/menu_page.dart';
+import 'package:debarrioapp/widgets/menu/order/finish_order/order_detail_finish_page.dart';
+import 'package:debarrioapp/widgets/menu/order/ongoing_order/order_detail_ongoing_page.dart';
+import 'package:debarrioapp/widgets/menu/order/order_home_page.dart';
+import 'package:debarrioapp/widgets/menu/order/order_payment_summary_page.dart';
 import 'package:debarrioapp/widgets/menu/payment_method/payment_method_add_card_page.dart';
 import 'package:debarrioapp/widgets/menu/payment_method/payment_method_loading_splash.dart';
 import 'package:debarrioapp/widgets/menu/payment_method/payment_method_page.dart';
+import 'package:debarrioapp/widgets/menu/payment_method/payment_method_pay_page.dart';
+import 'package:debarrioapp/widgets/menu/payment_method/payment_method_pay_splash.dart';
+import 'package:debarrioapp/widgets/menu/profile/profile_home_page.dart';
+import 'package:debarrioapp/widgets/menu/profile/profile_update_page.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_delete_splash.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_detail_page.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_page.dart';
@@ -27,8 +37,12 @@ import 'package:debarrioapp/widgets/menu/sale/sale_details_delivered_page.dart';
 import 'package:debarrioapp/widgets/menu/sale/sale_details_page.dart';
 import 'package:debarrioapp/widgets/menu/sale/sale_details_prepared_page.dart';
 import 'package:debarrioapp/widgets/menu/sale/sale_page.dart';
+import 'package:debarrioapp/widgets/purchase/purchase_home_page.dart';
 import 'package:debarrioapp/widgets/registration/registration_splash.dart';
 import 'package:debarrioapp/widgets/search/search_page.dart';
+import 'package:debarrioapp/widgets/shopping_cart/shopping_cart_empty_splash.dart';
+import 'package:debarrioapp/widgets/shopping_cart/shopping_cart_home_page.dart';
+import 'package:debarrioapp/widgets/shopping_cart/shopping_cart_order_placed_splash.dart';
 import 'package:debarrioapp/widgets/verify/verify_sms_page.dart';
 import 'package:debarrioapp/widgets/verify/verify_splash_loading.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +76,13 @@ class Routes {
   static const PAYMENT_METHOD_LIST_SCREEN = '/payment_method_list_screen';
   static const PAYMENT_METHOD_ADD_CARD_SCREEN =
       '/payment_method_add_card_screen';
+  static const PAYMENT_METHOD_PAY_SCREEN = '/payment_method_pay_screen';
+
+  //order
+  static const ORDER_HOME_PAGE_SCREEN = '/order_home_page_screen';
+  static const ORDER_DETAIL_FINISH_SCREEN = '/order_detail_finish_screen';
+  static const ORDER_DETAIL_ONGOING_SCREEN = '/order_detail_ongoing_screen';
+  static const ORDER_PAYMENT_SUMMARY_SCREEN = '/order_payment_summary_screen';
 
   //search
   static const SEARCH_SCREEN = '/search_screen';
@@ -74,6 +95,16 @@ class Routes {
 
   //location
   static const LOCATION_CHANGE_PAGE = '/location_change_page';
+
+  //purchase
+  static const PURCHASE_HOME_SCREEN = '/purchase_home_screen';
+
+  //shopping
+  static const SHOPPING_CART_HOME_SCREEN = '/shopping_cart_home_screen';
+
+  //profile
+  static const PROFILE_HOME_SCREEN = '/profile_home_screen';
+  static const PROFILE_UPDATE_SCREEN = '/profile_update_screen';
 
   static const SPLASH_LOADING_REGISTRATION_SCREEN = '/splash_loading_screen';
   static const SPLASH_LOADING_VERIFICATION_SMS_SCREEN =
@@ -95,6 +126,14 @@ class Routes {
 
   static const SPLASH_LOADING_ADD_CREDIT_CARD_SCREEN =
       '/splash_loading_add_credit_card_screen';
+
+  static const SPLASH_PAY_CREDIT_CARD_SCREEN =
+      '/splash_play_credit_card_screen';
+
+  static const SPLASH_CONFIRM_ORDER_PLACED_SCREEN =
+      '/splash_confirm_order_placed_screen';
+
+  static const SPLASH_EMPTY_CART_SCREEN = '/splash_empty_cart_screen';
 
   static void createRoutes() {
     var mainRoutes = [
@@ -290,6 +329,30 @@ class Routes {
           ),
         ],
       ),
+      SailorRoute(
+        name: SPLASH_PAY_CREDIT_CARD_SCREEN,
+        builder: (context, args, params) {
+          return Material(
+            type: MaterialType.transparency,
+            child: CreditCardPaySplash(),
+          );
+        },
+      ),
+      SailorRoute(
+        name: SPLASH_CONFIRM_ORDER_PLACED_SCREEN,
+        builder: (context, args, params) {
+          return Material(
+            type: MaterialType.transparency,
+            child: ShoppingCartOrderPlacedSplash(),
+          );
+        },
+      ),
+      SailorRoute(
+        name: SPLASH_EMPTY_CART_SCREEN,
+        builder: (_, __, ___) {
+          return ShoppingCartEmptySplash();
+        },
+      ),
     ];
 
     var routesSale = [
@@ -348,6 +411,39 @@ class Routes {
       ),
     ];
 
+    var routesOrder = [
+      SailorRoute(
+        name: ORDER_HOME_PAGE_SCREEN,
+        builder: (_, __, ___) {
+          return HomeOrderPage();
+        },
+      ),
+      SailorRoute(
+        name: ORDER_DETAIL_FINISH_SCREEN,
+        builder: (_, __, ___) {
+          return OrderDetailFinish();
+        },
+      ),
+      SailorRoute(
+        name: ORDER_DETAIL_ONGOING_SCREEN,
+        builder: (_, __, ___) {
+          return OrderDetailOngoing();
+        },
+      ),
+      SailorRoute(
+        name: ORDER_PAYMENT_SUMMARY_SCREEN,
+        builder: (_, __, params) {
+          final type = params.param<int>('type');
+          return OrderPaymentSummary(
+            type: type,
+          );
+        },
+        params: [
+          SailorParam<int>(name: 'type'),
+        ],
+      ),
+    ];
+
     var routesPaymentMethod = [
       SailorRoute(
         name: PAYMENT_METHOD_ADD_CARD_SCREEN,
@@ -367,6 +463,12 @@ class Routes {
           SailorParam<bool>(name: 'isCreated', defaultValue: true),
         ],
       ),
+      SailorRoute(
+        name: PAYMENT_METHOD_PAY_SCREEN,
+        builder: (_, __, ___) {
+          return PaymentMethodPay();
+        },
+      ),
     ];
 
     var routesSearch = [
@@ -375,6 +477,34 @@ class Routes {
         builder: (_, __, ___) {
           return SearchPage();
         },
+      ),
+    ];
+
+    var routesPurchase = [
+      SailorRoute(
+        name: PURCHASE_HOME_SCREEN,
+        builder: (_, __, params) {
+          final sellerDish = params.param<SellerDetail>('sellerDish');
+          return PurchasePage(
+            sellerDish: sellerDish,
+          );
+        },
+        params: [
+          SailorParam<SellerDetail>(name: 'sellerDish'),
+        ],
+      ),
+    ];
+
+    var routesShoppingCart = [
+      SailorRoute(
+        name: SHOPPING_CART_HOME_SCREEN,
+        builder: (_, __, ___) {
+          //final sellerDish = params.param<SellerDish>('sellerDish');
+          return ShoppingCartHome();
+        },
+/*         params: [
+          SailorParam<SellerDish>(name: 'sellerDish'),
+        ], */
       ),
     ];
 
@@ -392,11 +522,32 @@ class Routes {
       ),
     ];
 
+    var routesProfile = [
+      SailorRoute(
+        name: PROFILE_HOME_SCREEN,
+        builder: (_, __, ___) {
+          //final sellerDish = params.param<SellerDish>('sellerDish');
+          return ProfileHomePage();
+        },
+      ),
+      SailorRoute(
+        name: PROFILE_UPDATE_SCREEN,
+        builder: (_, __, ___) {
+          //final sellerDish = params.param<SellerDish>('sellerDish');
+          return ProfileUpdate();
+        },
+      ),
+    ];
+
     sailor.addRoutes(mainRoutes);
     sailor.addRoutes(routesSplash);
     sailor.addRoutes(routesRegistration);
     sailor.addRoutes(routesSale);
     sailor.addRoutes(routesPaymentMethod);
     sailor.addRoutes(routesSearch);
+    sailor.addRoutes(routesPurchase);
+    sailor.addRoutes(routesShoppingCart);
+    sailor.addRoutes(routesProfile);
+    sailor.addRoutes(routesOrder);
   }
 }

@@ -1,3 +1,5 @@
+import 'package:debarrioapp/models/seller.dart';
+
 import 'additional.dart';
 import 'dish_category.dart';
 import 'address.dart';
@@ -19,7 +21,7 @@ class DishModel {
   bool isDeleted;
   String createdAt;
   String updatedAt;
-  int seller;
+  Seller seller;
 
   DishModel({
     this.id,
@@ -54,6 +56,9 @@ class DishModel {
       address: json['address'] == null
           ? null
           : Address.fromJson(json['address'] as Map<String, dynamic>),
+      seller: json['seller'] == null
+          ? null
+          : Seller.fromJson(json['seller'] as Map<String, dynamic>),
       dishName: json['dish_name'] as String,
       image: json['image'] as String,
       stock: json['stock'] as int,
@@ -66,7 +71,6 @@ class DishModel {
       isDeleted: json['is_deleted'] as bool,
       createdAt: json['created_at'] as String,
       updatedAt: json['updated_at'] as String,
-      seller: json['seller'] as int,
     );
   }
 
@@ -76,6 +80,7 @@ class DishModel {
       'additional': additional?.toJson(),
       'dish_category': dishCategory?.toJson(),
       'address': address?.toJson(),
+      'seller': seller?.toJson(),
       'dish_name': dishName,
       'image': image,
       'stock': stock,
@@ -88,7 +93,6 @@ class DishModel {
       'is_deleted': isDeleted,
       'created_at': createdAt,
       'updated_at': updatedAt,
-      'seller': seller,
     };
   }
 }

@@ -119,10 +119,10 @@ class _CreditSplashState extends State<CreditSplash> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        onPressed: () {
+                        /* onPressed: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (_) => CreditInfo()));
-                        },
+                        }, */
                         child: Text(
                           "Angregar metodo de pago",
                           style: TextStyle(

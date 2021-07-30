@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/UserModel.dart';
+/* import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
@@ -21,8 +21,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  User user;
-  DatabaseService database = DatabaseService();
+  //User user;
+  //DatabaseService database = DatabaseService();
   bool loading = false;
   StorageService storage = StorageService();
 
@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<User>(context);
+    //user = Provider.of<User>(context);
     /* final appBar = AppBar(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -547,3 +547,4 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
+ */

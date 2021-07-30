@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
+/* import 'package:debarrioapp/ModelClass/AdditionDishModel.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:flutter/material.dart';
@@ -217,3 +217,4 @@ class _AdicionalasState extends State<Adicionalas> {
     }
   }
 }
+ */

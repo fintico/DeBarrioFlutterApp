@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
@@ -22,7 +23,10 @@ class PhoneNumScreen extends StatefulWidget {
 class _PhoneNumScreenState extends State<PhoneNumScreen> {
   TextEditingController _phoneCheck = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  User user;
+
+  final prefs = new UserPreferences();
+
+  //User user;
   bool disable = true;
   var isActive = false;
   TextStyle subtextStyle = TextStyle(
@@ -43,7 +47,8 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   );
   @override
   Widget build(BuildContext context) {
-    user = Provider.of<User>(context);
+    //user = Provider.of<User>(context);
+    prefs.screen = 1;
     TextStyle textStyle = TextStyle(
         color: HexColor('4C6072'),
         fontSize: 35.0,

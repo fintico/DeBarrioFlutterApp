@@ -7,33 +7,35 @@ class GenericButtonOrange extends StatelessWidget {
   final String text;
   final bool disable;
   final Function action;
+  final double height;
 
-  const GenericButtonOrange(
-      {Key key,
-      @required this.text,
-      @required this.disable,
-      @required this.action})
-      : super(key: key);
+  const GenericButtonOrange({
+    Key key,
+    @required this.text,
+    @required this.disable,
+    @required this.action,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: ButtonWidget(
-        text: this.text,
-        buttonColors: [
-          DBColors.RED,
-          DBColors.RED_DARK,
-          DBColors.GRAY_3,
-        ],
-        textColors: [
-          DBStyles.WHITE,
-          DBStyles.WHITE,
-          DBStyles.GRAY_2,
-        ],
-        disable: this.disable,
-        action: action,
-        border: false,
-      ),
+          text: this.text,
+          buttonColors: [
+            DBColors.RED,
+            DBColors.RED_DARK_1,
+            DBColors.GRAY_3,
+          ],
+          textColors: [
+            DBStyles.WHITE,
+            DBStyles.WHITE,
+            DBStyles.GRAY_2,
+          ],
+          disable: this.disable,
+          action: action,
+          border: null,
+          height: this.height),
     );
   }
 }

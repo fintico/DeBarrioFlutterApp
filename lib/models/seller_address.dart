@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:debarrioapp/models/address.dart';
+import 'package:debarrioapp/models/seller_user.dart';
 
 class SellerAddress {
   int id;
-  int seller;
+  SellerUser seller;
   Address address;
   bool isActive;
 
@@ -11,7 +14,8 @@ class SellerAddress {
   factory SellerAddress.fromJson(Map<String, dynamic> json) {
     return SellerAddress(
       id: json['id'] as int,
-      seller: json['seller'] as int,
+      seller:
+          json["seller"] == null ? null : SellerUser.fromJson(json["seller"]),
       address: json['address'] == null
           ? null
           : Address.fromJson(json['address'] as Map<String, dynamic>),
@@ -22,9 +26,14 @@ class SellerAddress {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'seller': seller,
+      'seller': seller?.toJson(),
       'address': address?.toJson(),
       'is_active': isActive,
     };
   }
+
+  factory SellerAddress.fromRawJson(String str) =>
+      SellerAddress.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 }

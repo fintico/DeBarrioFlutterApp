@@ -14,6 +14,7 @@ import 'package:debarrioapp/constants/credit_card.dart' as CreditCard;
 import 'package:sailor/sailor.dart';
 
 import '../../../utilsFunctions.dart';
+import 'payment_method_alert_item.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodAddCard extends StatefulWidget {
@@ -54,6 +55,7 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
+        bottomNavigationBar: _buttonSave(),
         body: Container(
           child: Column(
             children: <Widget>[
@@ -87,6 +89,11 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
                         textColor: DBColors.BLACK,
                         cardNumberDecoration: const InputDecoration(
                           border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: DBColors.GREEN,
+                            ),
+                          ),
                           labelText: 'Número de tarjeta',
                           labelStyle: labelStyle,
                           suffixIcon: Padding(
@@ -98,10 +105,14 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
                               color: DBColors.GRAY_2,
                             ),
                           ),
-                          //hintText: 'XXXX XXXX XXXX XXXX',
                         ),
                         cardHolderDecoration: const InputDecoration(
                           border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: DBColors.GREEN,
+                            ),
+                          ),
                           labelText: 'Nombre y apellido',
                           labelStyle: labelStyle,
                           enabledBorder: OutlineInputBorder(
@@ -112,6 +123,11 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
                         ),
                         expiryDateDecoration: const InputDecoration(
                           border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: DBColors.GREEN,
+                            ),
+                          ),
                           labelText: 'MM/AA',
                           labelStyle: labelStyle,
                           enabledBorder: OutlineInputBorder(
@@ -119,10 +135,14 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
                               color: DBColors.GRAY_2,
                             ),
                           ),
-                          //hintText: 'XX/XX',
                         ),
                         cvvCodeDecoration: const InputDecoration(
                           border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: DBColors.GREEN,
+                            ),
+                          ),
                           labelText: 'CVV',
                           labelStyle: labelStyle,
                           suffixIcon: Padding(
@@ -134,11 +154,10 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
                               color: DBColors.GRAY_2,
                             ),
                           ),
-                          //hintText: 'XXX',
                         ),
                         onCreditCardModelChange: onCreditCardModelChange,
                       ),
-                      _buttonSave(),
+                      //_buttonSave(),
                     ],
                   ),
                 ),
@@ -165,30 +184,45 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
   _buttonSave() {
     return Container(
       padding: const EdgeInsets.only(
-          top: 101.0, bottom: 24.0, left: 28.0, right: 28.0),
+          top: 24.0, bottom: 24.0, left: 28.0, right: 28.0),
       child: GenericButtonOrange(
         text: 'GUARDAR TARJETA',
         disable: false,
         action: () {
           if (formKey.currentState.validate()) {
             //print('valid!');
-            switch (detectCCType(creditCard.cardNumber)) {
-              case CreditCard.CardType.visa:
-                creditCard.brand = '1';
-                break;
-              case CreditCard.CardType.mastercard:
-                creditCard.brand = '2';
-                break;
-              default:
-                creditCard.brand = null;
+
+            if (detectCCType(creditCard.cardNumber) ==
+                    CreditCard.CardType.visa ||
+                detectCCType(creditCard.cardNumber) ==
+                    CreditCard.CardType.mastercard) {
+              switch (detectCCType(creditCard.cardNumber)) {
+                case CreditCard.CardType.visa:
+                  creditCard.brand = '1';
+                  break;
+                case CreditCard.CardType.mastercard:
+                  creditCard.brand = '2';
+                  break;
+                default:
+                  creditCard.brand = null;
+              }
+              Routes.sailor.navigate(
+                Routes.SPLASH_LOADING_ADD_CREDIT_CARD_SCREEN,
+                navigationType: NavigationType.pushReplace,
+                params: {
+                  'creditCard': creditCard,
+                },
+              );
+            } else {
+              print('other brand');
+              return showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (_) {
+                  return PaymentMethodAlert();
+                },
+              );
             }
-            Routes.sailor.navigate(
-              Routes.SPLASH_LOADING_ADD_CREDIT_CARD_SCREEN,
-              navigationType: NavigationType.pushReplace,
-              params: {
-                'creditCard': creditCard,
-              },
-            );
           } else {
             print('invalid!');
           }

@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/UserModel.dart';
+/* import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
@@ -618,3 +618,4 @@ class _EdiRestoranttInfoState extends State<EdiRestoranttInfo> {
     );
   }
 }
+ */

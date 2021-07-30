@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/constants/url_base.dart' as Url;
 
@@ -14,10 +16,32 @@ abstract class SellerService extends ChopperService {
   @Get(path: '/address/list/{seller_id}')
   Future<Response> addressbySeller(@Path("seller_id") int sellerId);
 
+  @Get(path: '/dish/list/')
+  Future<Response> getDishesBySeller();
+
+  @Get(path: '/dish/list/filter/')
+  Future<Response> getDishesBySellerFilter(
+    @Query('category') int category,
+    @Query('delivery_date') String deliveryDate,
+  );
+
+  @Post(path: '/create/')
+  Future<Response> postSeller(
+    @Field('user') int userId,
+  );
+
   @Put(path: '/address/update/{id}/')
   Future<Response> updateStateBySeller(
     @Path("id") int id,
     @Field('is_active') bool isActive,
+  );
+
+  @Multipart()
+  @Put(path: '/update/image/{user_id}/')
+  Future<Response> updateImage(
+    @Path("user_id") int userId,
+    @Part("urlImage") String urlImage,
+    @PartFile('urlImage') String url,
   );
 
   static SellerService create() {

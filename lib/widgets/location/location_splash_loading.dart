@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/home_provider.dart';
+import 'package:debarrioapp/services/seller_address_service.dart';
+import 'package:debarrioapp/models/address.dart';
 import 'package:debarrioapp/services/location_service.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
@@ -19,6 +25,8 @@ class LocationSplash extends StatefulWidget {
 }
 
 class _LocationSplashState extends State<LocationSplash> {
+  final prefs = new UserPreferences();
+
   TextStyle title = DBStyles.getStyle(
     DBStyles.WHITE,
     DBStyles.FONT_SYZE_L,
@@ -75,7 +83,18 @@ class _LocationSplashState extends State<LocationSplash> {
       Response<dynamic> res = await Provider.of<LocationService>(context)
           .postUserLocation(userAppData.address, userAppData.addressDescription,
               true, userAppData.longitude, userAppData.latitude);
-      print(res.bodyString);
+
+      Address address = Address.fromRawJson(res.bodyString);
+
+      prefs.address = address.address;
+      prefs.latitude = address.latitude;
+      prefs.longitude = address.longitude;
+
+      await Provider.of<SellerAddressService>(context, listen: false)
+          .postSellerAddress(prefs.userId, address.id, true);
+
+      await Future.delayed(Duration(milliseconds: 200));
+
       Routes.sailor.navigate(
         Routes.HOME_SCREEN,
         navigationType: NavigationType.pushReplace,

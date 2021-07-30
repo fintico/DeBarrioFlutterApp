@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
+/* import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/Adicionalas.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
@@ -880,3 +880,4 @@ class _FullInfoProdState extends State<FullInfoProd> {
     );
   }
 }
+ */

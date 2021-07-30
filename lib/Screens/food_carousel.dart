@@ -1,4 +1,4 @@
-import 'package:debarrioapp/ModelClass/OrderModel.dart';
+/* import 'package:debarrioapp/ModelClass/OrderModel.dart';
 import 'package:debarrioapp/ModelClass/OrderedDish.dart';
 import 'package:debarrioapp/ModelClass/PostedDishModel.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
@@ -282,3 +282,4 @@ class _RestaurantCarouselSliderState extends State<RestaurantCarouselSlider> {
     });
   }
 }
+ */

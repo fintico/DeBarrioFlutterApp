@@ -1,6 +1,7 @@
 import 'package:flutter/painting.dart';
 
 const Color BLACK_DARK = const Color(0xFF101010);
+const Color RED_DARK_1 = const Color(0xFFE84A31);
 const Color RED_DARK = const Color(0xFFCD402A);
 const Color RED_LIGHT = const Color(0xFFFFE5E1);
 const Color RED = const Color(0xFFE84A31);
@@ -17,6 +18,9 @@ const Color GREEN_DARK = const Color(0xFF58A86E);
 const Color GREEN_LIGHT = const Color(0xFFE8FAF2);
 const Color GREEN = const Color(0xFF52D176);
 const Color WHITE = const Color(0xFFFFFFFF);
+const Color GRAY_16 = const Color(0xFFE0E4EE);
+const Color GRAY_15 = const Color(0xFFECECEC);
+const Color GRAY_14 = const Color(0xFFDFE2E6);
 const Color GRAY_13 = const Color(0xFFD4DAE0);
 const Color GRAY_12 = const Color(0xFFEFF2FA);
 const Color GRAY_11 = const Color(0xFFCCCCCC);
