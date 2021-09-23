@@ -10,6 +10,7 @@ import 'package:debarrioapp/widgets/components/icons/minus.dart';
 import 'package:debarrioapp/widgets/components/icons/plus.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
@@ -86,11 +87,11 @@ class PurchaseBottom extends StatelessWidget {
                 action: () {
                   print('agregar al carrito');
                   purchaseBloc.onNotify();
-                  //print(purchaseBloc.restaurantName);
+                  print(purchaseBloc.deliveryDate);
                   dish.id = purchaseBloc.dishId;
                   dish.dishName = purchaseBloc.dishName;
                   dish.image = purchaseBloc.dishImage;
-                  dish.seller.restaurantName = purchaseBloc.restaurantName;
+                  //dish.seller.restaurantName = purchaseBloc.restaurantName;
                   order.subtotalPrice = purchaseBloc.subTotalPrice;
                   order.totalPrice = purchaseBloc.totalPrice;
                   order.isDelivery = purchaseBloc.delivery;

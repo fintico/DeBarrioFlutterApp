@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/models/additionalDish.dart';
 import 'package:debarrioapp/models/dish.dart';
+import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
+import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_eight.dart';
 import 'package:debarrioapp/widgets/components/icons/angle_right.dart';
 import 'package:debarrioapp/widgets/components/icons/bag.dart';
@@ -12,13 +19,16 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 import 'dish_statistics_card.dart';
 import 'dish_style.dart';
 
 class DishDetail extends StatefulWidget {
-  DishDetail({Key key}) : super(key: key);
+  final int dishId;
+  DishDetail({Key key, this.dishId}) : super(key: key);
 
   @override
   _DishDetailState createState() => _DishDetailState();
@@ -35,19 +45,22 @@ class _DishDetailState extends State<DishDetail> {
   }
 
   Widget build(BuildContext context) {
+    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     final appBar = PreferredSize(
         child: AppBarOptionEight(
             leftIconAction: () => Routes.sailor.navigate(
                 Routes.DISH_LIST_SCREEN,
                 navigationType: NavigationType.pushReplace),
             headerTitle: 'Detalle de la publicación',
-            rightIconAction: () => {detailsBottomSheet(context)}),
+            rightIconAction: () => {/* detailsBottomSheet(context) */}),
         preferredSize: Size.fromHeight(56.0));
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
         backgroundColor: DBColors.GRAY_12,
-        body: Container(
+        body: _buildBody(context),
+
+        /* Container(
           color: DBColors.WHITE,
           width: screenWidth(context),
           //height: screenHeight(context, dividedBy: 1.63),
@@ -107,28 +120,150 @@ class _DishDetailState extends State<DishDetail> {
                 ),
                 detailsDish(
                   title: 'UBICACIÓN ACTUAL',
-                  description: userAppData.address,
+                  description: homeBloc.sellerAddress.address.address,
                   descriptionStyle: descriptionStyle,
                 ),
               ],
             ),
           ),
-        ),
+        ), */
         bottomNavigationBar: _botomNavBar(),
       ),
     );
   }
 
-  Widget _dishImage() {
+  FutureBuilder<Response> _buildBody(BuildContext context) {
+    return FutureBuilder(
+      future: Provider.of<DishService>(context, listen: false)
+          .getDishById(widget.dishId),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                snapshot.error.toString(),
+                textAlign: TextAlign.center,
+                textScaleFactor: 1.3,
+              ),
+            );
+          }
+          DishModel dish =
+              DishModel.fromJson(json.decode(snapshot.data.bodyString));
+          //dishProvider.onActive(true);
+          //isActive = dish.isActive;
+          return _buildDish(context, dish);
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildDish(BuildContext context, DishModel dish) {
+    return Container(
+      color: DBColors.WHITE,
+      width: screenWidth(context),
+      //height: screenHeight(context, dividedBy: 1.63),
+      /* height: dish.additional != null
+          ? screenHeight(context, dividedBy: 1.63)
+          : screenHeight(context, dividedBy: 1), */
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 26.0, left: 28.0, right: 28.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "PUBLICACIÓN #0${dish.id}",
+                      style: publishtitleDetailStyle,
+                    ),
+                    getDishState(dish) && dish.isActive
+                        ? stateOnBox()
+                        : stateOffBox(),
+                  ],
+                ),
+              ),
+            ),
+            _dishImage(context, dish),
+            DishStatisticsCard(),
+            detailsDish(
+              title: 'TÍTULO DE LA VENTA',
+              description: dish.dishName,
+              descriptionStyle: descriptionDishStyle,
+            ),
+            detailsDish(
+              title: 'CATEGORÍA',
+              description: dish.dishCategory.dishCategoryDescription,
+              descriptionStyle: descriptionStyle,
+            ),
+            detailsDish(
+              title: 'STOCK DE PORCIONES',
+              description: dish.stock.toString(),
+              descriptionStyle: descriptionStyle,
+            ),
+            gridDetailDish(
+              titleLeft: 'FECHA DE ENTREGA',
+              descriptionLeft: dateTimeDetail(dish),
+              titleRight: 'HORARIO',
+              descriptionRight: timeDetail(dish),
+              descriptionStyle: descriptionStyle,
+            ),
+            gridDetailDish(
+              titleLeft: 'PRECIO DELIVERY',
+              descriptionLeft: 'S/ ${dish.priceDelivery.toString()}',
+              titleRight: 'PRECIO CON RECOJO',
+              descriptionRight: 'S/ ${dish.pricePickup.toString()}',
+              descriptionStyle: descriptionStyle,
+            ),
+            detailsDish(
+              title: 'UBICACIÓN ACTUAL',
+              description: dish.address.address,
+              descriptionStyle: descriptionStyle,
+            ),
+            _additionalDetail(context, dish),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _dishImage(context, DishModel dish) {
     return Container(
       width: screenWidth(context),
       height: screenHeight(context, dividedBy: 4.0),
       child: Container(
         padding: const EdgeInsets.only(left: 0.0, top: 18.0, bottom: 24.0),
-        child: Image(
-          image: NetworkImage(dish.urlImage),
-          fit: BoxFit.cover,
-        ),
+        child: cZeroStr(dish.image)
+            ? Image(
+                image: NetworkImage(dish.image),
+                //height: 56.0,
+                //width: 56.0,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes
+                          : null,
+                    ),
+                  );
+                },
+              )
+            : SvgPicture.asset(
+                'assets/images/empty.svg',
+                //height: 46.0,
+                //width: 46.0,
+                fit: BoxFit.contain,
+              ),
       ),
     );
   }
@@ -300,6 +435,112 @@ class _DishDetailState extends State<DishDetail> {
     );
   }
 
+  Widget _additionalDetail(context, DishModel dish) {
+    return Container(
+      //height: 200.0,
+      height:
+          dish.additional != null ? screenHeight(context, dividedBy: 3.72) : 1,
+      child: Column(
+        children: [
+          Container(
+            //height: 70.0,
+            color: DBColors.WHITE,
+            child: Column(
+              children: [
+                dish.additional != null
+                    ? Container(
+                        child: Column(
+                          //mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 28.0, top: 32.0, bottom: 16.0),
+                              child: Text(
+                                'ADICIONALES',
+                                style: bNavbarTitleStyle,
+                              ),
+                            ),
+                            Divider(
+                              color: DBColors.BLUE_LIGHT_5,
+                              thickness: 1.0,
+                              indent: 28.0,
+                              endIndent: 28.0,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                /* randomNumber = random.nextInt(900000);
+                                print(randomNumber); */
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                /* crossAxisAlignment: CrossAxisAlignment.start, */
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 28.0,
+                                          top: 20.0,
+                                        ),
+                                        child: Text(
+                                          dish.additional.additionalDescription,
+                                          style: bNavbarSubTitleStyle,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 28.0,
+                                          bottom: 20.0,
+                                        ),
+                                        child: Text(
+                                          'S/ ${dish.additional.price.toString()}',
+                                          style: bNavbarDescriptionStyle,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      right: 28.0,
+                                      top: 34.0,
+                                      bottom: 34.0,
+                                    ),
+                                    child: AngleRightIcon(
+                                      height: 20.0,
+                                      width: 20.0,
+                                      color: DBColors.GRAY_2,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              color: DBColors.BLUE_LIGHT_5,
+                              thickness: 1.0,
+                              indent: 28.0,
+                              endIndent: 28.0,
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                          ],
+                        ),
+                      )
+                    : SizedBox(
+                        height: 0.1,
+                      ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _botomNavBar() {
     return Container(
       //height: 200.0,
@@ -436,6 +677,37 @@ class _DishDetailState extends State<DishDetail> {
             Text(
               'ACTIVA',
               style: stateOnStyle,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget stateOffBox() {
+    return Flexible(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+        width: 86.0,
+        height: 20.0,
+        decoration: BoxDecoration(
+          color: DBColors.GRAY_4,
+          borderRadius: BorderRadius.circular(100.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: 6.0,
+              width: 6.0,
+              decoration: BoxDecoration(
+                color: DBColors.GRAY_2,
+                borderRadius: BorderRadius.circular(100.0),
+              ),
+            ),
+            Text(
+              'FINALIZADA',
+              style: stateOFFStyle,
             ),
           ],
         ),

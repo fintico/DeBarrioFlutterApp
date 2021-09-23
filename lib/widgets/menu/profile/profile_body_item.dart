@@ -39,13 +39,19 @@ class ProfileBody extends StatelessWidget {
         _profileData(
           subTitle: 'Nombre y Apellidos',
           description: cZeroStr(homeBloc.sellerAddress.seller.user.username)
-              ? homeBloc.sellerAddress.seller.user.username
+              ? homeBloc.sellerAddress.seller.user.username ==
+                      homeBloc.sellerAddress.seller.user.phoneNumber
+                  ? 'No hay información'
+                  : homeBloc.sellerAddress.seller.user.username
               : "No hay información",
         ),
         _profileData(
           subTitle: 'Correo electrónico',
           description: cZeroStr(homeBloc.sellerAddress.seller.user.email)
-              ? homeBloc.sellerAddress.seller.user.email
+              ? homeBloc.sellerAddress.seller.user.email ==
+                      homeBloc.sellerAddress.seller.user.phoneNumber
+                  ? 'No hay información'
+                  : homeBloc.sellerAddress.seller.user.email
               : "No hay información",
         ),
         _profileData(

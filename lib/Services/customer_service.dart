@@ -11,6 +11,23 @@ abstract class CustomerService extends ChopperService {
     'Connection': 'keep-alive',
   };
 
+  @Post(path: '/create/')
+  Future<Response> postCustomer(
+    @Field('user') int userId,
+  );
+
+  @Post(path: '/address/create/')
+  Future<Response> postCustomerAddress(
+    @Field('customer') int customerId,
+    @Field('address') int addressId,
+    @Field('is_active') bool isActive,
+  );
+
+  @Get(path: '/address/detail/{customer_id}')
+  Future<Response> getCustomerDetail(
+    @Path("customer_id") int customerId,
+  );
+
   @Get(path: '/search/list/{customer_id}/')
   Future<Response> customerSearchById(@Path("customer_id") int customerId);
 

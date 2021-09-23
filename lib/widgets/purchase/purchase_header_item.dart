@@ -127,7 +127,7 @@ class PurchaseHeader extends StatelessWidget {
                   left: 9.0, right: 5.0, top: 4.0, bottom: 4.0),
               child: Text(
                 //widget.restaurant.reviews,
-                "0.8 km",
+                "0.0 km",
                 style: numberHeaderStyle,
               ),
             ),
@@ -152,7 +152,7 @@ class PurchaseHeader extends StatelessWidget {
                   left: 8.0, right: 3.0, top: 4.0, bottom: 4.0),
               child: Text(
                 //widget.restaurant.reviews,
-                "5.0",
+                "0.0",
                 style: numberHeaderStyle,
               ),
             ),

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/order.dart';
+import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/providers/payment_method_provider.dart';
 import 'package:debarrioapp/providers/purchase_provider.dart';
 import 'package:debarrioapp/services/order_service.dart';
@@ -16,6 +17,7 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
@@ -73,10 +75,44 @@ class CreditCardPaySplash extends StatelessWidget {
 
   Future addOrder(BuildContext context) async {
     final purchaseBloc = Provider.of<PurchaseBloc>(context, listen: false);
+    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     final paymentMethodBloc =
         Provider.of<PaymentMethodBloc>(context, listen: false);
+    DateTime today = DateTime.now().subtract(Duration(hours: 5));
+    final formatterTo = new DateFormat('yyyy-MM-dd');
+    String deliveryDate = formatterTo.format(today);
     try {
-      Response<dynamic> res =
+      for (var i = 0; i < purchaseBloc.orderDetails.length; i++) {
+        Response<dynamic> res =
+            await Provider.of<OrderService>(context, listen: false).postOrder(
+          purchaseBloc.orderDetails[i].order.isDelivery,
+          purchaseBloc.orderDetails[i].order.isPickup,
+          purchaseBloc.orderDetails[i].order.totalPrice,
+          purchaseBloc.orderDetails[i].order.subtotalPrice,
+          purchaseBloc.tip.toDouble(),
+          1,
+          purchaseBloc.orderDetails[i].order.portion,
+          purchaseBloc.orderDetails[i].order.deliveryDate == null
+              ? deliveryDate
+              : purchaseBloc.orderDetails[i].order.deliveryDate,
+          null,
+          true,
+          false,
+          homeBloc.customerAddress.id,
+          paymentMethodBloc.id,
+        );
+
+        final orderJson = json.decode(res.bodyString).cast<String, dynamic>();
+        Map<String, dynamic> order = new Map<String, dynamic>.from(orderJson);
+        purchaseBloc.onOrder(order['id']);
+
+        await Future.delayed(Duration(milliseconds: 100));
+        await Provider.of<OrderService>(context, listen: false)
+            .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId);
+        await Future.delayed(Duration(milliseconds: 200));
+      }
+
+      /* Response<dynamic> res =
           await Provider.of<OrderService>(context).postOrder(
         purchaseBloc.delivery,
         purchaseBloc.pickup,
@@ -85,25 +121,27 @@ class CreditCardPaySplash extends StatelessWidget {
         purchaseBloc.tip.toDouble(),
         1,
         purchaseBloc.counter,
-        purchaseBloc.deliveryDate,
+        purchaseBloc.deliveryDate == null
+            ? deliveryDate
+            : purchaseBloc.deliveryDate,
         null,
         true,
         false,
-        1,
+        homeBloc.customerAddress.id,
         paymentMethodBloc.id,
-      );
+      ); */
       /* .postOrder(true, false, 15.20, 1, 1, '2021-06-18', true, false, 1); */
       /* final Order order =
           (json.decode(res.bodyString)).map((e) => Order.fromJson(e)).toList();
       print(order.id); */
-      final orderJson = json.decode(res.bodyString).cast<String, dynamic>();
+      /* final orderJson = json.decode(res.bodyString).cast<String, dynamic>();
       Map<String, dynamic> order = new Map<String, dynamic>.from(orderJson);
       purchaseBloc.onOrder(order['id']);
       print(purchaseBloc.orderId);
       await Future.delayed(Duration(milliseconds: 100));
       await Provider.of<OrderService>(context, listen: false)
           .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId);
-      await Future.delayed(Duration(milliseconds: 200));
+      await Future.delayed(Duration(milliseconds: 200)); */
       Routes.sailor.navigate(
         Routes.SPLASH_CONFIRM_ORDER_PLACED_SCREEN,
         navigationType: NavigationType.pushReplace,

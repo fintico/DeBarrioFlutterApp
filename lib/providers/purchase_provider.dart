@@ -69,6 +69,13 @@ class PurchaseBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeAll() {
+    _orderDetail = [];
+    tip = 0;
+    portion = 0;
+    counter = 1;
+  }
+
   void onAddItem(int index) {
     _orderDetail[index].order.portion++;
     orderDetails[index].order.totalPrice +=

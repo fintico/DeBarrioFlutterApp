@@ -23,6 +23,9 @@ abstract class SellerAddressService extends ChopperService {
     @Path("seller") int sellerId,
   );
 
+  @Get(path: '/list/{seller_id}')
+  Future<Response> addressbySeller(@Path("seller_id") int sellerId);
+
   static SellerAddressService create() {
     final client = ChopperClient(
       baseUrl: Url.API_BASE_URL,

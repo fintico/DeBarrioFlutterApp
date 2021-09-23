@@ -18,12 +18,8 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class LocationButton extends StatelessWidget {
-  final int index;
-  final DishModel dishModel;
   final SellerAddress sellerAddress;
-  const LocationButton(
-      {Key key, this.index, this.sellerAddress, this.dishModel})
-      : super(key: key);
+  const LocationButton({Key key, this.sellerAddress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +28,8 @@ class LocationButton extends StatelessWidget {
     return InkWell(
       onTap: () async {
         inspect(sellerAddress.address);
-        inspect(dishModel);
-        await setAddres(context);
-        Routes.sailor.navigate(Routes.DISH_REPUBLISH_SCREEN,
-            navigationType: NavigationType.pushReplace,
-            params: {'dishModel': dishModel, 'address': sellerAddress.address});
+        Navigator.pop(context);
+        //_setAddres();
       },
       child: Container(
         width: double.infinity,
@@ -140,19 +133,11 @@ class LocationButton extends StatelessWidget {
           );
   }
 
-  Future setAddres(BuildContext context) async {
-    if (sellerAddress.id == 1) {
-      final res = await Provider.of<SellerService>(context, listen: false)
-          .updateStateBySeller(1, true);
-      final restwo = await Provider.of<SellerService>(context, listen: false)
-          .updateStateBySeller(2, false);
-    } else {
-      final res = await Provider.of<SellerService>(context, listen: false)
-          .updateStateBySeller(2, true);
-      final restwo = await Provider.of<SellerService>(context, listen: false)
-          .updateStateBySeller(1, false);
-    }
-
-    //print(res.bodyString);
+  _setAddres() async {
+    /* Routes.sailor.navigate(
+      Routes.DISH_PUBLISH_SCREEN,
+      navigationType: NavigationType.push,
+      //params: {'dishModel': dishModel, 'address': sellerAddress.address},
+    ); */
   }
 }

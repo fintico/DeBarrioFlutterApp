@@ -5,7 +5,11 @@ import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/Screens/calendar_splash.dart';
 import 'package:debarrioapp/Screens/nav_drawer.dart';
 import 'package:debarrioapp/Screens/paysplash.dart';
+import 'package:debarrioapp/models/customer_address.dart';
+import 'package:debarrioapp/services/customer_service.dart';
+import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/seller_address.dart';
+import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/providers/purchase_provider.dart';
 import 'package:debarrioapp/services/seller_address_service.dart';
 import 'package:debarrioapp/models/seller_detail.dart';
@@ -255,6 +259,7 @@ class _HomePageState extends State<HomePage> {
   _fetchData() async {
     await _getUserData();
     await _getRestaurants();
+    await _getPosts();
   }
 
   Future _getRestaurants() async {
@@ -295,12 +300,29 @@ class _HomePageState extends State<HomePage> {
       SellerAddress sellerAddress = SellerAddress.fromRawJson(res.bodyString);
       homeBloc.onSetSellerAddress(sellerAddress);
 
-      //address = sellerAddress.address.address;
+      Response<dynamic> resCustomer =
+          await Provider.of<CustomerService>(context, listen: false)
+              .getCustomerDetail(prefs.userId);
+      CustomerAddress customerAddress =
+          CustomerAddress.fromRawJson(resCustomer.bodyString);
+      homeBloc.onSetCustomerAddress(customerAddress);
+      print(homeBloc.customerAddress.id);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
-      //latitude = sellerAddress.address.latitude;
-      //longitude = sellerAddress.address.longitude;
-      //moveCamera(latitude, longitude);
-      //inspect(homeBloc.sellerAddress);
+  Future _getPosts() async {
+    try {
+      final dishProvider = Provider.of<DishProvider>(context, listen: false);
+
+      Response<dynamic> res =
+          await Provider.of<DishService>(context, listen: false).getDishList();
+
+      List<DishModel> dishList = (json.decode(res.bodyString) as List)
+          .map((e) => DishModel.fromJson(e))
+          .toList();
+      dishProvider.setList(dishList);
     } catch (e) {
       print(e.toString());
     }

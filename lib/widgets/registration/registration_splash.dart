@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/models/auth.dart';
 import 'package:debarrioapp/services/register_service.dart';
@@ -90,6 +90,9 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
 
     await Provider.of<SellerService>(context, listen: false)
         .postSeller(auth.data.id);
+
+    await Provider.of<CustomerService>(context, listen: false)
+        .postCustomer(auth.data.id);
 
     inspect(auth);
     prefs.username = auth.data.username;

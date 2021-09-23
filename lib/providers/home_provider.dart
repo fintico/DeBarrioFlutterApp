@@ -1,3 +1,4 @@
+import 'package:debarrioapp/models/customer_address.dart';
 import 'package:debarrioapp/models/seller_address.dart';
 import 'package:debarrioapp/models/seller_detail.dart';
 import 'package:debarrioapp/models/seller_dish.dart';
@@ -12,6 +13,10 @@ class HomeBloc extends ChangeNotifier {
   int day = 0;
   String deliveryDate;
   SellerAddress sellerAddress;
+  CustomerAddress customerAddress;
+
+  //location
+  int addressId;
 
   List<SellerDish> sellers;
   List<SellerDetail> seller;
@@ -55,12 +60,27 @@ class HomeBloc extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onSetCustomerAddress(CustomerAddress customerAddressTemp) {
+    customerAddress = customerAddressTemp;
+    notifyListeners();
+  }
+
   void removeAll() {
     deliveryType = 0;
     dishType = 0;
     dishStyle = 0;
     lifeStyle = 0;
     day = 0;
+    notifyListeners();
+  }
+
+  void onAddressId(int id) {
+    addressId = id;
+    notifyListeners();
+  }
+
+  void removeAddressId() {
+    addressId = 0;
     notifyListeners();
   }
 }

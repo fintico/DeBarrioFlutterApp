@@ -4,6 +4,7 @@ import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/order_detail.dart';
 import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/services/order_service.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:chopper/chopper.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +41,10 @@ class SalePage extends StatelessWidget {
   }
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-      future: Provider.of<OrderService>(context).ordersDetailbySeller(27),
+      future:
+          Provider.of<OrderService>(context).ordersDetailbySeller(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

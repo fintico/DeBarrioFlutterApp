@@ -166,7 +166,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                             bottom: 4.0),
                                         child: Text(
                                           //widget.restaurant.reviews,
-                                          "5.0",
+                                          "0.0",
                                           style: numberCardStyle,
                                         ),
                                       ),
@@ -199,7 +199,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                             top: 4.0,
                                             bottom: 4.0),
                                         child: Text(
-                                          "80",
+                                          "00",
                                           style: numberCardStyle,
                                         ),
                                       ),
@@ -231,7 +231,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                             top: 4.0,
                                             bottom: 4.0),
                                         child: Text(
-                                          "0.8",
+                                          "0.0",
                                           style: numberCardStyle,
                                         ),
                                       ),

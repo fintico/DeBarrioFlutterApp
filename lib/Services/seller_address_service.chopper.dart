@@ -31,4 +31,10 @@ class _$SellerAddressService extends SellerAddressService {
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
+
+  Future<Response> addressbySeller(int sellerId) {
+    final $url = '/seller_address/list/${sellerId}';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
 }

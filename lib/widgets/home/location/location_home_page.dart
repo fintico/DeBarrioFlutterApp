@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/home_provider.dart';
+import 'package:debarrioapp/routers/router.dart';
+import 'package:debarrioapp/services/seller_address_service.dart';
 import 'package:debarrioapp/models/seller_address.dart';
-import 'package:debarrioapp/services/seller_service.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/home/location/location_button_item.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/services/location_service.dart';
@@ -14,6 +17,7 @@ import 'package:debarrioapp/providers/location_provider.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sailor/sailor.dart';
 
 import 'location_style.dart';
 
@@ -114,36 +118,11 @@ class HomeLocation extends StatelessWidget {
     );
   }
 
-  Future getLocation(
-      BuildContext context, LocationProvider locationProvider) async {
-    try {
-      //print('hola');
-      Response<dynamic> res =
-          await Provider.of<LocationService>(context, listen: false)
-              .getLocationList();
-      //print(res.bodyString);
-      //List<dynamic> jsonBody = json.decode(res.bodyString);
-      List<LocationModel> locationModel = (json.decode(res.bodyString) as List)
-          .map((e) => LocationModel.fromJson(e))
-          .toList();
-      //inspect(locationModel);
-      locationProvider.location(locationModel);
-      //inspect(dishModel);
-      //inspect(dishModel[0]);
-      //inspect(DishModel());
-      //DishModel dishModel;
-      //print(dishModel.toJson());
-
-      //print(dishModel);
-      //inspect(dishModel);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-        future: Provider.of<SellerService>(context).addressbySeller(27),
+        future: Provider.of<SellerAddressService>(context)
+            .addressbySeller(prefs.userId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -164,8 +143,24 @@ class HomeLocation extends StatelessWidget {
 
   ListView _buildAddress(
       BuildContext context, List<SellerAddress> sellerAddress) {
+    final homeBloc = Provider.of<HomeBloc>(context);
     return ListView.builder(
-        itemCount: /* sellerAddress.length */ 3,
-        itemBuilder: (context, index) => LocationButtonItem());
+        itemCount: sellerAddress.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              homeBloc.onAddressId(sellerAddress[index].address.id);
+              Routes.sailor.navigate(
+                Routes.HOME_SCREEN,
+                navigationType: NavigationType.pushReplace,
+                removeUntilPredicate: (route) => true,
+              );
+              homeBloc.removeAddressId();
+            },
+            child: LocationButtonItem(
+              sellerAddress: sellerAddress[index],
+            ),
+          );
+        });
   }
 }

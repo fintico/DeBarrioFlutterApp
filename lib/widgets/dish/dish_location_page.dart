@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/services/seller_address_service.dart';
 import 'package:debarrioapp/models/address.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/seller_address.dart';
 import 'package:debarrioapp/services/seller_service.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/dish/location_button.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/services/location_service.dart';
@@ -21,12 +23,10 @@ import 'package:provider/provider.dart';
 import 'dish_style.dart';
 
 class DishLocation extends StatelessWidget {
-  final DishModel dishModel;
-  const DishLocation({Key key, this.dishModel}) : super(key: key);
+  const DishLocation({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-/*     final locationProvider = Provider.of<LocationProvider>(context); */
     final appBar = PreferredSize(
       child: AppBarOptionFive(
         leftIconAction: () => Navigator.pop(context),
@@ -118,36 +118,11 @@ class DishLocation extends StatelessWidget {
     );
   }
 
-  Future getLocation(
-      BuildContext context, LocationProvider locationProvider) async {
-    try {
-      //print('hola');
-      Response<dynamic> res =
-          await Provider.of<LocationService>(context, listen: false)
-              .getLocationList();
-      //print(res.bodyString);
-      //List<dynamic> jsonBody = json.decode(res.bodyString);
-      List<LocationModel> locationModel = (json.decode(res.bodyString) as List)
-          .map((e) => LocationModel.fromJson(e))
-          .toList();
-      //inspect(locationModel);
-      locationProvider.location(locationModel);
-      //inspect(dishModel);
-      //inspect(dishModel[0]);
-      //inspect(DishModel());
-      //DishModel dishModel;
-      //print(dishModel.toJson());
-
-      //print(dishModel);
-      //inspect(dishModel);
-    } catch (e) {
-      print(e);
-    }
-  }
-
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-        future: Provider.of<SellerService>(context).addressbySeller(27),
+        future: Provider.of<SellerAddressService>(context)
+            .addressbySeller(prefs.userId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
@@ -171,9 +146,7 @@ class DishLocation extends StatelessWidget {
     return ListView.builder(
       itemCount: sellerAddress.length,
       itemBuilder: (context, index) => LocationButton(
-        index: index,
         sellerAddress: sellerAddress[index],
-        dishModel: dishModel,
       ),
     );
   }

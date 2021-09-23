@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:debarrioapp/ServicesFire/FirebaseStorageService.dart';
 import 'package:debarrioapp/models/additionalDish.dart';
 import 'package:debarrioapp/models/dish.dart';
+import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
@@ -22,6 +23,7 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 import '../../utilProperties.dart';
@@ -58,6 +60,7 @@ class _DishPublishState extends State<DishPublish> {
 
   @override
   Widget build(BuildContext context) {
+    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     final appBar = PreferredSize(
         child: AppBarOptionSix(
           headerTitle: 'Publicar venta',
@@ -94,7 +97,7 @@ class _DishPublishState extends State<DishPublish> {
                         _deliveryTime(),
                         _priceByDelivery(),
                         _priceByPickUp(),
-                        _salesAddress(),
+                        _salesAddress(homeBloc),
                       ],
                     ),
                   ),
@@ -122,8 +125,8 @@ class _DishPublishState extends State<DishPublish> {
               padding: const EdgeInsets.all(28.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image(
-                  image: NetworkImage(dish.urlImage),
+                child: Image.file(
+                  dish.dishImageFile,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -480,7 +483,7 @@ class _DishPublishState extends State<DishPublish> {
     );
   }
 
-  Widget _salesAddress() {
+  Widget _salesAddress(HomeBloc homeBloc) {
     return Container(
       padding: const EdgeInsets.only(
           left: 28.0, right: 28.0, top: 32.0, bottom: 32.0),
@@ -499,19 +502,20 @@ class _DishPublishState extends State<DishPublish> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: userAppData.address,
+          hintText: homeBloc.sellerAddress.address.address,
           hintStyle: TextStyle(
             color: cZeroStr(
-              userAppData.address,
+              homeBloc.sellerAddress.address.address,
             )
                 ? DBColors.BLACK
                 : DBColors.GRAY_2,
           ),
           labelText: 'Dirección para la venta',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: cZeroStr(userAppData.address)
-              ? FloatingLabelBehavior.always
-              : null,
+          floatingLabelBehavior:
+              cZeroStr(homeBloc.sellerAddress.address.address)
+                  ? FloatingLabelBehavior.always
+                  : null,
           fillColor: DBColors.GREEN,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
@@ -925,8 +929,10 @@ class _DishPublishState extends State<DishPublish> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
+        dish.dishImageFile = _imageFile;
+        dish.urlImage = pickedFile.path;
       });
-      uploadImage();
+      //uploadImage();
     } else {
       print('nope');
     }
@@ -953,6 +959,24 @@ class _DishPublishState extends State<DishPublish> {
     if (!cZeroStr(dish.dishName)) {
       print('Please select a dish name');
       inspect(dish);
+      return;
+    } else if (dish.dishImageFile == null) {
+      print('Please select an image');
+      return;
+    } else if (dish.dishStock == null) {
+      print('Please select a stock');
+      return;
+    } else if (dish.dishCategory == null) {
+      print('Please select a category');
+      return;
+    } else if (!cZeroStr(dish.dishDeliveryDate)) {
+      print('Please select a date');
+      return;
+    } else if (dish.dishDeliveryPrice == null) {
+      print('Please select a delivery price');
+      return;
+    } else if (dish.dishPickUpPrice == null) {
+      print('Please select a pickup price');
       return;
     } else {
       print('ready');

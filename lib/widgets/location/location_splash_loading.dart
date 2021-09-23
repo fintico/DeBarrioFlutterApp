@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/services/seller_address_service.dart';
 import 'package:debarrioapp/models/address.dart';
@@ -92,6 +93,9 @@ class _LocationSplashState extends State<LocationSplash> {
 
       await Provider.of<SellerAddressService>(context, listen: false)
           .postSellerAddress(prefs.userId, address.id, true);
+
+      await Provider.of<CustomerService>(context, listen: false)
+          .postCustomerAddress(prefs.userId, address.id, true);
 
       await Future.delayed(Duration(milliseconds: 200));
 

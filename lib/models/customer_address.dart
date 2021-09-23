@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'address.dart';
 import 'customer.dart';
 
@@ -27,4 +29,9 @@ class CustomerAddress {
       'address': address?.toJson(),
     };
   }
+
+  factory CustomerAddress.fromRawJson(String str) =>
+      CustomerAddress.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 }

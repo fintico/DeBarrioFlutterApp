@@ -195,7 +195,9 @@ class _DishAdditionalState extends State<DishAdditional> {
         additionalDish.isFree,
       );
       print(res.bodyString);
-      if (res.statusCode == 201) {
+      Map<String, dynamic> jsonMap = json.decode(res.bodyString);
+      dish.dishAdditional = jsonMap["id"];
+      /* if (res.statusCode == 201) {
         //print(res.body);
         //inspect(res.body);
         final jsonBody = json.decode(res.bodyString).cast<String, dynamic>();
@@ -211,7 +213,7 @@ class _DishAdditionalState extends State<DishAdditional> {
         //inspect(AdditionalModel);
       } else {
         print('nel');
-      }
+      } */
       //print('DISH');
       //inspect(AdditionalModel());
       /*var add = new AdditionalDish();

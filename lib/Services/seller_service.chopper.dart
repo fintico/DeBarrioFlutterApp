@@ -14,12 +14,6 @@ class _$SellerService extends SellerService {
 
   final definitionType = SellerService;
 
-  Future<Response> addressbySeller(int sellerId) {
-    final $url = '/seller/address/list/${sellerId}';
-    final $request = Request('GET', $url, client.baseUrl);
-    return client.send<dynamic, dynamic>($request);
-  }
-
   Future<Response> getDishesBySeller() {
     final $url = '/seller/dish/list/';
     final $request = Request('GET', $url, client.baseUrl);
@@ -40,6 +34,13 @@ class _$SellerService extends SellerService {
     final $url = '/seller/create/';
     final $body = {'user': userId};
     final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> putSeller(int userId, String restaurantName) {
+    final $url = '/seller/update/${userId}/';
+    final $body = {'restaurant_name': restaurantName};
+    final $request = Request('PUT', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 

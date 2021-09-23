@@ -6,8 +6,6 @@ part 'register_service.chopper.dart';
 
 @ChopperApi(baseUrl: '/auth')
 abstract class RegisterService extends ChopperService {
-  //static const API_BASE_URL = 'http://10.0.2.2:8000';
-  //static const API_BASE_URL = 'http://e1a24879338c.ngrok.io';
   static var customHeaders = {
     'Accept': '*/*',
     'Cache-Control': 'no-cache',

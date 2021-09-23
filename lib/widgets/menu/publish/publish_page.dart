@@ -5,6 +5,7 @@ import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/providers/dish_provider.dart';
 import 'package:debarrioapp/services/dish_service.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/menu/publish/publish_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +39,10 @@ class PublishPage extends StatelessWidget {
   }
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-      future: Provider.of<DishService>(context).getDishList(),
+      future:
+          Provider.of<DishService>(context).getDishBySellerList(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           /* if (snapshot.hasError) {

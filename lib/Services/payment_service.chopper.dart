@@ -26,8 +26,14 @@ class _$PaymentService extends PaymentService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> postCreditCardCreate(String cardNumber, String cardHolder,
-      String expiredDate, String cvv, bool isDeleted, int cardTypeId) {
+  Future<Response> postCreditCardCreate(
+      String cardNumber,
+      String cardHolder,
+      String expiredDate,
+      String cvv,
+      bool isDeleted,
+      int cardTypeId,
+      int customerId) {
     final $url = '/payment/credit_card/create/';
     final $body = {
       'card_number': cardNumber,
@@ -35,7 +41,8 @@ class _$PaymentService extends PaymentService {
       'expired_date': expiredDate,
       'cvv': cvv,
       'is_deleted': isDeleted,
-      'card_type': cardTypeId
+      'card_type': cardTypeId,
+      'customer': customerId
     };
     final $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);

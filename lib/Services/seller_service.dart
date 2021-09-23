@@ -13,9 +13,6 @@ abstract class SellerService extends ChopperService {
     'Connection': 'keep-alive',
   };
 
-  @Get(path: '/address/list/{seller_id}')
-  Future<Response> addressbySeller(@Path("seller_id") int sellerId);
-
   @Get(path: '/dish/list/')
   Future<Response> getDishesBySeller();
 
@@ -28,6 +25,12 @@ abstract class SellerService extends ChopperService {
   @Post(path: '/create/')
   Future<Response> postSeller(
     @Field('user') int userId,
+  );
+
+  @Put(path: '/update/{user_id}/')
+  Future<Response> putSeller(
+    @Path("user_id") int userId,
+    @Field('restaurant_name') String restaurantName,
   );
 
   @Put(path: '/address/update/{id}/')

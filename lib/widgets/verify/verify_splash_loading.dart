@@ -24,12 +24,14 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: _buildBodyLoading(context),
+        body: verificationLoadingSplash(),
       ),
     );
   }
 
   FutureBuilder<Response> _buildBodyLoading(context) {
+    print(userAppData.verificationCode);
+    print(userAppData.phoneNumber);
     return FutureBuilder<Response>(
         future: Provider.of<RegisterService>(context).postVerifyCode(
             userAppData.verificationCode, userAppData.phoneNumber),
@@ -37,29 +39,39 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.error != null) {
               userAppData.verificationCode = '';
+              print('error data');
               return VerifySMSPage(
-                  args: VerifySMSPageArgs(
-                      verifyType: 'REGISTER',
-                      error: true,
-                      errorMsg: snapshot.error.toString()));
+                args: VerifySMSPageArgs(
+                  verifyType: 'REGISTER',
+                  error: true,
+                  errorMsg: snapshot.error.toString(),
+                ),
+              );
             } else {
-              Map<String, dynamic> jsonMap =
+              print('estoy listo');
+              /* Map<String, dynamic> jsonMap =
                   json.decode(snapshot.data.bodyString);
               userAppData.accessToken = jsonMap["data"]["access"];
-              userAppData.refreshToken = jsonMap["data"]["refresh"];
-              var successSplashBuilder = FutureBuilder(
+              userAppData.refreshToken = jsonMap["data"]["refresh"]; */
+              /* var successSplashBuilder = FutureBuilder(
                   future: Future.delayed(const Duration(seconds: 3), () {
                     _navigateLocationRegistration();
                   }),
                   builder: (context, snapshot) {
                     return verificationSuccessSplash();
-                  });
-              return successSplashBuilder;
+                  }); */
+              return verificationSuccess();
             }
           } else {
             return verificationLoadingSplash();
           }
         });
+  }
+
+  verificationSuccess() async {
+    verificationSuccessSplash();
+    await Future.delayed(const Duration(seconds: 3));
+    _navigateLocationRegistration();
   }
 
   void _navigateLocationRegistration() {
@@ -110,6 +122,7 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
   }
 
   Widget verificationLoadingSplash() {
+    submitVericationCode();
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
@@ -147,5 +160,18 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
         ),
       ),
     );
+  }
+
+  submitVericationCode() async {
+    try {
+      await Provider.of<RegisterService>(context).postVerifyCode(
+        userAppData.verificationCode,
+        userAppData.phoneNumber,
+      );
+      Future.delayed(const Duration(seconds: 1));
+      verificationSuccess();
+    } catch (e) {
+      print(e);
+    }
   }
 }

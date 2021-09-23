@@ -1,3 +1,4 @@
+import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/providers/profile_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
@@ -40,12 +41,18 @@ class ProfileUpdate extends StatelessWidget {
               ),
               ProfileTextField(
                 title: 'Nombre y apellidos',
-                description: homeBloc.sellerAddress.seller.user.username,
+                description: homeBloc.sellerAddress.seller.user.username ==
+                        homeBloc.sellerAddress.seller.user.phoneNumber
+                    ? ''
+                    : homeBloc.sellerAddress.seller.user.username,
                 fieldType: 2,
               ),
               ProfileTextField(
                 title: 'Correo electrónico',
-                description: homeBloc.sellerAddress.seller.user.email,
+                description: homeBloc.sellerAddress.seller.user.email ==
+                        homeBloc.sellerAddress.seller.user.phoneNumber
+                    ? ''
+                    : homeBloc.sellerAddress.seller.user.email,
                 fieldType: 3,
               ),
               ProfileTextField(
@@ -61,12 +68,13 @@ class ProfileUpdate extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: _bottomNavBtn(profileBloc, homeBloc),
+        bottomNavigationBar: _bottomNavBtn(context, profileBloc, homeBloc),
       ),
     );
   }
 
-  _bottomNavBtn(ProfileBloc profileBloc, HomeBloc homeBloc) {
+  _bottomNavBtn(
+      BuildContext context, ProfileBloc profileBloc, HomeBloc homeBloc) {
     return Container(
       padding: EdgeInsets.only(
         left: 28.0,
@@ -77,7 +85,7 @@ class ProfileUpdate extends StatelessWidget {
       child: GenericButtonOrange(
         action: () {
           print('editar perfil');
-          _validateForm(profileBloc, homeBloc);
+          _validateForm(context, profileBloc, homeBloc);
           profileBloc.onUpdated();
         },
         disable: false,
@@ -86,7 +94,8 @@ class ProfileUpdate extends StatelessWidget {
     );
   }
 
-  _validateForm(ProfileBloc profileBloc, HomeBloc homeBloc) {
+  _validateForm(
+      BuildContext context, ProfileBloc profileBloc, HomeBloc homeBloc) async {
     if (!cZeroStr(profileBloc.restaurantName) &&
         !cZeroStr(homeBloc.sellerAddress.seller.restaurantName)) {
       print('Ingresa el restaurant');
@@ -110,6 +119,10 @@ class ProfileUpdate extends StatelessWidget {
     Routes.sailor.navigate(
       Routes.PROFILE_HOME_SCREEN,
       navigationType: NavigationType.pushReplace,
+    );
+    await Provider.of<SellerService>(context, listen: false).putSeller(
+      homeBloc.sellerAddress.seller.user.id,
+      homeBloc.sellerAddress.seller.restaurantName,
     );
   }
 }

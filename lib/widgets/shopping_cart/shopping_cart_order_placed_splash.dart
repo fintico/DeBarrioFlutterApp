@@ -17,7 +17,7 @@ class ShoppingCartOrderPlacedSplash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purchaseBloc = Provider.of<PurchaseBloc>(context);
+    final purchaseBloc = Provider.of<PurchaseBloc>(context, listen: false);
     final appBar = PreferredSize(
         child: Container(
           child: AppBarOptionOne(
@@ -130,11 +130,15 @@ class ShoppingCartOrderPlacedSplash extends StatelessWidget {
                           child: GenericButtonWhite(
                             text: 'MIS PEDIDOS',
                             disable: false,
-                            action: () => Routes.sailor.navigate(
-                              Routes.ORDER_HOME_PAGE_SCREEN,
-                              navigationType: NavigationType.pushReplace,
-                              removeUntilPredicate: (route) => true,
-                            ),
+                            action: () {
+                              purchaseBloc.removeAll();
+                              purchaseBloc.removeAllOrder();
+                              Routes.sailor.navigate(
+                                Routes.ORDER_HOME_PAGE_SCREEN,
+                                navigationType: NavigationType.pushReplace,
+                                removeUntilPredicate: (route) => true,
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -147,11 +151,15 @@ class ShoppingCartOrderPlacedSplash extends StatelessWidget {
                           child: GenericButtonOrange(
                             text: 'INICIO',
                             disable: false,
-                            action: () => Routes.sailor.navigate(
-                              Routes.HOME_SCREEN,
-                              navigationType: NavigationType.pushReplace,
-                              removeUntilPredicate: (route) => true,
-                            ),
+                            action: () {
+                              purchaseBloc.removeAll();
+                              purchaseBloc.removeAllOrder();
+                              Routes.sailor.navigate(
+                                Routes.HOME_SCREEN,
+                                navigationType: NavigationType.pushReplace,
+                                removeUntilPredicate: (route) => true,
+                              );
+                            },
                           ),
                         ),
                       ),

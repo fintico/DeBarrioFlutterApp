@@ -24,6 +24,7 @@ abstract class PaymentService extends ChopperService {
     @Field('cvv') String cvv,
     @Field('is_deleted') bool isDeleted,
     @Field('card_type') int cardTypeId,
+    @Field('customer') int customerId,
   );
 
   @Put(path: '/credit_card/update/state/{id}/')

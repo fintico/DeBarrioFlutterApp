@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/services/dish_service.dart';
@@ -67,7 +69,6 @@ class RepublishSplash extends StatelessWidget {
           .updateDish(
               dishModel.id,
               dishModel.dishName,
-              dishModel.image,
               dishModel.stock,
               dishModel.deliveryDate,
               dishModel.deliveryTimeFrom,
@@ -78,7 +79,7 @@ class RepublishSplash extends StatelessWidget {
               dishModel.isDeleted,
               dishModel.seller.id,
               dishModel.dishCategory.id,
-              dishModel.additional.id,
+              dishModel.additional == null ? null : dishModel.additional.id,
               dishModel.address.id);
       Routes.sailor.navigate(
         Routes.DISH_LIST_SCREEN,

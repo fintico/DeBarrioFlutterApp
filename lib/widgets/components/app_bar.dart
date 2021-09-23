@@ -1,3 +1,4 @@
+import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -144,13 +145,13 @@ class AppBarWidget extends StatelessWidget {
                     height: 12.0,
                   ),
           ),
-          /* Container(
+          Container(
             child: args.profileLogo
                 ? _getProfile(context)
                 : Container(
                     height: 0.0,
                   ),
-          ) */
+          )
         ],
       ),
     );
@@ -231,9 +232,10 @@ class AppBarWidget extends StatelessWidget {
     );
   }
 
-  /*  Widget _getProfile(BuildContext context) {
-    User user;
-    user = Provider.of<User>(context);
+  Widget _getProfile(BuildContext context) {
+    //User user;
+    //user = Provider.of<User>(context);
+    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -241,10 +243,10 @@ class AppBarWidget extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: 60.0,
-            backgroundImage: cZeroStr(user.pictureUri)
-                ? NetworkImage(user.pictureUri)
+            backgroundImage: cZeroStr(homeBloc.sellerAddress.seller.urlImage)
+                ? NetworkImage(homeBloc.sellerAddress.seller.urlImage)
                 : null,
-            child: cZeroStr(user.pictureUri)
+            child: cZeroStr(homeBloc.sellerAddress.seller.urlImage)
                 ? null
                 : SvgPicture.asset(
                     'assets/images/user.svg',
@@ -257,7 +259,12 @@ class AppBarWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(14.0),
           child: Text(
-            cZeroStr(user.name) ? user.name : "No establecido",
+            cZeroStr(homeBloc.sellerAddress.seller.user.username)
+                ? homeBloc.sellerAddress.seller.user.username ==
+                        homeBloc.sellerAddress.seller.user.phoneNumber
+                    ? 'No hay información'
+                    : homeBloc.sellerAddress.seller.user.username
+                : "No hay información",
             textAlign: TextAlign.center,
             style: DBStyles.getStyle(
               DBStyles.WHITE,
@@ -270,5 +277,5 @@ class AppBarWidget extends StatelessWidget {
         ),
       ],
     );
-  } */
+  }
 }

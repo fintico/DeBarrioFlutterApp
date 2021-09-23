@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/menu/order/order_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:chopper/chopper.dart';
@@ -39,8 +40,10 @@ class HomeOrderPage extends StatelessWidget {
   }
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-      future: Provider.of<OrderService>(context).ordersDetailbyCustomer(26),
+      future: Provider.of<OrderService>(context)
+          .ordersDetailbyCustomer(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

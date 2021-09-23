@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class Dish {
   static final Dish _dish = new Dish._internal();
 
@@ -12,6 +14,7 @@ class Dish {
   double dishPickUpPrice;
   int dishAddress;
   int dishAdditional;
+  File dishImageFile;
 
   String category;
   String date;

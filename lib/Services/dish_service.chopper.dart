@@ -16,7 +16,6 @@ class _$DishService extends DishService {
 
   Future<Response> postSellerDish(
       String dishName,
-      String urlImage,
       int stock,
       String deliveryDate,
       String deliveryFromTime,
@@ -30,7 +29,6 @@ class _$DishService extends DishService {
     final $url = '/dish/create/';
     final $body = {
       'dish_name': dishName,
-      'image': urlImage,
       'stock': stock,
       'delivery_date': deliveryDate,
       'delivery_time_from': deliveryFromTime,
@@ -43,6 +41,17 @@ class _$DishService extends DishService {
       'address': addressId
     };
     final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> updateDishImage(int dishId, String urlImage, String url) {
+    final $url = '/dish/update/image/${dishId}/';
+    final $parts = <PartValue>[
+      PartValue<String>('urlImage', urlImage),
+      PartValueFile<String>('urlImage', url)
+    ];
+    final $request =
+        Request('PUT', $url, client.baseUrl, parts: $parts, multipart: true);
     return client.send<dynamic, dynamic>($request);
   }
 
@@ -68,7 +77,6 @@ class _$DishService extends DishService {
   Future<Response> updateDish(
       int dishId,
       String dishName,
-      String urlImage,
       int stock,
       String deliveryDate,
       String deliveryFromTime,
@@ -84,7 +92,6 @@ class _$DishService extends DishService {
     final $url = '/dish/update/${dishId}';
     final $body = {
       'dish_name': dishName,
-      'image': urlImage,
       'stock': stock,
       'delivery_date': deliveryDate,
       'delivery_time_from': deliveryFromTime,
@@ -104,6 +111,12 @@ class _$DishService extends DishService {
 
   Future<Response> getDishList() {
     final $url = '/dish/list/';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> getDishBySellerList(int sellerId) {
+    final $url = '/dish/seller/list/${sellerId}/';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }

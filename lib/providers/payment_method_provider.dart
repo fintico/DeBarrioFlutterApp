@@ -8,6 +8,7 @@ class PaymentMethodBloc extends ChangeNotifier {
   int indexCreditCard;
   int id;
   List<CreditCard> _creditCards = [];
+  bool isPaying = false;
 
   void onCreditCard(int index) {
     indexCreditCard = index + 1;
@@ -18,6 +19,11 @@ class PaymentMethodBloc extends ChangeNotifier {
   void onId(int idTemp) {
     id = idTemp;
     print(id);
+    notifyListeners();
+  }
+
+  void onPaying(bool value) {
+    isPaying = value;
     notifyListeners();
   }
 

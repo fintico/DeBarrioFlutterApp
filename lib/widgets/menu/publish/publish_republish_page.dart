@@ -93,7 +93,7 @@ class _RepublishPageState extends State<RepublishPage> {
   @override
   void initState() {
     // TODO: implement initState
-    inspect(widget.address);
+    //inspect(widget.address);
     inspect(widget.dishModel);
     if (widget.address == null) {
       print('aea');
@@ -562,9 +562,10 @@ class _RepublishPageState extends State<RepublishPage> {
       child: TextField(
         readOnly: true,
         onTap: () {
-          Routes.sailor.navigate(Routes.LOCATION_CHANGE_PAGE,
-              navigationType: NavigationType.push,
-              params: {'dishModel': widget.dishModel});
+          Routes.sailor.navigate(
+            Routes.LOCATION_CHANGE_PAGE,
+            navigationType: NavigationType.push,
+          );
         },
         style: labelInput,
         decoration: InputDecoration(
@@ -1038,9 +1039,7 @@ class _RepublishPageState extends State<RepublishPage> {
         ? double.parse(pricePickup)
         : widget.dishModel.pricePickup;
     dish.additional = widget.dishModel.additional;
-    dish.address = cZeroStr(widget.address.address)
-        ? widget.address
-        : widget.dishModel.address;
+    dish.address = widget.dishModel.address;
     dish.image = widget.dishModel.image;
     dish.seller = widget.dishModel.seller;
     dish.id = widget.dishModel.id;

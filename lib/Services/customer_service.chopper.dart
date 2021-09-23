@@ -14,6 +14,31 @@ class _$CustomerService extends CustomerService {
 
   final definitionType = CustomerService;
 
+  Future<Response> postCustomer(int userId) {
+    final $url = '/customer/create/';
+    final $body = {'user': userId};
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> postCustomerAddress(
+      int customerId, int addressId, bool isActive) {
+    final $url = '/customer/address/create/';
+    final $body = {
+      'customer': customerId,
+      'address': addressId,
+      'is_active': isActive
+    };
+    final $request = Request('POST', $url, client.baseUrl, body: $body);
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  Future<Response> getCustomerDetail(int customerId) {
+    final $url = '/customer/address/detail/${customerId}';
+    final $request = Request('GET', $url, client.baseUrl);
+    return client.send<dynamic, dynamic>($request);
+  }
+
   Future<Response> customerSearchById(int customerId) {
     final $url = '/customer/search/list/${customerId}/';
     final $request = Request('GET', $url, client.baseUrl);

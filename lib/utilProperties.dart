@@ -1,7 +1,7 @@
 List<String> category = [
-  'Peruana',
   'Marina',
   'Fusión',
+  'Peruana',
 ];
 
 List<String> dayTime = [

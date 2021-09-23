@@ -99,6 +99,14 @@ TextStyle stateOnStyle = DBStyle.getStyle(
   DBStyle.FONT_WEIGHT_BOLD,
 );
 
+TextStyle stateOFFStyle = DBStyle.getStyle(
+  DBStyle.GRAY_2,
+  DBStyle.FONT_SYZE_XS,
+  DBStyle.FONT_HEIGHT_XS,
+  0.0,
+  DBStyle.FONT_WEIGHT_BOLD,
+);
+
 TextStyle descriptionDishStyle = DBStyle.getStyle(
   DBStyle.BLACK,
   DBStyle.FONT_SYZE_H3,

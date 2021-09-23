@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/components/icons/cross.dart';
 import 'package:debarrioapp/widgets/components/icons/plus_circle.dart';
 import 'package:debarrioapp/widgets/components/icons/radio_active.dart';
@@ -48,8 +49,10 @@ class PaymentMethodPage extends StatelessWidget {
   }
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
+    final prefs = new UserPreferences();
     return FutureBuilder(
-      future: Provider.of<PaymentService>(context).getCreditCards(),
+      future: Provider.of<PaymentService>(context)
+          .getCreditCardByCustomer(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

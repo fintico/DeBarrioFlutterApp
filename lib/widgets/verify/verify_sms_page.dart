@@ -158,11 +158,15 @@ class _VerifySMSPageState extends State<VerifySMSPage> {
                 textStyle: otpTextStyle,
               ),
               onCodeChanged: (val) {
+                print(val);
                 userAppData.verificationCode = val;
-                if (!widget.args.error && val.length == 6) {
+                if (!widget.args.error &&
+                    userAppData.verificationCode.length == 6) {
+                  print('codigo enviado');
                   Routes.sailor.navigate(
-                      Routes.SPLASH_LOADING_VERIFICATION_SMS_SCREEN,
-                      navigationType: NavigationType.pushReplace);
+                    Routes.SPLASH_LOADING_VERIFICATION_SMS_SCREEN,
+                    navigationType: NavigationType.pushReplace,
+                  );
                 }
               },
             ),

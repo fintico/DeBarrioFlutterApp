@@ -1,10 +1,12 @@
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/payment_method_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/services/dish_service.dart';
 import 'package:debarrioapp/services/payment_service.dart';
 import 'package:debarrioapp/utils/screen_size_reducers.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
@@ -66,25 +68,33 @@ class CreditCardAddSplash extends StatelessWidget {
   }
 
   Future addCreditCard(BuildContext context) async {
+    final paymentMethodBloc =
+        Provider.of<PaymentMethodBloc>(context, listen: false);
+    final prefs = new UserPreferences();
     try {
-      /*  Response<dynamic> res = */ await Provider.of<PaymentService>(context)
-          .postCreditCardCreate(
+      await Provider.of<PaymentService>(context).postCreditCardCreate(
         creditCard.cardNumber,
         creditCard.cardHolderName,
         creditCard.expiryDate,
         creditCard.cvvCode,
         false,
         int.parse(creditCard.brand) ?? null,
+        prefs.userId,
       );
       await Future.delayed(Duration(milliseconds: 200));
-      Routes.sailor.navigate(
-        Routes.PAYMENT_METHOD_LIST_SCREEN,
-        navigationType: NavigationType.pushReplace,
-        removeUntilPredicate: (route) => true,
-        params: {
-          'isCreated': true,
-        },
-      );
+      paymentMethodBloc.isPaying == true
+          ? Routes.sailor.navigate(
+              Routes.PAYMENT_METHOD_LIST_SCREEN,
+              navigationType: NavigationType.pushReplace,
+              removeUntilPredicate: (route) => true,
+              params: {
+                'isCreated': true,
+              },
+            )
+          : Routes.sailor.navigate(
+              Routes.PAYMENT_METHOD_PAY_SCREEN,
+              navigationType: NavigationType.pushReplace,
+            );
     } catch (e) {
       print(e);
     }

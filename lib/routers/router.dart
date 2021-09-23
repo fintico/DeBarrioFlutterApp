@@ -163,9 +163,17 @@ class Routes {
       ),
       SailorRoute(
         name: DISH_DETAIL_SCREEN,
-        builder: (_, __, ___) {
-          return DishDetail();
+        builder: (_, __, params) {
+          final dishId = params.param<int>('dishId');
+          return DishDetail(
+            dishId: dishId,
+          );
         },
+        params: [
+          SailorParam<int>(
+            name: 'dishId',
+          ),
+        ],
       ),
       SailorRoute(
         name: DISH_LIST_SCREEN,
@@ -226,15 +234,9 @@ class Routes {
       ),
       SailorRoute(
         name: LOCATION_CHANGE_PAGE,
-        builder: (_, __, params) {
-          final dishModel = params.param<DishModel>('dishModel');
-          return DishLocation(
-            dishModel: dishModel,
-          );
+        builder: (_, __, ___) {
+          return DishLocation();
         },
-        params: [
-          SailorParam<DishModel>(name: 'dishModel'),
-        ],
       ),
     ];
 
@@ -272,10 +274,18 @@ class Routes {
       SailorRoute(
         name: SPLASH_CONFIRM_DISH_PUBLISH_SCREEN,
         builder: (context, args, params) {
+          final dishId = params.param<int>('dishId');
           return Material(
-            child: DishConfirm(),
+            child: DishConfirm(
+              dishId: dishId,
+            ),
           );
         },
+        params: [
+          SailorParam<int>(
+            name: 'dishId',
+          ),
+        ],
       ),
       SailorRoute(
         name: SPLASH_LOADING_DISH_DELETE_SCREEN,

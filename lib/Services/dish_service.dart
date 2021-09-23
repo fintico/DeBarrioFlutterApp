@@ -15,7 +15,7 @@ abstract class DishService extends ChopperService {
   @Post(path: '/create/')
   Future<Response> postSellerDish(
     @Field('dish_name') String dishName,
-    @Field('image') String urlImage,
+    //@Field('image') String urlImage,
     @Field('stock') int stock,
     @Field('delivery_date') String deliveryDate,
     @Field('delivery_time_from') String deliveryFromTime,
@@ -26,6 +26,14 @@ abstract class DishService extends ChopperService {
     @Field('dish_category') int categoryId,
     @Field('additional') int additionalId,
     @Field('address') int addressId,
+  );
+
+  @Multipart()
+  @Put(path: '/update/image/{dish_id}/')
+  Future<Response> updateDishImage(
+    @Path("dish_id") int dishId,
+    @Part("urlImage") String urlImage,
+    @PartFile('urlImage') String url,
   );
 
   @Post(path: '/additional/create/')
@@ -43,7 +51,7 @@ abstract class DishService extends ChopperService {
   Future<Response> updateDish(
     @Path("id") int dishId,
     @Field('dish_name') String dishName,
-    @Field('image') String urlImage,
+    //@Field('image') String urlImage,
     @Field('stock') int stock,
     @Field('delivery_date') String deliveryDate,
     @Field('delivery_time_from') String deliveryFromTime,
@@ -60,6 +68,9 @@ abstract class DishService extends ChopperService {
 
   @Get(path: '/list/')
   Future<Response> getDishList();
+
+  @Get(path: '/seller/list/{seller_id}/')
+  Future<Response> getDishBySellerList(@Path("seller_id") int sellerId);
 
   @Get(path: '/list/{dish_name}/')
   Future<Response> getDishByName(@Path("dish_name") String dishName);

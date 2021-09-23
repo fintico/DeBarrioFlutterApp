@@ -1,3 +1,4 @@
+import 'package:debarrioapp/providers/payment_method_provider.dart';
 import 'package:debarrioapp/providers/purchase_provider.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,15 @@ class PaymentMethodPayBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final purchaseBloc = Provider.of<PurchaseBloc>(context);
+    final paymentMethodBloc =
+        Provider.of<PaymentMethodBloc>(context, listen: false);
     return Container(
       padding: const EdgeInsets.only(left: 28.0, right: 28.0, bottom: 28.0),
       child: GenericButtonOrange(
           text: 'PAGAR S/ ${purchaseBloc.totalPriceOrder.toStringAsFixed(2)}',
           disable: false,
           action: () {
+            paymentMethodBloc.onPaying(false);
             Routes.sailor.navigate(
               Routes.SPLASH_PAY_CREDIT_CARD_SCREEN,
               navigationType: NavigationType.pushReplace,
