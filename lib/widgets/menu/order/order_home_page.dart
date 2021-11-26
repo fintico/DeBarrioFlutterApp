@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:debarrioapp/Services/order_service.dart';
 import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:debarrioapp/widgets/menu/order/order_card_item.dart';
 import 'package:flutter/material.dart';
 import 'package:chopper/chopper.dart';
-import 'package:debarrioapp/services/order_service.dart';
 import 'package:debarrioapp/models/order_detail.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
@@ -41,9 +41,9 @@ class HomeOrderPage extends StatelessWidget {
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
     final prefs = new UserPreferences();
+    OrderService orderService = OrderService.create();
     return FutureBuilder(
-      future: Provider.of<OrderService>(context)
-          .ordersDetailbyCustomer(prefs.userId),
+      future: orderService.ordersDetailbyCustomer(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

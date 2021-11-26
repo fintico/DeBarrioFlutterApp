@@ -221,6 +221,7 @@ class IntroScreenState extends State<IntroScreen> {
           text: '¡COMENCEMOS!',
           disable: false,
           action: () => onDonePress(),
+          height: 56.0,
         ),
       ),
     );

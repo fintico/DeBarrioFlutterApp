@@ -22,14 +22,28 @@ class HomeBloc extends ChangeNotifier {
   int lifeStyle = 0;
   int day = 0;
   String? deliveryDate;
-  SellerAddress? sellerAddress;
-  CustomerAddress? customerAddress;
+  SellerAddress? _sellerAddress;
+  CustomerAddress? _customerAddress;
 
   //location
   int? addressId;
 
   List<SellerDish>? sellers;
   List<SellerDetail>? seller;
+
+  SellerAddress? get sellerAddress => _sellerAddress;
+
+  set sellerAddress(SellerAddress? sellerAddress) {
+    this._sellerAddress = sellerAddress;
+    notifyListeners();
+  }
+
+  CustomerAddress? get customerAddress => _customerAddress;
+
+  set customerAddress(CustomerAddress? customerAddress) {
+    this._customerAddress = customerAddress;
+    notifyListeners();
+  }
 
   void onDeliveryType(int type) {
     deliveryType = type;
@@ -123,18 +137,18 @@ class HomeBloc extends ChangeNotifier {
     /* final SellerAddressService instanceSellerAddressService =
         sellerAddressService.get(instanceName: 'SellerAddressService'); */
 
-    final dynamic response = await Future.wait(
+    final response = await Future.wait(
       [
         sellerAddressService.getSellerDetail(prefs.userId),
         customerService.getCustomerDetail(prefs.userId),
       ],
     );
 
-    inspect(response[0]);
-    inspect(response[1]);
+    /*  inspect(response[0]);
+    inspect(response[1]); */
 
-    //onSetSellerAddress(response[0]);
-    //onSetCustomerAddress(response[1]);
+    _sellerAddress = SellerAddress.fromRawJson(response[0].bodyString);
+    _customerAddress = CustomerAddress.fromRawJson(response[1].bodyString);
 
     notifyListeners();
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/providers/profile_provider.dart';
 import 'package:debarrioapp/utils/user_preferences.dart';
@@ -26,14 +27,15 @@ class ProfileHeader extends StatefulWidget {
 }
 
 class _ProfileHeaderState extends State<ProfileHeader> {
+  final home = homeProvider<HomeBloc>();
   @override
   Widget build(BuildContext context) {
-    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
+    //final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     return Container(
       width: screenWidth(context),
       height: screenHeight(context, dividedBy: 4.0),
       color: DBColors.BLUE_LIGHT_5,
-      child: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage)
+      child: cZeroStr(home.sellerAddress!.seller!.urlImage)
           ? Container(
               padding: const EdgeInsets.all(28.0),
               child: CircleAvatar(
@@ -44,8 +46,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image(
-                    image:
-                        NetworkImage(homeBloc.sellerAddress!.seller!.urlImage!),
+                    image: NetworkImage(home.sellerAddress!.seller!.urlImage!),
                     fit: BoxFit.cover,
                   ),
                 ),

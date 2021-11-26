@@ -1,3 +1,4 @@
+import 'package:debarrioapp/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,11 +9,9 @@ import '../../../utilsFunctions.dart';
 import 'profile_style.dart';
 
 class ProfileBody extends StatelessWidget {
-  const ProfileBody({Key? key}) : super(key: key);
-
+  final home = homeProvider<HomeBloc>();
   @override
   Widget build(BuildContext context) {
-    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -26,45 +25,44 @@ class ProfileBody extends StatelessWidget {
         ),
         _profileData(
             subTitle: 'ID de usuario',
-            description: '${homeBloc.sellerAddress!.seller!.user!.id}'
+            description: '${home.sellerAddress!.seller!.user!.id}'
             /* ? homeBloc.sellerAddress.seller.user.id
                     : "No hay información", */
             ),
         _profileData(
           subTitle: 'Nombre de restaurante',
-          description: cZeroStr(homeBloc.sellerAddress!.seller!.restaurantName!)
-              ? homeBloc.sellerAddress!.seller!.restaurantName!
+          description: cZeroStr(home.sellerAddress!.seller!.restaurantName)
+              ? home.sellerAddress!.seller!.restaurantName!
               : "No hay información",
         ),
         _profileData(
           subTitle: 'Nombre y Apellidos',
-          description: cZeroStr(homeBloc.sellerAddress!.seller!.user!.username!)
-              ? homeBloc.sellerAddress!.seller!.user!.username! ==
-                      homeBloc.sellerAddress!.seller!.user!.phoneNumber!
+          description: cZeroStr(home.sellerAddress!.seller!.user!.username!)
+              ? home.sellerAddress!.seller!.user!.username! ==
+                      home.sellerAddress!.seller!.user!.phoneNumber!
                   ? 'No hay información'
-                  : homeBloc.sellerAddress!.seller!.user!.username!
+                  : home.sellerAddress!.seller!.user!.username!
               : "No hay información",
         ),
         _profileData(
           subTitle: 'Correo electrónico',
-          description: cZeroStr(homeBloc.sellerAddress!.seller!.user!.email)
-              ? homeBloc.sellerAddress!.seller!.user!.email! ==
-                      homeBloc.sellerAddress!.seller!.user!.phoneNumber
+          description: cZeroStr(home.sellerAddress!.seller!.user!.email)
+              ? home.sellerAddress!.seller!.user!.email! ==
+                      home.sellerAddress!.seller!.user!.phoneNumber
                   ? 'No hay información'
-                  : homeBloc.sellerAddress!.seller!.user!.email!
+                  : home.sellerAddress!.seller!.user!.email!
               : "No hay información",
         ),
         _profileData(
           subTitle: 'Celular',
-          description:
-              cZeroStr(homeBloc.sellerAddress!.seller!.user!.phoneNumber!)
-                  ? homeBloc.sellerAddress!.seller!.user!.phoneNumber!
-                  : "No hay información",
+          description: cZeroStr(home.sellerAddress!.seller!.user!.phoneNumber!)
+              ? home.sellerAddress!.seller!.user!.phoneNumber!
+              : "No hay información",
         ),
         _profileData(
           subTitle: 'Dirección',
-          description: cZeroStr(homeBloc.sellerAddress!.address!.address!)
-              ? homeBloc.sellerAddress!.address!.address!
+          description: cZeroStr(home.sellerAddress!.address!.address!)
+              ? home.sellerAddress!.address!.address!
               : "No hay información",
         ),
       ],

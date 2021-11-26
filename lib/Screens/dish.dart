@@ -12,10 +12,6 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 import 'package:sailor/sailor.dart';
 
-import 'calender_timeline.dart';
-import 'fullproductinfo.dart';
-import 'map_screen.dart';
-
 class DishConfirm extends StatefulWidget {
   final int? dishId;
 

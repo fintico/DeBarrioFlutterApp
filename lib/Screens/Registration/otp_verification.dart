@@ -1,9 +1,5 @@
 import 'dart:async';
 
-import 'package:debarrioapp/ModelClass/UserModel.dart';
-import 'package:debarrioapp/Screens/Registration/map_loaction_set.dart';
-import 'package:debarrioapp/Screens/Registration/ui_screen.dart';
-import 'package:debarrioapp/Screens/map_screen.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseAuthService.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
 import 'package:debarrioapp/models/user.dart';

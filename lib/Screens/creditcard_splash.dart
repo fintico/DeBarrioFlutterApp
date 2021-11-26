@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'creditcard_info__add_new_credit_card.dart';
-
 class CreditSplash extends StatefulWidget {
   @override
   _CreditSplashState createState() => _CreditSplashState();

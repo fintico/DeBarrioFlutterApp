@@ -1,4 +1,3 @@
-import 'package:debarrioapp/Screens/food_carousel.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/seller_detail.dart';
 import 'package:debarrioapp/models/seller_dish.dart';

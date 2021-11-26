@@ -50,9 +50,9 @@ class PaymentMethodPage extends StatelessWidget {
 
   FutureBuilder<Response> _buildBody(BuildContext context) {
     final prefs = new UserPreferences();
+    PaymentService paymentService = PaymentService.create();
     return FutureBuilder(
-      future: Provider.of<PaymentService>(context)
-          .getCreditCardByCustomer(prefs.userId),
+      future: paymentService.getCreditCardByCustomer(prefs.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {

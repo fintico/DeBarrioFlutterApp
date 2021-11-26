@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
-import 'map_screen.dart';
 
 class PaySplash extends StatefulWidget {
   @override

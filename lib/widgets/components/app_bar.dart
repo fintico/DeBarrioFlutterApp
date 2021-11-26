@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:debarrioapp/providers/home_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/utilsFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -235,7 +238,9 @@ class AppBarWidget extends StatelessWidget {
   Widget _getProfile(BuildContext context) {
     //User user;
     //user = Provider.of<User>(context);
-    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
+    //final homeBloc = Provider.of<HomeBloc>(context, listen: false);
+    final home = homeProvider<HomeBloc>();
+    inspect(home.sellerAddress);
     return Column(
       children: [
         Padding(
@@ -243,10 +248,10 @@ class AppBarWidget extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: 60.0,
-            backgroundImage: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage)
-                ? NetworkImage(homeBloc.sellerAddress!.seller!.urlImage!)
+            backgroundImage: cZeroStr(home.sellerAddress!.seller!.urlImage)
+                ? NetworkImage(home.sellerAddress!.seller!.urlImage!)
                 : null,
-            child: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage!)
+            child: cZeroStr(home.sellerAddress!.seller!.urlImage)
                 ? null
                 : SvgPicture.asset(
                     'assets/images/user.svg',
@@ -259,11 +264,11 @@ class AppBarWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(14.0),
           child: Text(
-            cZeroStr(homeBloc.sellerAddress!.seller!.user!.username)
-                ? homeBloc.sellerAddress!.seller!.user!.username! ==
-                        homeBloc.sellerAddress!.seller!.user!.phoneNumber!
+            cZeroStr(home.sellerAddress!.seller!.user!.username)
+                ? home.sellerAddress!.seller!.user!.username! ==
+                        home.sellerAddress!.seller!.user!.phoneNumber!
                     ? 'No hay información'
-                    : homeBloc.sellerAddress!.seller!.user!.username!
+                    : home.sellerAddress!.seller!.user!.username!
                 : "No hay información",
             textAlign: TextAlign.center,
             style: DBStyles.getStyle(

@@ -12,7 +12,6 @@ import 'package:flutter_svg/svg.dart';
 import 'Registration/OnBoardingScreen.dart';
 import 'Registration/map_loaction_set.dart';
 import 'Registration/phonenumber.dart';
-import 'map_screen.dart';
 
 class Splash extends StatefulWidget {
   @override

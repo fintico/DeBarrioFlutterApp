@@ -1,6 +1,5 @@
 import 'package:debarrioapp/Screens/Registration/map_loaction_set.dart';
 import 'package:debarrioapp/Screens/dish.dart';
-import 'package:debarrioapp/Screens/map_screen.dart';
 import 'package:debarrioapp/models/address.dart';
 import 'package:debarrioapp/models/dish.dart';
 import 'package:debarrioapp/models/dishModel.dart';

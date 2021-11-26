@@ -188,6 +188,7 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
       child: GenericButtonOrange(
         text: 'GUARDAR TARJETA',
         disable: false,
+        height: 56.0,
         action: () {
           if (formKey.currentState!.validate()) {
             //print('valid!');
