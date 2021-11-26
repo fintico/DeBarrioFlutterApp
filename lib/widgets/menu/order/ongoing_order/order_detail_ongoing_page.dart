@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sailor/sailor.dart';
 
 class OrderDetailOngoing extends StatelessWidget {
-  const OrderDetailOngoing({Key key}) : super(key: key);
+  const OrderDetailOngoing({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ import 'calendar_bloc.dart';
 import 'calendar_style.dart';
 
 class CalendarWeek extends StatefulWidget {
-  const CalendarWeek({Key key}) : super(key: key);
+  const CalendarWeek({Key? key}) : super(key: key);
 
   @override
   _CalendarWeekState createState() => _CalendarWeekState();

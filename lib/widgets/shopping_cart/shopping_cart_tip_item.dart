@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'shopping_cart_style.dart';
 
 class ShoppingCartTip extends StatelessWidget {
-  const ShoppingCartTip({Key key}) : super(key: key);
+  const ShoppingCartTip({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -14,12 +14,12 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class RepublishSplash extends StatelessWidget {
-  final DishModel dishModel;
-  const RepublishSplash({Key key, this.dishModel}) : super(key: key);
+  final DishModel? dishModel;
+  const RepublishSplash({Key? key, this.dishModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    updateDish(context, dishModel);
+    updateDish(context, dishModel!);
     TextStyle title = DBStyles.getStyle(
       DBStyles.WHITE,
       DBStyles.FONT_SYZE_L,
@@ -65,22 +65,23 @@ class RepublishSplash extends StatelessWidget {
 
   Future updateDish(BuildContext context, DishModel dishModel) async {
     try {
-      Response<dynamic> res = await Provider.of<DishService>(context)
-          .updateDish(
-              dishModel.id,
-              dishModel.dishName,
-              dishModel.stock,
-              dishModel.deliveryDate,
-              dishModel.deliveryTimeFrom,
-              dishModel.deliveryTimeTo,
-              dishModel.priceDelivery,
-              dishModel.pricePickup,
-              dishModel.isActive,
-              dishModel.isDeleted,
-              dishModel.seller.id,
-              dishModel.dishCategory.id,
-              dishModel.additional == null ? null : dishModel.additional.id,
-              dishModel.address.id);
+      Response<dynamic> res =
+          await Provider.of<DishService>(context).updateDish(
+              dishModel.id!,
+              dishModel.dishName!,
+              dishModel.stock!,
+              dishModel.deliveryDate!,
+              dishModel.deliveryTimeFrom!,
+              dishModel.deliveryTimeTo!,
+              dishModel.priceDelivery!,
+              dishModel.pricePickup!,
+              dishModel.isActive!,
+              dishModel.isDeleted!,
+              dishModel.seller!.id!,
+              dishModel.dishCategory!.id!,
+              //dishModel.additional == null ? null : dishModel.additional!.id,
+              dishModel.additional!.id!,
+              dishModel.address!.id!);
       Routes.sailor.navigate(
         Routes.DISH_LIST_SCREEN,
         navigationType: NavigationType.pushReplace,

@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class ShoppingCartOrderPlacedSplash extends StatelessWidget {
-  const ShoppingCartOrderPlacedSplash({Key key}) : super(key: key);
+  const ShoppingCartOrderPlacedSplash({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

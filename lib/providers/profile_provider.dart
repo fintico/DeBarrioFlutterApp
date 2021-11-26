@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ProfileBloc extends ChangeNotifier {
-  String _restaurantName;
-  String _fullName;
-  String _email;
+  String? _restaurantName;
+  String? _fullName;
+  String? _email;
   bool isGone = false;
   bool isUpdated = false;
 
@@ -35,29 +35,29 @@ class ProfileBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  get restaurantName {
+  String? get restaurantName {
     return _restaurantName;
   }
 
-  set restaurantName(String name) {
+  set restaurantName(String? name) {
     _restaurantName = name;
     notifyListeners();
   }
 
-  get fullName {
+  String? get fullName {
     return _fullName;
   }
 
-  set fullName(String name) {
+  set fullName(String? name) {
     _fullName = name;
     notifyListeners();
   }
 
-  get email {
+  String? get email {
     return _email;
   }
 
-  set email(String name) {
+  set email(String? name) {
     _email = name;
     notifyListeners();
   }

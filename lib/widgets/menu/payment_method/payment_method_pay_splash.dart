@@ -22,8 +22,8 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class CreditCardPaySplash extends StatelessWidget {
-  final CreditCardModel creditCard;
-  const CreditCardPaySplash({Key key, this.creditCard}) : super(key: key);
+  final CreditCardModel? creditCard;
+  const CreditCardPaySplash({Key? key, this.creditCard}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,21 +85,21 @@ class CreditCardPaySplash extends StatelessWidget {
       for (var i = 0; i < purchaseBloc.orderDetails.length; i++) {
         Response<dynamic> res =
             await Provider.of<OrderService>(context, listen: false).postOrder(
-          purchaseBloc.orderDetails[i].order.isDelivery,
-          purchaseBloc.orderDetails[i].order.isPickup,
-          purchaseBloc.orderDetails[i].order.totalPrice,
-          purchaseBloc.orderDetails[i].order.subtotalPrice,
+          purchaseBloc.orderDetails[i].order!.isDelivery!,
+          purchaseBloc.orderDetails[i].order!.isPickup!,
+          purchaseBloc.orderDetails[i].order!.totalPrice!,
+          purchaseBloc.orderDetails[i].order!.subtotalPrice!,
           purchaseBloc.tip.toDouble(),
           1,
-          purchaseBloc.orderDetails[i].order.portion,
-          purchaseBloc.orderDetails[i].order.deliveryDate == null
+          purchaseBloc.orderDetails[i].order!.portion!,
+          purchaseBloc.orderDetails[i].order!.deliveryDate == null
               ? deliveryDate
-              : purchaseBloc.orderDetails[i].order.deliveryDate,
+              : purchaseBloc.orderDetails[i].order!.deliveryDate!,
           null,
           true,
           false,
-          homeBloc.customerAddress.id,
-          paymentMethodBloc.id,
+          homeBloc.customerAddress!.id!,
+          paymentMethodBloc.id!,
         );
 
         final orderJson = json.decode(res.bodyString).cast<String, dynamic>();
@@ -108,7 +108,7 @@ class CreditCardPaySplash extends StatelessWidget {
 
         await Future.delayed(Duration(milliseconds: 100));
         await Provider.of<OrderService>(context, listen: false)
-            .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId);
+            .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId!);
         await Future.delayed(Duration(milliseconds: 200));
       }
 
@@ -156,7 +156,7 @@ class CreditCardPaySplash extends StatelessWidget {
     final purchaseBloc = Provider.of<PurchaseBloc>(context);
     try {
       await Provider.of<OrderService>(context)
-          .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId);
+          .postOrderDish(purchaseBloc.orderId, purchaseBloc.dishId!);
       await Future.delayed(Duration(milliseconds: 200));
       Routes.sailor.navigate(
         Routes.SPLASH_CONFIRM_ORDER_PLACED_SCREEN,

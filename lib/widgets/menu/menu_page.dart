@@ -18,7 +18,7 @@ import 'package:sailor/sailor.dart';
 import 'menu_style.dart';
 
 class MenuPage extends StatelessWidget {
-  const MenuPage({Key key}) : super(key: key);
+  const MenuPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

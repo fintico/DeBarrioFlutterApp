@@ -14,8 +14,8 @@ import 'package:sailor/sailor.dart';
 
 class PurchasePage extends StatefulWidget {
   //final SellerDish sellerDish;
-  final SellerDetail sellerDish;
-  PurchasePage({Key key, this.sellerDish}) : super(key: key);
+  final SellerDetail? sellerDish;
+  PurchasePage({Key? key, this.sellerDish}) : super(key: key);
 
   @override
   _PurchasePageState createState() => _PurchasePageState();

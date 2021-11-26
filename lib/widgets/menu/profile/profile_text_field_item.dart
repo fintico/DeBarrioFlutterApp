@@ -9,11 +9,11 @@ import '../../../utilsFunctions.dart';
 import 'profile_style.dart';
 
 class ProfileTextField extends StatelessWidget {
-  final String title;
-  final String description;
-  final int fieldType;
+  final String? title;
+  final String? description;
+  final int? fieldType;
   const ProfileTextField(
-      {Key key, this.title, this.description, this.fieldType})
+      {Key? key, this.title, this.description, this.fieldType})
       : super(key: key);
 
   @override
@@ -24,14 +24,14 @@ class ProfileTextField extends StatelessWidget {
       child: TextFormField(
         onChanged: (value) {
           print(value);
-          _fieldType(profileBloc, fieldType, value);
+          _fieldType(profileBloc, fieldType!, value);
         },
         //controller: controller,
-        keyboardType: _keyboarType(fieldType),
+        keyboardType: _keyboarType(fieldType!),
         style: labelFormStyle,
-        readOnly: fieldType > 3 ? true : false,
+        readOnly: fieldType! > 3 ? true : false,
         onTap: () {
-          _onTapType(fieldType);
+          _onTapType(fieldType!);
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(

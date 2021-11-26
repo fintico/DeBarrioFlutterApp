@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class FilterBottom extends StatelessWidget {
-  const FilterBottom({Key key}) : super(key: key);
+  const FilterBottom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,7 @@ class FilterBottom extends StatelessWidget {
             child: GenericButtonOrange(
                 text: 'APLICAR',
                 disable: false,
+                height: 48.0,
                 action: () {
                   print('aplicar');
                   _getRestaurantsFilter(context);
@@ -67,7 +68,7 @@ class FilterBottom extends StatelessWidget {
       Response<dynamic> res =
           await Provider.of<SellerService>(context, listen: false)
               .getDishesBySellerFilter(
-                  homeBloc.dishStyle == 0 ? null : homeBloc.dishStyle,
+                  homeBloc.dishStyle == 0 ? 0 : homeBloc.dishStyle,
                   homeBloc.deliveryDate ?? deliveryDate);
       homeBloc.seller = (json.decode(res.bodyString) as List)
           .map((e) => SellerDetail.fromJson(e))

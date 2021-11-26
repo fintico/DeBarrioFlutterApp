@@ -6,9 +6,12 @@ import 'package:debarrioapp/providers/order_provider.dart';
 import 'package:debarrioapp/providers/payment_method_provider.dart';
 import 'package:debarrioapp/providers/profile_provider.dart';
 import 'package:debarrioapp/providers/purchase_provider.dart';
+import 'package:debarrioapp/providers/register_provider.dart';
 import 'package:debarrioapp/providers/sale_provider.dart';
 import 'package:debarrioapp/providers/search_provider.dart';
 import 'package:debarrioapp/providers/shopping_cart_provider.dart';
+import 'package:debarrioapp/providers/user_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/seller_address_service.dart';
 import 'package:debarrioapp/services/rating_service.dart';
 import 'package:debarrioapp/services/customer_service.dart';
@@ -37,6 +40,7 @@ import 'package:debarrioapp/widgets/purchase/purchase_home_page.dart';
 import 'package:debarrioapp/widgets/search/search_page.dart';
 import 'package:debarrioapp/widgets/shopping_cart/shopping_cart_home_page.dart';
 import 'package:debarrioapp/widgets/shopping_cart/shopping_cart_order_placed_splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart' as symbolLocal;
 import 'package:intl/intl.dart';
@@ -58,12 +62,14 @@ import 'widgets/location/location_page.dart';
 import 'widgets/menu/profile/profile_home_page.dart';
 import 'widgets/registration/registration_page.dart';
 
-int initScreen;
+int? initScreen;
 
 Future<void> main() async {
   Routes.createRoutes();
+  setupLocator();
   _setupLogging();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   final prefs = new UserPreferences();
   await prefs.initPrefs();
   //SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -73,7 +79,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  //AuthService authService;
+  late final AuthService authService;
   //DatabaseService database;
   final prefs = new UserPreferences();
   @override
@@ -99,9 +105,11 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => HomeBloc()),
           ChangeNotifierProvider(create: (_) => DishProvider()),
           ChangeNotifierProvider(create: (_) => LocationProvider()),
-          Provider(
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => RegisterProvider()),
+          /* Provider(
             create: (_) => RegisterService.create(),
-            dispose: (_, value) => value.client.dispose(),
+            dispose: (_, value) => value!.client.dispose(),
           ),
           Provider(
             create: (_) => LocationService.create(),
@@ -134,7 +142,7 @@ class MyApp extends StatelessWidget {
           Provider(
             create: (_) => SellerAddressService.create(),
             dispose: (_, value) => value.client.dispose(),
-          )
+          ) */
         ],
         child: MaterialApp(
           theme: ThemeData(
@@ -157,22 +165,8 @@ class MyApp extends StatelessWidget {
           routes: {
             //'home': (context) => LocationPage(),
             //'home': (context) => PhoneNumScreen(),
-            'home': (context) => HomePage(),
-            //'home': (context) => CalendarPage(),
-            //'home': (context) => DishLocation(),
-            //'home': (context) => PublishPage(),
-            //'home': (context) => MenuPage(),
-            //'home': (context) => SaleDetails(),
-            //'home': (context) => RouteDeliveryPage(),
-            //'home': (context) => SearchPage(),
-            //'home': (context) => PurchasePage(),
-            //'home': (context) => ShoppingCartHome(),
-            //'home': (context) => ShoppingCartOrderPlacedSplash(),
-            //'home': (context) => HomeFilter(),
-            //'home': (context) => OrderDetailFinish(),
-            //'home': (context) => OrderDetailOngoing(),
-            //'home': (context) => ProfileHomePage(),
-            'onBoard': (context) => IntroScreen(),
+            'home': (context) => PhoneNumScreen(),
+            'onBoard': (context) => PhoneNumScreen(),
           },
           onGenerateRoute: Routes.sailor.generator(),
           navigatorKey: Routes.sailor.navigatorKey,

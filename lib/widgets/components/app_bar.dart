@@ -11,24 +11,24 @@ import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 
 class AppBarWidgetArgs extends BaseArguments {
-  final Widget leftIcon;
-  final Widget rightIcon;
-  final Widget secondaryIcon;
-  final Function leftIconAction;
-  final Function rightIconAction;
-  final Function secondaryIconAction;
-  final String headerTitle;
-  final String title;
-  final String subTitle;
-  final Widget subTitleIcon;
-  final Function subTitleIconAction;
-  final Widget extraIcon;
-  final Function extraActionIcon;
-  final bool circularBorder;
-  final bool headerLogo;
-  final Color headerTitleColor;
-  final Color headerBackground;
-  final bool profileLogo;
+  final Widget? leftIcon;
+  final Widget? rightIcon;
+  final Widget? secondaryIcon;
+  final VoidCallback? leftIconAction;
+  final VoidCallback? rightIconAction;
+  final VoidCallback? secondaryIconAction;
+  final String? headerTitle;
+  final String? title;
+  final String? subTitle;
+  final Widget? subTitleIcon;
+  final VoidCallback? subTitleIconAction;
+  final Widget? extraIcon;
+  final VoidCallback? extraActionIcon;
+  final bool? circularBorder;
+  final bool? headerLogo;
+  final Color? headerTitleColor;
+  final Color? headerBackground;
+  final bool? profileLogo;
 
   AppBarWidgetArgs({
     this.extraIcon,
@@ -53,16 +53,16 @@ class AppBarWidgetArgs extends BaseArguments {
 }
 
 class AppBarWidget extends StatelessWidget {
-  final AppBarWidgetArgs args;
-  const AppBarWidget({Key key, @required this.args}) : super(key: key);
+  final AppBarWidgetArgs? args;
+  const AppBarWidget({Key? key, @required this.args}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: args.headerBackground,
-        borderRadius: args.circularBorder
+        color: args!.headerBackground,
+        borderRadius: args!.circularBorder!
             ? BorderRadius.only(
                 bottomLeft: Radius.circular(8.0),
                 bottomRight: Radius.circular(8.0),
@@ -77,10 +77,10 @@ class AppBarWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 16.0),
-                child: args.leftIcon != null
+                child: args!.leftIcon != null
                     ? GestureDetector(
-                        child: args.leftIcon,
-                        onTap: args.leftIconAction,
+                        child: args!.leftIcon,
+                        onTap: args!.leftIconAction,
                       )
                     : Container(
                         width: 24.0,
@@ -89,16 +89,16 @@ class AppBarWidget extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 16.0, left: 28.0),
-                child: args.headerLogo
+                child: args!.headerLogo!
                     ? HeaderLogoIcon(
                         height: 22.0,
                         width: 180.0,
                       )
                     : Text(
-                        args.headerTitle,
+                        args!.headerTitle!,
                         textAlign: TextAlign.center,
                         style: DBStyles.getStyle(
-                            args.headerTitleColor,
+                            args!.headerTitleColor!,
                             DBStyles.FONT_SYZE_L,
                             DBStyles.FONT_HEIGHT_L,
                             0,
@@ -111,10 +111,10 @@ class AppBarWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Container(
-                      child: args.secondaryIcon != null
+                      child: args!.secondaryIcon != null
                           ? GestureDetector(
-                              child: args.secondaryIcon,
-                              onTap: args.secondaryIconAction,
+                              child: args!.secondaryIcon,
+                              onTap: args!.secondaryIconAction,
                             )
                           : Container(),
                     ),
@@ -123,10 +123,10 @@ class AppBarWidget extends StatelessWidget {
                     padding:
                         EdgeInsets.only(top: 16.0, right: 16.0, left: 20.0),
                     child: Container(
-                      child: args.rightIcon != null
+                      child: args!.rightIcon != null
                           ? GestureDetector(
-                              child: args.rightIcon,
-                              onTap: args.rightIconAction,
+                              child: args!.rightIcon,
+                              onTap: args!.rightIconAction,
                             )
                           : Container(
                               width: 24.0,
@@ -139,14 +139,14 @@ class AppBarWidget extends StatelessWidget {
             ],
           ),
           Container(
-            child: (args.title.isNotEmpty || args.subTitle.isNotEmpty)
+            child: (args!.title!.isNotEmpty || args!.subTitle!.isNotEmpty)
                 ? _getContent()
                 : Container(
                     height: 12.0,
                   ),
           ),
           Container(
-            child: args.profileLogo
+            child: args!.profileLogo!
                 ? _getProfile(context)
                 : Container(
                     height: 0.0,
@@ -171,14 +171,14 @@ class AppBarWidget extends StatelessWidget {
           ),
         ),
         Container(
-          child: args.title.isNotEmpty
+          child: args!.title!.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.only(top: 14.0, bottom: 13.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        args.title,
+                        args!.title!,
                         textAlign: TextAlign.center,
                         style: DBStyles.getStyle(
                             DBStyles.YELLOW,
@@ -197,14 +197,14 @@ class AppBarWidget extends StatelessWidget {
                     children: [
                       Container(
                         child: GestureDetector(
-                          onTap: args.subTitleIconAction,
-                          child: args.subTitleIcon,
+                          onTap: args!.subTitleIconAction!,
+                          child: args!.subTitleIcon,
                         ),
                       ),
                       Container(
                         padding: EdgeInsets.only(left: 12.0),
                         child: Text(
-                          args.subTitle,
+                          args!.subTitle!,
                           textAlign: TextAlign.center,
                           style: DBStyles.getStyle(
                               DBStyles.GREEN,
@@ -219,8 +219,8 @@ class AppBarWidget extends StatelessWidget {
                         padding: EdgeInsets.only(right: 16.0),
                         child: Container(
                           child: GestureDetector(
-                            onTap: args.extraActionIcon,
-                            child: args.extraIcon,
+                            onTap: args!.extraActionIcon,
+                            child: args!.extraIcon,
                           ),
                         ),
                       )
@@ -243,10 +243,10 @@ class AppBarWidget extends StatelessWidget {
           child: CircleAvatar(
             backgroundColor: Colors.white,
             radius: 60.0,
-            backgroundImage: cZeroStr(homeBloc.sellerAddress.seller.urlImage)
-                ? NetworkImage(homeBloc.sellerAddress.seller.urlImage)
+            backgroundImage: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage)
+                ? NetworkImage(homeBloc.sellerAddress!.seller!.urlImage!)
                 : null,
-            child: cZeroStr(homeBloc.sellerAddress.seller.urlImage)
+            child: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage!)
                 ? null
                 : SvgPicture.asset(
                     'assets/images/user.svg',
@@ -259,11 +259,11 @@ class AppBarWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(14.0),
           child: Text(
-            cZeroStr(homeBloc.sellerAddress.seller.user.username)
-                ? homeBloc.sellerAddress.seller.user.username ==
-                        homeBloc.sellerAddress.seller.user.phoneNumber
+            cZeroStr(homeBloc.sellerAddress!.seller!.user!.username)
+                ? homeBloc.sellerAddress!.seller!.user!.username! ==
+                        homeBloc.sellerAddress!.seller!.user!.phoneNumber!
                     ? 'No hay información'
-                    : homeBloc.sellerAddress.seller.user.username
+                    : homeBloc.sellerAddress!.seller!.user!.username!
                 : "No hay información",
             textAlign: TextAlign.center,
             style: DBStyles.getStyle(

@@ -14,7 +14,7 @@ import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_six.dart';
 
 class PublishPage extends StatelessWidget {
-  const PublishPage({Key key}) : super(key: key);
+  const PublishPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class PublishPage extends StatelessWidget {
             );
           } */
           final List<DishModel> dishes =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => DishModel.fromJson(e))
                   .toList();
           return _buildDishes(context, dishes);

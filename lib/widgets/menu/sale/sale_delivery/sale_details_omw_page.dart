@@ -20,8 +20,8 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import '../sale_style.dart';
 
 class SaleDetailsOmw extends StatelessWidget {
-  final OrderDetail orderDetail;
-  const SaleDetailsOmw({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const SaleDetailsOmw({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +50,14 @@ class SaleDetailsOmw extends StatelessWidget {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<OrderService>(context, listen: false)
-          .ordersDetailbyId(orderDetail.id),
+          .ordersDetailbyId(orderDetail!.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             print(snapshot.error.toString());
           }
           OrderDetail orderDetailDATA =
-              OrderDetail.fromJson(json.decode(snapshot.data.bodyString));
+              OrderDetail.fromJson(json.decode(snapshot.data!.bodyString));
           inspect(orderDetailDATA);
 
           return _buildOrderDetailDelivery(context, orderDetailDATA);
@@ -85,7 +85,7 @@ class SaleDetailsOmw extends StatelessWidget {
         text: 'ORDEN ENTREGADA',
         disable: false,
         action: () {
-          _setStateOrder(context, orderDetail.order.id, 4);
+          _setStateOrder(context, orderDetail!.order!.id!, 4);
         },
       ),
     );

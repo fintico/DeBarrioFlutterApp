@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'filter_style.dart';
 
 class TimeItem extends StatelessWidget {
-  const TimeItem({Key key}) : super(key: key);
+  const TimeItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +116,7 @@ class TimeItem extends StatelessWidget {
     DateTime time = date.add(Duration(days: dayNumber));
     String day = formatterDay.format(time);
     String month = formatterMonth.format(time);
+    String t;
     return Container(
       height: 56.0,
       width: 56.0,
@@ -129,7 +130,7 @@ class TimeItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
-              toBeginningOfSentenceCase(day),
+              toBeginningOfSentenceCase(day)!,
               style: homeBloc.day == dayNumber ? dayInvStyle : dayStyle,
             ),
           ),

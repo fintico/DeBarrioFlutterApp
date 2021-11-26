@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class MinusIcon extends StatelessWidget {
   const MinusIcon({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

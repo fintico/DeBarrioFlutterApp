@@ -87,7 +87,7 @@ void getCurrentLocation(Function setPosition) async {
   }
   return price.toStringAsFixed(2);
 } */
-Future<String> uploadImage(File imageFile) async {
+/* Future<String> uploadImage(File imageFile) async {
   String fileName = path.basename(imageFile.path);
   String urlImage;
   StorageReference firebaseStorageRef =
@@ -101,7 +101,7 @@ Future<String> uploadImage(File imageFile) async {
     },
   );
   return urlImage;
-}
+} */
 
 Future<void> getLocationPermission(Function setPosition) async {
   LocationPermission permission = await Geolocator.checkPermission();
@@ -118,8 +118,8 @@ Future<void> getLocationPermission(Function setPosition) async {
 bool getDishState(DishModel dish) {
   bool isActive;
   DateTime today = DateTime.now().subtract(Duration(hours: 5));
-  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
-  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  String dishFrom = dish.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
+  String dishTo = dish.deliveryDate! + ' ' + dish.deliveryTimeTo!;
   DateTime dateFrom = DateTime.parse(dishFrom);
   DateTime dateTo = DateTime.parse(dishTo);
   //print(today);
@@ -138,8 +138,8 @@ bool getDishState(DishModel dish) {
 String dateTimeString(DishModel dish) {
   String dateString;
   final formatter = new DateFormat('dd/MM/yyyy');
-  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
-  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  String dishFrom = dish.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
+  String dishTo = dish.deliveryDate! + ' ' + dish.deliveryTimeTo!;
   DateTime dateFrom = DateTime.parse(dishFrom);
   DateTime dateTo = DateTime.parse(dishTo);
   String dishDate = formatter.format(dateFrom);
@@ -160,8 +160,8 @@ String dateTimeString(DishModel dish) {
 String dateSaleTimeString(DishModel dish, Order order) {
   String dateString;
   final formatter = new DateFormat('dd/MM/yyyy');
-  String dishFrom = order.deliveryDate + ' ' + dish.deliveryTimeFrom;
-  String dishTo = order.deliveryDate + ' ' + dish.deliveryTimeTo;
+  String dishFrom = order.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
+  String dishTo = order.deliveryDate! + ' ' + dish.deliveryTimeTo!;
   DateTime dateFrom = DateTime.parse(dishFrom);
   DateTime dateTo = DateTime.parse(dishTo);
   String dishDate = formatter.format(dateFrom);
@@ -182,9 +182,9 @@ String dateSaleTimeString(DishModel dish, Order order) {
 String dateOrderedTimeString(Order order) {
   String dateString;
   final formatter = new DateFormat('dd/MM/yyyy');
-  String orderDate = order.deliveryDate +
+  String orderDate = order.deliveryDate! +
       ' ' +
-      (order.deliveryTime == null ? '00:00' : order.deliveryTime);
+      (order.deliveryTime == null ? '00:00' : order.deliveryTime!);
 
   DateTime dateFrom = DateTime.parse(orderDate);
 
@@ -192,7 +192,7 @@ String dateOrderedTimeString(Order order) {
   if (order.deliveryTime == null) {
     dateString = date;
   } else {
-    final orderTime = order.deliveryTime.split(':');
+    final orderTime = order.deliveryTime!.split(':');
     final orderTimeE = dayTime[dateFrom.hour].split(' ');
     dateString =
         date + ' ' + orderTime[0] + ':' + orderTime[1] + ' ' + orderTimeE[1];
@@ -205,9 +205,9 @@ String dateOrderedTimeString(Order order) {
 }
 
 String dateTimeDetail(DishModel dish) {
-  String dateString;
+  String? dateString;
   final formatter = new DateFormat('dd/MM/yyyy');
-  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
+  String? dishFrom = dish.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
   DateTime dateFrom = DateTime.parse(dishFrom);
   String dishDate = formatter.format(dateFrom);
 
@@ -217,10 +217,11 @@ String dateTimeDetail(DishModel dish) {
 }
 
 String orderDateDetail(OrderDetail orderDetail) {
-  String dateString;
+  String? dateString;
   final formatter = new DateFormat('dd/MM/yyyy');
-  String orderFrom =
-      orderDetail.order.deliveryDate + ' ' + orderDetail.dish.deliveryTimeFrom;
+  String? orderFrom = orderDetail.order!.deliveryDate! +
+      ' ' +
+      orderDetail.dish!.deliveryTimeFrom!;
   DateTime dateFrom = DateTime.parse(orderFrom);
   String dishDate = formatter.format(dateFrom);
 
@@ -231,7 +232,7 @@ String orderDateDetail(OrderDetail orderDetail) {
 
 String timeFromDetail(DishModel dish) {
   String timeFromString;
-  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
+  String dishFrom = dish.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
   DateTime dateFrom = DateTime.parse(dishFrom);
 
   timeFromString = dayTime[dateFrom.hour];
@@ -241,7 +242,7 @@ String timeFromDetail(DishModel dish) {
 
 String timeToDetail(DishModel dish) {
   String timeToString;
-  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  String dishTo = dish.deliveryDate! + ' ' + dish.deliveryTimeTo!;
   DateTime dateTo = DateTime.parse(dishTo);
 
   timeToString = dayTime[dateTo.hour];
@@ -251,8 +252,8 @@ String timeToDetail(DishModel dish) {
 
 String timeDetail(DishModel dish) {
   String dateString;
-  String dishFrom = dish.deliveryDate + ' ' + dish.deliveryTimeFrom;
-  String dishTo = dish.deliveryDate + ' ' + dish.deliveryTimeTo;
+  String dishFrom = dish.deliveryDate! + ' ' + dish.deliveryTimeFrom!;
+  String dishTo = dish.deliveryDate! + ' ' + dish.deliveryTimeTo!;
   DateTime dateFrom = DateTime.parse(dishFrom);
   DateTime dateTo = DateTime.parse(dishTo);
   //dayTime[dateFrom.hour];
@@ -266,8 +267,8 @@ String timeDetail(DishModel dish) {
 String timeDetail24H(DishModel dish) {
   String dateString;
 
-  final timeFromTemp = dish.deliveryTimeFrom.split(":");
-  final timeToTemp = dish.deliveryTimeTo.split(":");
+  final timeFromTemp = dish.deliveryTimeFrom!.split(":");
+  final timeToTemp = dish.deliveryTimeTo!.split(":");
   String dishFrom = '${timeFromTemp[0]}:${timeFromTemp[1]}';
   String dishTo = '${timeToTemp[0]}:${timeToTemp[1]}';
 
@@ -323,7 +324,7 @@ Future<Uint8List> getBytesFromAsset(String path, int width) async {
   ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
       targetWidth: width);
   ui.FrameInfo fi = await codec.getNextFrame();
-  return (await fi.image.toByteData(format: ui.ImageByteFormat.png))
+  return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
       .buffer
       .asUint8List();
 }

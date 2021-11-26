@@ -7,11 +7,11 @@ import 'package:debarrioapp/widgets/components/icons/angle_left.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 class AppBarOptionOneTwo extends StatelessWidget {
-  final Function leftIconAction;
-  final Function rightIconAction;
-  final Function secondaryIconAction;
+  final VoidCallback? leftIconAction;
+  final VoidCallback? rightIconAction;
+  final VoidCallback? secondaryIconAction;
   const AppBarOptionOneTwo({
-    Key key,
+    Key? key,
     @required this.leftIconAction,
     @required this.rightIconAction,
     @required this.secondaryIconAction,

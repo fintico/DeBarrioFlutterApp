@@ -27,8 +27,8 @@ import 'dish_statistics_card.dart';
 import 'dish_style.dart';
 
 class DishDetail extends StatefulWidget {
-  final int dishId;
-  DishDetail({Key key, this.dishId}) : super(key: key);
+  final int? dishId;
+  DishDetail({Key? key, this.dishId}) : super(key: key);
 
   @override
   _DishDetailState createState() => _DishDetailState();
@@ -36,7 +36,7 @@ class DishDetail extends StatefulWidget {
 
 class _DishDetailState extends State<DishDetail> {
   Random random = new Random();
-  int randomNumber;
+  int? randomNumber;
   @override
   @override
   void initState() {
@@ -135,7 +135,7 @@ class _DishDetailState extends State<DishDetail> {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<DishService>(context, listen: false)
-          .getDishById(widget.dishId),
+          .getDishById(widget.dishId!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -148,7 +148,7 @@ class _DishDetailState extends State<DishDetail> {
             );
           }
           DishModel dish =
-              DishModel.fromJson(json.decode(snapshot.data.bodyString));
+              DishModel.fromJson(json.decode(snapshot.data!.bodyString));
           //dishProvider.onActive(true);
           //isActive = dish.isActive;
           return _buildDish(context, dish);
@@ -184,7 +184,7 @@ class _DishDetailState extends State<DishDetail> {
                       "PUBLICACIÓN #0${dish.id}",
                       style: publishtitleDetailStyle,
                     ),
-                    getDishState(dish) && dish.isActive
+                    getDishState(dish) && dish.isActive!
                         ? stateOnBox()
                         : stateOffBox(),
                   ],
@@ -195,12 +195,12 @@ class _DishDetailState extends State<DishDetail> {
             DishStatisticsCard(),
             detailsDish(
               title: 'TÍTULO DE LA VENTA',
-              description: dish.dishName,
+              description: dish.dishName!,
               descriptionStyle: descriptionDishStyle,
             ),
             detailsDish(
               title: 'CATEGORÍA',
-              description: dish.dishCategory.dishCategoryDescription,
+              description: dish.dishCategory!.dishCategoryDescription!,
               descriptionStyle: descriptionStyle,
             ),
             detailsDish(
@@ -224,7 +224,7 @@ class _DishDetailState extends State<DishDetail> {
             ),
             detailsDish(
               title: 'UBICACIÓN ACTUAL',
-              description: dish.address.address,
+              description: dish.address!.address!,
               descriptionStyle: descriptionStyle,
             ),
             _additionalDetail(context, dish),
@@ -242,7 +242,7 @@ class _DishDetailState extends State<DishDetail> {
         padding: const EdgeInsets.only(left: 0.0, top: 18.0, bottom: 24.0),
         child: cZeroStr(dish.image)
             ? Image(
-                image: NetworkImage(dish.image),
+                image: NetworkImage(dish.image!),
                 //height: 56.0,
                 //width: 56.0,
                 fit: BoxFit.cover,
@@ -252,7 +252,7 @@ class _DishDetailState extends State<DishDetail> {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );
@@ -269,9 +269,9 @@ class _DishDetailState extends State<DishDetail> {
   }
 
   Widget detailsDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -284,14 +284,14 @@ class _DishDetailState extends State<DishDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title!,
             style: subTitleStyle,
           ),
           SizedBox(
             height: 4.0,
           ),
           Text(
-            description,
+            description!,
             style: descriptionStyle,
           ),
           title == 'UBICACIÓN ACTUAL'
@@ -313,9 +313,9 @@ class _DishDetailState extends State<DishDetail> {
   }
 
   Widget detailsRightDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -328,7 +328,7 @@ class _DishDetailState extends State<DishDetail> {
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: Text(
-              title,
+              title!,
               style: subTitleStyle,
             ),
           ),
@@ -338,7 +338,7 @@ class _DishDetailState extends State<DishDetail> {
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: Text(
-              description,
+              description!,
               style: descriptionStyle,
             ),
           ),
@@ -357,9 +357,9 @@ class _DishDetailState extends State<DishDetail> {
   }
 
   Widget detailsLefttDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -371,14 +371,14 @@ class _DishDetailState extends State<DishDetail> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title!,
             style: subTitleStyle,
           ),
           SizedBox(
             height: 4.0,
           ),
           Text(
-            description,
+            description!,
             style: descriptionStyle,
           ),
           Padding(
@@ -396,11 +396,11 @@ class _DishDetailState extends State<DishDetail> {
   }
 
   Widget gridDetailDish({
-    String titleLeft,
-    String titleRight,
-    String descriptionLeft,
-    String descriptionRight,
-    TextStyle descriptionStyle,
+    String? titleLeft,
+    String? titleRight,
+    String? descriptionLeft,
+    String? descriptionRight,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       child: Row(
@@ -487,7 +487,8 @@ class _DishDetailState extends State<DishDetail> {
                                           top: 20.0,
                                         ),
                                         child: Text(
-                                          dish.additional.additionalDescription,
+                                          dish.additional!
+                                              .additionalDescription!,
                                           style: bNavbarSubTitleStyle,
                                         ),
                                       ),
@@ -497,7 +498,7 @@ class _DishDetailState extends State<DishDetail> {
                                           bottom: 20.0,
                                         ),
                                         child: Text(
-                                          'S/ ${dish.additional.price.toString()}',
+                                          'S/ ${dish.additional!.price!.toString()}',
                                           style: bNavbarDescriptionStyle,
                                         ),
                                       ),
@@ -596,7 +597,7 @@ class _DishDetailState extends State<DishDetail> {
                                         child: Text(
                                           dish.dishAdditional != null
                                               ? additionalDish
-                                                  .additionalDescription
+                                                  .additionalDescription!
                                               : "",
                                           style: bNavbarSubTitleStyle,
                                         ),

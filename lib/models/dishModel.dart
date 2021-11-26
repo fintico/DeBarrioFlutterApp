@@ -5,23 +5,23 @@ import 'dish_category.dart';
 import 'address.dart';
 
 class DishModel {
-  int id;
-  Additional additional;
-  DishCategory dishCategory;
-  Address address;
-  String dishName;
-  String image;
-  int stock;
-  String deliveryDate;
-  String deliveryTimeFrom;
-  String deliveryTimeTo;
-  double priceDelivery;
-  double pricePickup;
-  bool isActive;
-  bool isDeleted;
-  String createdAt;
-  String updatedAt;
-  Seller seller;
+  int? id;
+  Additional? additional;
+  DishCategory? dishCategory;
+  Address? address;
+  String? dishName;
+  String? image;
+  int? stock;
+  String? deliveryDate;
+  String? deliveryTimeFrom;
+  String? deliveryTimeTo;
+  double? priceDelivery;
+  double? pricePickup;
+  bool? isActive;
+  bool? isDeleted;
+  String? createdAt;
+  String? updatedAt;
+  Seller? seller;
 
   DishModel({
     this.id,

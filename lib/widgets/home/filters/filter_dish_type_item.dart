@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'filter_style.dart';
 
 class DishTypeItem extends StatelessWidget {
-  const DishTypeItem({Key key}) : super(key: key);
+  const DishTypeItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

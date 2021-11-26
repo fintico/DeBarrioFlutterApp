@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class BottomBarCalenderInfo extends StatefulWidget {
-  final Function setPostedDish;
+  final Function? setPostedDish;
 
-  const BottomBarCalenderInfo({Key key, this.setPostedDish}) : super(key: key);
+  const BottomBarCalenderInfo({Key? key, this.setPostedDish}) : super(key: key);
   @override
   _BottomBarCalenderInfoState createState() => _BottomBarCalenderInfoState();
 }
@@ -56,7 +56,7 @@ class _BottomBarCalenderInfoState extends State<BottomBarCalenderInfo> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
-                          widget.setPostedDish();
+                          widget.setPostedDish!();
                         },
                         child: Text("Confirmar ventaa"),
                         elevation: 0.0,

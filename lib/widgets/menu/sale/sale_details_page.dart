@@ -20,9 +20,9 @@ import 'sale_pickup_detail_item.dart';
 import 'sale_style.dart';
 
 class SaleDetails extends StatelessWidget {
-  final OrderDetail orderDetail;
-  final int stateOrder;
-  const SaleDetails({Key key, this.orderDetail, this.stateOrder})
+  final OrderDetail? orderDetail;
+  final int? stateOrder;
+  const SaleDetails({Key? key, this.orderDetail, this.stateOrder})
       : super(key: key);
 
   @override
@@ -40,7 +40,7 @@ class SaleDetails extends StatelessWidget {
         appBar: appBar,
         body: _buildBody(context),
         bottomNavigationBar: Visibility(
-          visible: stateOrder != 4 && orderDetail.order.state != 4,
+          visible: stateOrder != 4 && orderDetail!.order!.state != 4,
           child: _bottomNavOrder(context),
           replacement: _notifyDone(),
         ),
@@ -51,15 +51,15 @@ class SaleDetails extends StatelessWidget {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<OrderService>(context, listen: false)
-          .ordersDetailbyId(orderDetail.id),
+          .ordersDetailbyId(orderDetail!.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             print(snapshot.error.toString());
           }
           OrderDetail orderDetail =
-              OrderDetail.fromJson(json.decode(snapshot.data.bodyString));
-          if (orderDetail.order.isDelivery) {
+              OrderDetail.fromJson(json.decode(snapshot.data!.bodyString));
+          if (orderDetail.order!.isDelivery!) {
             return _buildOrderDetailDelivery(context, orderDetail);
           } else {
             return _buildOrderDetailPickup(context, orderDetail);
@@ -103,7 +103,7 @@ class SaleDetails extends StatelessWidget {
                         : 'null', */
         disable: false,
         action: () {
-          _setStateOrder(context, orderDetail.order.id, 2);
+          _setStateOrder(context, orderDetail!.order!.id!, 2);
           //_isVisible = !_isVisible;
           //saleBloc.onVisible(orderDetail.order.state);
         },

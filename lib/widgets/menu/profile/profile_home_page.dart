@@ -13,7 +13,7 @@ import 'profile_header_item.dart';
 import 'profile_notify_item.dart';
 
 class ProfileHomePage extends StatelessWidget {
-  const ProfileHomePage({Key key}) : super(key: key);
+  const ProfileHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

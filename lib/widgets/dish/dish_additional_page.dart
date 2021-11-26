@@ -20,7 +20,7 @@ import '../../utilsFunctions.dart';
 import 'dish_style.dart';
 
 class DishAdditional extends StatefulWidget {
-  DishAdditional({Key key}) : super(key: key);
+  DishAdditional({Key? key}) : super(key: key);
 
   @override
   _DishAdditionalState createState() => _DishAdditionalState();
@@ -28,8 +28,8 @@ class DishAdditional extends StatefulWidget {
 
 class _DishAdditionalState extends State<DishAdditional> {
   TextEditingController _textPrice = TextEditingController();
-  bool isActive;
-  String price;
+  bool? isActive;
+  String? price;
 
   @override
   void initState() {
@@ -101,7 +101,7 @@ class _DishAdditionalState extends State<DishAdditional> {
         controller: _textPrice,
         style: labelInput,
         //readOnly: isActive,
-        enabled: !isActive,
+        enabled: !isActive!,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           border: OutlineInputBorder(
@@ -175,7 +175,7 @@ class _DishAdditionalState extends State<DishAdditional> {
       print('Please select a price');
       inspect(additionalDish);
     } else {
-      additionalDish.price = double.parse(price);
+      additionalDish.price = double.parse(price!);
       if (additionalDish.price != 0.0) {
         additionalDish.isFree = false;
       }
@@ -190,9 +190,9 @@ class _DishAdditionalState extends State<DishAdditional> {
       Response<dynamic> res =
           await Provider.of<DishService>(context, listen: false)
               .postAdditionalDish(
-        additionalDish.additionalDescription,
-        additionalDish.price,
-        additionalDish.isFree,
+        additionalDish.additionalDescription!,
+        additionalDish.price!,
+        additionalDish.isFree!,
       );
       print(res.bodyString);
       Map<String, dynamic> jsonMap = json.decode(res.bodyString);

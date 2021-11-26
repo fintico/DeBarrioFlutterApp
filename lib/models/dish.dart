@@ -3,23 +3,23 @@ import 'dart:io';
 class Dish {
   static final Dish _dish = new Dish._internal();
 
-  String dishName;
-  int dishCategory;
-  int dishStock;
-  String urlImage;
-  String dishDeliveryDate;
-  String dishDeliveryFromTime;
-  String dishDeliveryToTime;
-  double dishDeliveryPrice;
-  double dishPickUpPrice;
-  int dishAddress;
-  int dishAdditional;
-  File dishImageFile;
+  String? dishName;
+  int? dishCategory;
+  int? dishStock;
+  String? urlImage;
+  String? dishDeliveryDate;
+  String? dishDeliveryFromTime;
+  String? dishDeliveryToTime;
+  double? dishDeliveryPrice;
+  double? dishPickUpPrice;
+  int? dishAddress;
+  int? dishAdditional;
+  File? dishImageFile;
 
-  String category;
-  String date;
-  String timeFrom;
-  String timeTo;
+  String? category;
+  String? date;
+  String? timeFrom;
+  String? timeTo;
 
   Dish._internal();
 

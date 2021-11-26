@@ -6,15 +6,18 @@ part of 'dish_service.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations
 class _$DishService extends DishService {
-  _$DishService([ChopperClient client]) {
+  _$DishService([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
   }
 
+  @override
   final definitionType = DishService;
 
-  Future<Response> postSellerDish(
+  @override
+  Future<Response<dynamic>> postSellerDish(
       String dishName,
       int stock,
       String deliveryDate,
@@ -27,7 +30,7 @@ class _$DishService extends DishService {
       int additionalId,
       int addressId) {
     final $url = '/dish/create/';
-    final $body = {
+    final $body = <String, dynamic>{
       'dish_name': dishName,
       'stock': stock,
       'delivery_date': deliveryDate,
@@ -44,8 +47,10 @@ class _$DishService extends DishService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> updateDishImage(int dishId, String urlImage, String url) {
-    final $url = '/dish/update/image/${dishId}/';
+  @override
+  Future<Response<dynamic>> updateDishImage(
+      int dishId, String urlImage, String url) {
+    final $url = '/dish/update/image/$dishId/';
     final $parts = <PartValue>[
       PartValue<String>('urlImage', urlImage),
       PartValueFile<String>('urlImage', url)
@@ -55,10 +60,11 @@ class _$DishService extends DishService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> postAdditionalDish(
+  @override
+  Future<Response<dynamic>> postAdditionalDish(
       String additionalDescription, double price, bool isFree) {
     final $url = '/dish/additional/create/';
-    final $body = {
+    final $body = <String, dynamic>{
       'additional_description': additionalDescription,
       'price': price,
       'is_free': isFree
@@ -67,14 +73,16 @@ class _$DishService extends DishService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> deleteDish(int dishId, bool isActive) {
-    final $url = '/dish/delete/state/${dishId}';
-    final $body = {'is_active': isActive};
+  @override
+  Future<Response<dynamic>> deleteDish(int dishId, bool isActive) {
+    final $url = '/dish/delete/state/$dishId';
+    final $body = <String, dynamic>{'is_active': isActive};
     final $request = Request('PATCH', $url, client.baseUrl, body: $body);
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> updateDish(
+  @override
+  Future<Response<dynamic>> updateDish(
       int dishId,
       String dishName,
       int stock,
@@ -89,8 +97,8 @@ class _$DishService extends DishService {
       int categoryId,
       int additionalId,
       int addressId) {
-    final $url = '/dish/update/${dishId}';
-    final $body = {
+    final $url = '/dish/update/$dishId';
+    final $body = <String, dynamic>{
       'dish_name': dishName,
       'stock': stock,
       'delivery_date': deliveryDate,
@@ -109,26 +117,30 @@ class _$DishService extends DishService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> getDishList() {
+  @override
+  Future<Response<dynamic>> getDishList() {
     final $url = '/dish/list/';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> getDishBySellerList(int sellerId) {
-    final $url = '/dish/seller/list/${sellerId}/';
+  @override
+  Future<Response<dynamic>> getDishBySellerList(int sellerId) {
+    final $url = '/dish/seller/list/$sellerId/';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> getDishByName(String dishName) {
-    final $url = '/dish/list/${dishName}/';
+  @override
+  Future<Response<dynamic>> getDishByName(String dishName) {
+    final $url = '/dish/list/$dishName/';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> getDishById(int dishId) {
-    final $url = '/dish/detail/${dishId}';
+  @override
+  Future<Response<dynamic>> getDishById(int dishId) {
+    final $url = '/dish/detail/$dishId';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);
   }

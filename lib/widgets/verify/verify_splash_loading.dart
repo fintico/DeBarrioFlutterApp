@@ -13,7 +13,7 @@ import 'verify_sms_args.dart';
 import 'verify_sms_page.dart';
 
 class VerificationSMSLoading extends StatefulWidget {
-  VerificationSMSLoading({Key key}) : super(key: key);
+  VerificationSMSLoading({Key? key}) : super(key: key);
 
   @override
   _VerificationSMSLoadingState createState() => _VerificationSMSLoadingState();
@@ -34,7 +34,7 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
     print(userAppData.phoneNumber);
     return FutureBuilder<Response>(
         future: Provider.of<RegisterService>(context).postVerifyCode(
-            userAppData.verificationCode, userAppData.phoneNumber),
+            userAppData.verificationCode!, userAppData.phoneNumber!),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.error != null) {
@@ -165,8 +165,8 @@ class _VerificationSMSLoadingState extends State<VerificationSMSLoading> {
   submitVericationCode() async {
     try {
       await Provider.of<RegisterService>(context).postVerifyCode(
-        userAppData.verificationCode,
-        userAppData.phoneNumber,
+        userAppData.verificationCode!,
+        userAppData.phoneNumber!,
       );
       Future.delayed(const Duration(seconds: 1));
       verificationSuccess();

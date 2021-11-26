@@ -19,7 +19,7 @@ import 'payment_method_pay_item.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodPay extends StatelessWidget {
-  const PaymentMethodPay({Key key}) : super(key: key);
+  const PaymentMethodPay({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class PaymentMethodPay extends StatelessWidget {
           }
 
           final List<CreditCard> creditCard =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => CreditCard.fromJson(e))
                   .toList();
           /* paymentMethodBloc.creditCards =

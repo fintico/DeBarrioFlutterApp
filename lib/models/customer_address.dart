@@ -4,9 +4,9 @@ import 'address.dart';
 import 'customer.dart';
 
 class CustomerAddress {
-  int id;
-  Customer customer;
-  Address address;
+  int? id;
+  Customer? customer;
+  Address? address;
 
   CustomerAddress({this.id, this.customer, this.address});
 

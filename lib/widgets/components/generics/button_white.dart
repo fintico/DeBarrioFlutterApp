@@ -4,11 +4,11 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import '../button.dart';
 
 class GenericButtonWhite extends StatelessWidget {
-  final String text;
-  final bool disable;
-  final Function action;
+  final String? text;
+  final bool? disable;
+  final VoidCallback? action;
   const GenericButtonWhite({
-    Key key,
+    Key? key,
     @required this.text,
     @required this.disable,
     @required this.action,
@@ -18,7 +18,7 @@ class GenericButtonWhite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ButtonWidget(
-        text: this.text,
+        text: this.text!,
         buttonColors: [
           DBColors.WHITE,
           DBColors.GRAY_5,
@@ -29,8 +29,8 @@ class GenericButtonWhite extends StatelessWidget {
           DBStyles.BLACK,
           DBStyles.GRAY_2,
         ],
-        disable: this.disable,
-        action: action,
+        disable: this.disable!,
+        action: action!,
         border: Border.all(color: DBColors.BLACK),
       ),
     );

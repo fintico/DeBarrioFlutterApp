@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodAlert extends StatelessWidget {
-  const PaymentMethodAlert({Key key}) : super(key: key);
+  const PaymentMethodAlert({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

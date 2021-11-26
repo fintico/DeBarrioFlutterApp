@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dish_style.dart';
 
 class DishStatisticsCard extends StatefulWidget {
-  DishStatisticsCard({Key key}) : super(key: key);
+  DishStatisticsCard({Key? key}) : super(key: key);
 
   @override
   _DishStatisticsCardState createState() => _DishStatisticsCardState();

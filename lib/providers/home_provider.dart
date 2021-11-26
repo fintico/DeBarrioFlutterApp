@@ -1,7 +1,17 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:debarrioapp/Services/customer_service.dart';
+import 'package:debarrioapp/Services/dish_service.dart';
+import 'package:debarrioapp/Services/seller_address_service.dart';
+import 'package:debarrioapp/Services/seller_service.dart';
 import 'package:debarrioapp/models/customer_address.dart';
+import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/seller_address.dart';
 import 'package:debarrioapp/models/seller_detail.dart';
 import 'package:debarrioapp/models/seller_dish.dart';
+import 'package:debarrioapp/service_locator.dart';
+import 'package:debarrioapp/utils/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -11,15 +21,15 @@ class HomeBloc extends ChangeNotifier {
   int dishStyle = 0;
   int lifeStyle = 0;
   int day = 0;
-  String deliveryDate;
-  SellerAddress sellerAddress;
-  CustomerAddress customerAddress;
+  String? deliveryDate;
+  SellerAddress? sellerAddress;
+  CustomerAddress? customerAddress;
 
   //location
-  int addressId;
+  int? addressId;
 
-  List<SellerDish> sellers;
-  List<SellerDetail> seller;
+  List<SellerDish>? sellers;
+  List<SellerDetail>? seller;
 
   void onDeliveryType(int type) {
     deliveryType = type;
@@ -81,6 +91,51 @@ class HomeBloc extends ChangeNotifier {
 
   void removeAddressId() {
     addressId = 0;
+    notifyListeners();
+  }
+
+  void loadRestaurants() async {
+    /* final SellerService instanceService =
+        serviceSeller.get(instanceName: 'SellerService'); */
+
+    SellerService sellerService = SellerService.create();
+
+    final response = await Future.value(sellerService.getDishesBySeller());
+
+    List<SellerDetail> seller = (json.decode(response.bodyString) as List)
+        .map((e) => SellerDetail.fromJson(e))
+        .toList();
+
+    inspect(seller);
+    onSetSellerDetail(seller);
+
+    notifyListeners();
+  }
+
+  void loadUser() async {
+    final prefs = UserPreferences();
+    /* final CustomerService instanceCustomer =
+        serviceCustomer.get(instanceName: 'CustomerService'); */
+    print(prefs.userId);
+    CustomerService customerService = CustomerService.create();
+    SellerAddressService sellerAddressService = SellerAddressService.create();
+
+    /* final SellerAddressService instanceSellerAddressService =
+        sellerAddressService.get(instanceName: 'SellerAddressService'); */
+
+    final dynamic response = await Future.wait(
+      [
+        sellerAddressService.getSellerDetail(prefs.userId),
+        customerService.getCustomerDetail(prefs.userId),
+      ],
+    );
+
+    inspect(response[0]);
+    inspect(response[1]);
+
+    //onSetSellerAddress(response[0]);
+    //onSetCustomerAddress(response[1]);
+
     notifyListeners();
   }
 }

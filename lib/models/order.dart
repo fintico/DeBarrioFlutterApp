@@ -2,21 +2,21 @@ import 'package:debarrioapp/models/credit_card.dart';
 import 'package:debarrioapp/models/customer_address.dart';
 
 class Order {
-  int id;
-  bool isDelivery;
-  bool isPickup;
-  double totalPrice;
-  double subtotalPrice;
-  double tip;
-  int state;
-  int portion;
-  String deliveryDate;
-  String deliveryTime;
-  bool isActive;
-  bool isDeleted;
-  String createdAt;
-  CustomerAddress customerAddress;
-  CreditCard creditCard;
+  int? id;
+  bool? isDelivery;
+  bool? isPickup;
+  double? totalPrice;
+  double? subtotalPrice;
+  double? tip;
+  int? state;
+  int? portion;
+  String? deliveryDate;
+  String? deliveryTime;
+  bool? isActive;
+  bool? isDeleted;
+  String? createdAt;
+  CustomerAddress? customerAddress;
+  CreditCard? creditCard;
 
   Order({
     this.id,

@@ -32,31 +32,31 @@ import 'dish_location_page.dart';
 import 'dish_style.dart';
 
 class DishPublish extends StatefulWidget {
-  DishPublish({Key key}) : super(key: key);
+  DishPublish({Key? key}) : super(key: key);
 
   @override
   _DishPublishState createState() => _DishPublishState();
 }
 
 class _DishPublishState extends State<DishPublish> {
-  StorageService storage = StorageService();
+  //StorageService storage = StorageService();
 
   final picker = ImagePicker();
 
-  String dishName;
-  String categoryName;
-  String saleDate;
-  String saleDateTo;
-  String fromTime;
-  String toTime;
-  int fromTimeIndex;
-  int toTimeIndex;
-  File _imageFile;
-  String urlImage;
+  String? dishName;
+  String? categoryName;
+  String? saleDate;
+  String? saleDateTo;
+  String? fromTime;
+  String? toTime;
+  int? fromTimeIndex;
+  int? toTimeIndex;
+  File? _imageFile;
+  String? urlImage;
 
-  DateTime deliveryDate;
-  DateTime dishFromTime;
-  DateTime dishToTime;
+  DateTime? deliveryDate;
+  DateTime? dishFromTime;
+  DateTime? dishToTime;
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class _DishPublishState extends State<DishPublish> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.file(
-                  dish.dishImageFile,
+                  dish.dishImageFile!,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -502,10 +502,10 @@ class _DishPublishState extends State<DishPublish> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: homeBloc.sellerAddress.address.address,
+          hintText: homeBloc.sellerAddress!.address!.address,
           hintStyle: TextStyle(
             color: cZeroStr(
-              homeBloc.sellerAddress.address.address,
+              homeBloc.sellerAddress!.address!.address,
             )
                 ? DBColors.BLACK
                 : DBColors.GRAY_2,
@@ -513,7 +513,7 @@ class _DishPublishState extends State<DishPublish> {
           labelText: 'Dirección para la venta',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
           floatingLabelBehavior:
-              cZeroStr(homeBloc.sellerAddress.address.address)
+              cZeroStr(homeBloc.sellerAddress!.address!.address)
                   ? FloatingLabelBehavior.always
                   : null,
           fillColor: DBColors.GREEN,
@@ -589,7 +589,7 @@ class _DishPublishState extends State<DishPublish> {
                                         child: Text(
                                           dish.dishAdditional != null
                                               ? additionalDish
-                                                  .additionalDescription
+                                                  .additionalDescription!
                                               : "",
                                           style: bNavbarSubTitleStyle,
                                         ),
@@ -809,13 +809,13 @@ class _DishPublishState extends State<DishPublish> {
                               //postedDish.startTime = time.da;
                             });
                             dishFromTime = DateTime(
-                                deliveryDate.year,
-                                deliveryDate.month,
-                                deliveryDate.day,
-                                fromTimeIndex);
+                                deliveryDate!.year,
+                                deliveryDate!.month,
+                                deliveryDate!.day,
+                                fromTimeIndex!);
                             var timeFormatter = new DateFormat('H:mm');
                             dish.dishDeliveryFromTime =
-                                timeFormatter.format(dishFromTime);
+                                timeFormatter.format(dishFromTime!);
                             print(dishFromTime);
                             print(dish.dishDeliveryFromTime);
                             print(fromTime);
@@ -873,13 +873,13 @@ class _DishPublishState extends State<DishPublish> {
                               toTimeIndex = index;
                               dish.timeTo = time;
                               dishToTime = DateTime(
-                                  deliveryDate.year,
-                                  deliveryDate.month,
-                                  deliveryDate.day,
-                                  toTimeIndex);
+                                  deliveryDate!.year,
+                                  deliveryDate!.month,
+                                  deliveryDate!.day,
+                                  toTimeIndex!);
                               var timeFormatter = new DateFormat('H:mm');
                               dish.dishDeliveryToTime =
-                                  timeFormatter.format(dishToTime);
+                                  timeFormatter.format(dishToTime!);
                               print(dish.dishDeliveryToTime);
                               print(dishToTime);
                               //postedDish.category = time;
@@ -902,7 +902,7 @@ class _DishPublishState extends State<DishPublish> {
   }
 
   void _selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2000),
@@ -925,7 +925,7 @@ class _DishPublishState extends State<DishPublish> {
   }
 
   Future pickDishImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
@@ -938,8 +938,8 @@ class _DishPublishState extends State<DishPublish> {
     }
   }
 
-  Future uploadImage() async {
-    String fileName = path.basename(_imageFile.path);
+  /* Future uploadImage() async {
+    String? fileName = path.basename(_imageFile.path);
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads/$fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
@@ -953,7 +953,7 @@ class _DishPublishState extends State<DishPublish> {
         });
       },
     );
-  }
+  } */
 
   Future setPostedDish() async {
     if (!cZeroStr(dish.dishName)) {

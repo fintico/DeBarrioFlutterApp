@@ -32,7 +32,7 @@ const FontWeight FONT_WEIGHT_REGULAR = FontWeight.w400;
 
 TextStyle getStyle(Color color, double fontSize, double height,
     double letterSpacing, FontWeight fontWeight,
-    [TextDecoration textDecoration]) {
+    [TextDecoration? textDecoration]) {
   return TextStyle(
     color: color,
     fontFamily: FONT_FAMILY,

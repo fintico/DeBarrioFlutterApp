@@ -16,7 +16,7 @@ import 'shopping_cart_bottom_item.dart';
 import 'shopping_cart_style.dart';
 
 class ShoppingCartHome extends StatelessWidget {
-  const ShoppingCartHome({Key key}) : super(key: key);
+  const ShoppingCartHome({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

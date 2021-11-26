@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AngleLeftIcon extends StatelessWidget {
-  final double height;
-  final double width;
-  final Color color;
+  final double? height;
+  final double? width;
+  final Color? color;
 
   const AngleLeftIcon(
-      {Key key,
+      {Key? key,
       @required this.height,
       @required this.width,
       @required this.color})

@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 import 'location_style.dart';
 
 class LocationButtonItem extends StatelessWidget {
-  final SellerAddress sellerAddress;
-  const LocationButtonItem({Key key, this.sellerAddress}) : super(key: key);
+  final SellerAddress? sellerAddress;
+  const LocationButtonItem({Key? key, this.sellerAddress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class LocationButtonItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 14.0, top: 20.0),
                           child: Text(
-                            sellerAddress.address.address,
+                            sellerAddress!.address!.address!,
                             textAlign: TextAlign.left,
                             style: titleLocationItemStyle,
                           ),
@@ -66,7 +66,7 @@ class LocationButtonItem extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 14.0, top: 8.0, bottom: 20.0),
                           child: Text(
-                            sellerAddress.address.addressDescription,
+                            sellerAddress!.address!.addressDescription!,
                             textAlign: TextAlign.left,
                             style: descriptionLocationItemStyle,
                           ),
@@ -76,8 +76,8 @@ class LocationButtonItem extends StatelessWidget {
                 Container(
                     padding: const EdgeInsets.only(
                         left: 16.0, top: 34.0, right: 34.0, bottom: 34.0),
-                    child: homeBloc.addressId == sellerAddress.address.id ||
-                            prefs.address == sellerAddress.address.address
+                    child: homeBloc.addressId == sellerAddress!.address!.id ||
+                            prefs.address == sellerAddress!.address!.address
                         ? RadioActiveIcon(
                             height: 20.0,
                             width: 20.0,

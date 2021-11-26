@@ -5,17 +5,17 @@ import 'package:geolocator/geolocator.dart';
 class UserAppData {
   static final UserAppData _userAppData = new UserAppData._internal();
 
-  String phoneNumber = '';
-  String accessToken = '';
-  String refreshToken = '';
-  String verificationCode = '';
-  String signCode = '';
-  String address = '';
-  String addressDescription = '';
-  bool isActive = true;
-  double latitude;
-  double longitude;
-  String dishName;
+  String? phoneNumber = '';
+  String? accessToken = '';
+  String? refreshToken = '';
+  String? verificationCode = '';
+  String? signCode = '';
+  String? address = '';
+  String? addressDescription = '';
+  bool? isActive = true;
+  double? latitude;
+  double? longitude;
+  String? dishName;
 
   //Placemark userCurrentLocation;
   RegistrationArgs registrationArgs =

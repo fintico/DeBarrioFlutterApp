@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class PaymentMethodBloc extends ChangeNotifier {
   bool creditCard = false;
-  int indexCreditCard;
-  int id;
+  int? indexCreditCard;
+  int? id;
   List<CreditCard> _creditCards = [];
   bool isPaying = false;
 
@@ -16,7 +16,7 @@ class PaymentMethodBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onId(int idTemp) {
+  void onId(int? idTemp) {
     id = idTemp;
     print(id);
     notifyListeners();

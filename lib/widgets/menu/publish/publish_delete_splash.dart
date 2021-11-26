@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class PublishDelete extends StatelessWidget {
-  final int dishId;
-  const PublishDelete({Key key, this.dishId}) : super(key: key);
+  final int? dishId;
+  const PublishDelete({Key? key, this.dishId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class PublishDelete extends StatelessWidget {
   Future deleteDish(BuildContext context) async {
     try {
       Response<dynamic> res =
-          await Provider.of<DishService>(context).deleteDish(dishId, false);
+          await Provider.of<DishService>(context).deleteDish(dishId!, false);
       print(res.bodyString);
       Routes.sailor.navigate(
         Routes.DISH_LIST_SCREEN,

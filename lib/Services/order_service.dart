@@ -20,7 +20,7 @@ abstract class OrderService extends ChopperService {
     @Field('state') int state,
     @Field('portion') int portion,
     @Field('delivery_date') String deliveryDate,
-    @Field('delivery_time') String deliveryTime,
+    @Field('delivery_time') String? deliveryTime,
     @Field('is_active') bool isActive,
     @Field('is_deleted') bool isDeleted,
     @Field('customer_address') int customerAddress,

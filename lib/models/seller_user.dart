@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:debarrioapp/models/user.dart';
 
 class SellerUser {
-  final User user;
-  String restaurantName;
-  String urlImage;
+  User? user;
+  String? restaurantName;
+  String? urlImage;
 
   SellerUser({this.user, this.restaurantName, this.urlImage});
 
@@ -16,7 +16,7 @@ class SellerUser {
       );
 
   Map<String, dynamic> toJson() => {
-        "user": user == null ? null : user.toJson(),
+        "user": user == null ? null : user!.toJson(),
         'restaurant_name': restaurantName,
         'urlImage': urlImage,
       };

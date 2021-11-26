@@ -35,16 +35,16 @@ import 'publish_style.dart';
 
 // ignore: must_be_immutable
 class RepublishPage extends StatefulWidget {
-  final DishModel dishModel;
-  final Address address;
-  RepublishPage({Key key, this.dishModel, this.address}) : super(key: key);
+  final DishModel? dishModel;
+  final Address? address;
+  RepublishPage({Key? key, this.dishModel, this.address}) : super(key: key);
 
   @override
   _RepublishPageState createState() => _RepublishPageState();
 }
 
 class _RepublishPageState extends State<RepublishPage> {
-  StorageService storage = StorageService();
+  //StorageService storage = StorageService();
 
   DishModel dish = DishModel();
 
@@ -52,43 +52,43 @@ class _RepublishPageState extends State<RepublishPage> {
 
   final picker = ImagePicker();
 
-  String dishName;
+  String? dishName;
 
-  String categoryName;
+  String? categoryName;
 
-  String stock;
+  String? stock;
 
-  String priceDelivery;
+  String? priceDelivery;
 
-  String pricePickup;
+  String? pricePickup;
 
-  String saleDate;
+  String? saleDate;
 
-  String saleDateTo;
+  String? saleDateTo;
 
-  String fromTime;
+  String? fromTime;
 
-  String fromTimeTo;
+  String? fromTimeTo;
 
-  String toTime;
+  String? toTime;
 
-  String toTimeTo;
+  String? toTimeTo;
 
-  int fromTimeIndex;
+  int? fromTimeIndex;
 
-  int toTimeIndex;
+  int? toTimeIndex;
 
-  File _imageFile;
+  File? _imageFile;
 
-  String urlImage;
+  String? urlImage;
 
-  DateTime deliveryDate;
+  DateTime? deliveryDate;
 
-  DateTime dishFromTime;
+  DateTime? dishFromTime;
 
-  DateTime dishToTime;
+  DateTime? dishToTime;
 
-  String address;
+  String? address;
 
   @override
   void initState() {
@@ -100,14 +100,14 @@ class _RepublishPageState extends State<RepublishPage> {
     } else {
       print('ae2');
     }
-    urlImage = widget.dishModel.image;
-    saleDate = dateTimeDetail(widget.dishModel);
-    categoryName = widget.dishModel.dishCategory.dishCategoryDescription;
-    fromTime = timeFromDetail(widget.dishModel);
-    toTime = timeToDetail(widget.dishModel);
+    urlImage = widget.dishModel!.image;
+    saleDate = dateTimeDetail(widget.dishModel!);
+    categoryName = widget.dishModel!.dishCategory!.dishCategoryDescription;
+    fromTime = timeFromDetail(widget.dishModel!);
+    toTime = timeToDetail(widget.dishModel!);
     address = widget.address == null
-        ? widget.dishModel.address.address
-        : widget.address.address;
+        ? widget.dishModel!.address!.address
+        : widget.address!.address;
     super.initState();
   }
 
@@ -154,7 +154,7 @@ class _RepublishPageState extends State<RepublishPage> {
                     ),
                   ),
                   Container(
-                    height: widget.dishModel.additional != null
+                    height: widget.dishModel!.additional != null
                         ? screenHeight(context, dividedBy: 1.75)
                         : screenHeight(context, dividedBy: 3.3),
                   ),
@@ -178,7 +178,7 @@ class _RepublishPageState extends State<RepublishPage> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image(
-                  image: NetworkImage(urlImage),
+                  image: NetworkImage(urlImage!),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -219,13 +219,13 @@ class _RepublishPageState extends State<RepublishPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: widget.dishModel.dishName != null
-              ? widget.dishModel.dishName
+          hintText: widget.dishModel!.dishName != null
+              ? widget.dishModel!.dishName
               : '',
           hintStyle: TextStyle(color: DBColors.BLACK),
           labelText: 'Nombre del plato',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: cZeroStr(widget.dishModel.dishName)
+          floatingLabelBehavior: cZeroStr(widget.dishModel!.dishName)
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
@@ -254,15 +254,15 @@ class _RepublishPageState extends State<RepublishPage> {
           ),
           hintText: categoryName,
           hintStyle: TextStyle(
-            color:
-                cZeroStr(widget.dishModel.dishCategory.dishCategoryDescription)
-                    ? DBColors.BLACK
-                    : DBColors.GRAY_2,
+            color: cZeroStr(
+                    widget.dishModel!.dishCategory!.dishCategoryDescription)
+                ? DBColors.BLACK
+                : DBColors.GRAY_2,
           ),
           labelText: 'Categoría',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
           floatingLabelBehavior:
-              cZeroStr(widget.dishModel.dishCategory.dishCategoryDescription)
+              cZeroStr(widget.dishModel!.dishCategory!.dishCategoryDescription)
                   ? FloatingLabelBehavior.always
                   : null,
           fillColor: DBColors.GREEN,
@@ -297,13 +297,13 @@ class _RepublishPageState extends State<RepublishPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: widget.dishModel.stock != null
-              ? widget.dishModel.stock.toString()
+          hintText: widget.dishModel!.stock != null
+              ? widget.dishModel!.stock.toString()
               : '',
           hintStyle: TextStyle(color: DBColors.BLACK),
           labelText: 'Stock de porciones',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: widget.dishModel.stock != null
+          floatingLabelBehavior: widget.dishModel!.stock != null
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
@@ -334,13 +334,13 @@ class _RepublishPageState extends State<RepublishPage> {
           ),
           hintText: saleDate,
           hintStyle: TextStyle(
-            color: cZeroStr(widget.dishModel.deliveryDate)
+            color: cZeroStr(widget.dishModel!.deliveryDate)
                 ? DBColors.BLACK
                 : DBColors.GRAY_2,
           ),
           labelText: 'Fecha de entrega',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: cZeroStr(widget.dishModel.deliveryDate)
+          floatingLabelBehavior: cZeroStr(widget.dishModel!.deliveryDate)
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
@@ -414,13 +414,13 @@ class _RepublishPageState extends State<RepublishPage> {
           ),
           hintText: fromTime,
           hintStyle: TextStyle(
-            color: cZeroStr(widget.dishModel.deliveryTimeFrom)
+            color: cZeroStr(widget.dishModel!.deliveryTimeFrom)
                 ? DBColors.BLACK
                 : DBColors.GRAY_2,
           ),
           labelText: 'Desde',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: cZeroStr(widget.dishModel.deliveryTimeFrom)
+          floatingLabelBehavior: cZeroStr(widget.dishModel!.deliveryTimeFrom)
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
@@ -457,13 +457,13 @@ class _RepublishPageState extends State<RepublishPage> {
           ),
           hintText: toTime,
           hintStyle: TextStyle(
-            color: cZeroStr(widget.dishModel.deliveryTimeTo)
+            color: cZeroStr(widget.dishModel!.deliveryTimeTo)
                 ? DBColors.BLACK
                 : DBColors.GRAY_2,
           ),
           labelText: 'Hasta',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: cZeroStr(widget.dishModel.deliveryTimeTo)
+          floatingLabelBehavior: cZeroStr(widget.dishModel!.deliveryTimeTo)
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
@@ -498,17 +498,17 @@ class _RepublishPageState extends State<RepublishPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: widget.dishModel.priceDelivery != null
-              ? "S/ ${widget.dishModel.priceDelivery.toString()}"
+          hintText: widget.dishModel!.priceDelivery != null
+              ? "S/ ${widget.dishModel!.priceDelivery.toString()}"
               : '',
           hintStyle: TextStyle(color: DBColors.BLACK),
           labelText: 'Precio con delivery (por porción)',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: widget.dishModel.priceDelivery != null
+          floatingLabelBehavior: widget.dishModel!.priceDelivery != null
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
-          prefixText: widget.dishModel.priceDelivery != null ? "" : "S/",
+          prefixText: widget.dishModel!.priceDelivery != null ? "" : "S/",
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
             borderSide: BorderSide(
@@ -532,17 +532,17 @@ class _RepublishPageState extends State<RepublishPage> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
           ),
-          hintText: widget.dishModel.pricePickup != null
-              ? "S/ ${widget.dishModel.pricePickup.toString()}"
+          hintText: widget.dishModel!.pricePickup != null
+              ? "S/ ${widget.dishModel!.pricePickup.toString()}"
               : '',
           hintStyle: TextStyle(color: DBColors.BLACK),
           labelText: 'Precio con recojo (por porción)',
           labelStyle: TextStyle(color: DBColors.GRAY_2),
-          floatingLabelBehavior: widget.dishModel.pricePickup != null
+          floatingLabelBehavior: widget.dishModel!.pricePickup != null
               ? FloatingLabelBehavior.always
               : null,
           fillColor: DBColors.GREEN,
-          prefixText: widget.dishModel.pricePickup != null ? "" : "S/",
+          prefixText: widget.dishModel!.pricePickup != null ? "" : "S/",
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(4.0),
             borderSide: BorderSide(
@@ -608,7 +608,7 @@ class _RepublishPageState extends State<RepublishPage> {
   Widget _botomNavBar() {
     return Container(
       //height: 200.0,
-      height: widget.dishModel.additional != null
+      height: widget.dishModel!.additional != null
           //? screenHeight(context, dividedBy: 2.225)
           ? screenHeight(context, dividedBy: 2.18)
           : screenHeight(context, dividedBy: 4.35),
@@ -619,7 +619,7 @@ class _RepublishPageState extends State<RepublishPage> {
             color: DBColors.GRAY_8,
             child: Column(
               children: [
-                widget.dishModel.additional != null
+                widget.dishModel!.additional != null
                     ? Container(
                         child: Column(
                           //mainAxisAlignment: MainAxisAlignment.start,
@@ -656,9 +656,9 @@ class _RepublishPageState extends State<RepublishPage> {
                                           top: 20.0,
                                         ),
                                         child: Text(
-                                          widget.dishModel.additional != null
-                                              ? widget.dishModel.additional
-                                                  .additionalDescription
+                                          widget.dishModel!.additional != null
+                                              ? widget.dishModel!.additional!
+                                                  .additionalDescription!
                                               : "",
                                           style: bNavbarSubTitleStyle,
                                         ),
@@ -669,8 +669,8 @@ class _RepublishPageState extends State<RepublishPage> {
                                           bottom: 20.0,
                                         ),
                                         child: Text(
-                                          widget.dishModel.additional != null
-                                              ? 'S/ ${widget.dishModel.additional.price.toString()}'
+                                          widget.dishModel!.additional != null
+                                              ? 'S/ ${widget.dishModel!.additional!.price.toString()}'
                                               : "",
                                           style: bNavbarDescriptionStyle,
                                         ),
@@ -950,7 +950,7 @@ class _RepublishPageState extends State<RepublishPage> {
   }
 
   void _selectDate() async {
-    DateTime picked = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
       firstDate: new DateTime(2000),
@@ -971,39 +971,39 @@ class _RepublishPageState extends State<RepublishPage> {
 
   void _selectDateFrom() {
     dishFromTime = DateTime(
-      deliveryDate.year,
-      deliveryDate.month,
-      deliveryDate.day,
-      fromTimeIndex,
+      deliveryDate!.year,
+      deliveryDate!.month,
+      deliveryDate!.day,
+      fromTimeIndex!,
     );
     final timeFormatter = new DateFormat('H:mm');
-    fromTimeTo = timeFormatter.format(dishFromTime);
+    fromTimeTo = timeFormatter.format(dishFromTime!);
   }
 
   void _selectDateTo() {
     dishToTime = DateTime(
-      deliveryDate.year,
-      deliveryDate.month,
-      deliveryDate.day,
-      toTimeIndex,
+      deliveryDate!.year,
+      deliveryDate!.month,
+      deliveryDate!.day,
+      toTimeIndex!,
     );
     final timeFormatter = new DateFormat('H:mm');
-    toTimeTo = timeFormatter.format(dishToTime);
+    toTimeTo = timeFormatter.format(dishToTime!);
   }
 
   Future pickDishImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
-      uploadImage();
+      //uploadImage();
     } else {
       print('nope');
     }
   }
 
-  Future uploadImage() async {
+  /*  Future uploadImage() async {
     String fileName = path.basename(_imageFile.path);
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads/$fileName');
@@ -1018,31 +1018,31 @@ class _RepublishPageState extends State<RepublishPage> {
         });
       },
     );
-  }
+  } */
 
   Future setPostedDish() async {
-    dish.dishName = cZeroStr(dishName) ? dishName : widget.dishModel.dishName;
+    dish.dishName = cZeroStr(dishName) ? dishName : widget.dishModel!.dishName;
     dish.dishCategory = cZeroStr(dishCategory.dishCategoryDescription)
         ? dishCategory
-        : widget.dishModel.dishCategory;
-    dish.stock = cZeroStr(stock) ? int.parse(stock) : widget.dishModel.stock;
+        : widget.dishModel!.dishCategory;
+    dish.stock = cZeroStr(stock) ? int.parse(stock!) : widget.dishModel!.stock;
     dish.deliveryDate =
-        cZeroStr(saleDateTo) ? saleDateTo : widget.dishModel.deliveryDate;
+        cZeroStr(saleDateTo) ? saleDateTo : widget.dishModel!.deliveryDate;
     dish.deliveryTimeFrom =
-        cZeroStr(fromTimeTo) ? fromTimeTo : widget.dishModel.deliveryTimeFrom;
+        cZeroStr(fromTimeTo) ? fromTimeTo : widget.dishModel!.deliveryTimeFrom;
     dish.deliveryTimeTo =
-        cZeroStr(toTimeTo) ? toTimeTo : widget.dishModel.deliveryTimeTo;
+        cZeroStr(toTimeTo) ? toTimeTo : widget.dishModel!.deliveryTimeTo;
     dish.priceDelivery = cZeroStr(priceDelivery)
-        ? double.parse(priceDelivery)
-        : widget.dishModel.priceDelivery;
+        ? double.parse(priceDelivery!)
+        : widget.dishModel!.priceDelivery;
     dish.pricePickup = cZeroStr(pricePickup)
-        ? double.parse(pricePickup)
-        : widget.dishModel.pricePickup;
-    dish.additional = widget.dishModel.additional;
-    dish.address = widget.dishModel.address;
-    dish.image = widget.dishModel.image;
-    dish.seller = widget.dishModel.seller;
-    dish.id = widget.dishModel.id;
+        ? double.parse(pricePickup!)
+        : widget.dishModel!.pricePickup;
+    dish.additional = widget.dishModel!.additional;
+    dish.address = widget.dishModel!.address;
+    dish.image = widget.dishModel!.image;
+    dish.seller = widget.dishModel!.seller;
+    dish.id = widget.dishModel!.id;
     dish.isActive = true;
     dish.isDeleted = false;
 

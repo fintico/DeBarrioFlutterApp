@@ -8,10 +8,10 @@ import 'package:http/http.dart' as http;
 class AdditionalDish {
   static final AdditionalDish _additionalDish = new AdditionalDish._internal();
 
-  int id;
-  String additionalDescription;
-  double price;
-  bool isFree;
+  int? id;
+  String? additionalDescription;
+  double? price;
+  bool? isFree;
 
   AdditionalDish._internal();
 

@@ -22,8 +22,8 @@ import 'package:sailor/sailor.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodPayItem extends StatelessWidget {
-  final CreditCard creditCard;
-  const PaymentMethodPayItem({Key key, this.creditCard}) : super(key: key);
+  final CreditCard? creditCard;
+  const PaymentMethodPayItem({Key? key, this.creditCard}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class PaymentMethodPayItem extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 28.0, top: 20.0, bottom: 20.0),
                       child: SvgPicture.asset(
-                        creditCard.cardType.id == 1
+                        creditCard!.cardType!.id == 1
                             ? 'assets/images/visa.svg'
                             : 'assets/images/mastercard.svg',
                         height: 24.0,
@@ -52,7 +52,7 @@ class PaymentMethodPayItem extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 16.0, top: 20.0, bottom: 20.0),
                       child: Text(
-                        '**** ${creditCard.cardNumber.substring(creditCard.cardNumber.length - 5)}',
+                        '**** ${creditCard!.cardNumber!.substring(creditCard!.cardNumber!.length - 5)}',
                         style: numberStyle,
                       ),
                     ),
@@ -61,7 +61,7 @@ class PaymentMethodPayItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(
                       right: 28.0, top: 22.0, bottom: 22.0),
-                  child: paymentMethodBloc.id == creditCard.id
+                  child: paymentMethodBloc.id == creditCard!.id
                       ? RadioActiveIcon(
                           height: 20.0,
                           width: 20.0,

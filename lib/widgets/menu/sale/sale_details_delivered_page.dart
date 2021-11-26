@@ -21,8 +21,8 @@ import 'sale_pickup_detail_item.dart';
 import 'sale_style.dart';
 
 class SaleDetailsDelivered extends StatelessWidget {
-  final OrderDetail orderDetail;
-  const SaleDetailsDelivered({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const SaleDetailsDelivered({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,16 +51,16 @@ class SaleDetailsDelivered extends StatelessWidget {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<OrderService>(context, listen: false)
-          .ordersDetailbyId(orderDetail.id),
+          .ordersDetailbyId(orderDetail!.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             print(snapshot.error.toString());
           }
           OrderDetail orderDetailDATA =
-              OrderDetail.fromJson(json.decode(snapshot.data.bodyString));
+              OrderDetail.fromJson(json.decode(snapshot.data!.bodyString));
           inspect(orderDetailDATA);
-          if (orderDetail.order.isDelivery) {
+          if (orderDetail!.order!.isDelivery!) {
             return _buildOrderDetailDelivery(context, orderDetailDATA);
           } else {
             return _buildOrderDetailPickup(context, orderDetailDATA);
@@ -96,7 +96,7 @@ class SaleDetailsDelivered extends StatelessWidget {
         text: 'ORDEN ENTREGADA',
         disable: false,
         action: () {
-          _setStateOrder(context, orderDetail.order.id, 4);
+          _setStateOrder(context, orderDetail!.order!.id!, 4);
         },
       ),
     );

@@ -6,11 +6,11 @@ import 'package:debarrioapp/widgets/components/app_bar.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 class AppBarOptionTwo extends StatelessWidget {
-  final Function leftIconAction;
+  final VoidCallback? leftIconAction;
   //final Function rightIconAction;
-  final String title;
+  final String? title;
   const AppBarOptionTwo(
-      {Key key,
+      {Key? key,
       @required this.leftIconAction,
       //@required this.rightIconAction,
       @required this.title})

@@ -2,19 +2,19 @@ import 'dart:core';
 
 class BankCard {
   ///Card unique Id
-  String cardId;
+  String? cardId;
 
   ///Card holder name
-  String cardName;
+  String? cardName;
 
   ///Card Expiry date MM/YY
-  String cardExpiry;
+  String? cardExpiry;
 
   ///Card number printed on card
-  String cardNumber;
+  String? cardNumber;
 
   ///Card secret key written on card's Back
-  String cardKey;
+  String? cardKey;
 
   Map<String, dynamic> toMap() {
     return {

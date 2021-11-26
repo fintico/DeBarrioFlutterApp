@@ -8,14 +8,14 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:provider/provider.dart';
 
 class SearchResultItem extends StatelessWidget {
-  final DishModel dish;
-  const SearchResultItem({Key key, this.dish}) : super(key: key);
+  final DishModel? dish;
+  const SearchResultItem({Key? key, this.dish}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print(dish.dishName);
+        print(dish!.dishName);
         _createSearch(context);
       },
       child: Container(
@@ -36,7 +36,7 @@ class SearchResultItem extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       left: 14.0, top: 20.0, bottom: 20.0),
                   child: Text(
-                    dish.dishName,
+                    dish!.dishName!,
                     style: itemSearchDescription,
                   ),
                 ),
@@ -57,7 +57,7 @@ class SearchResultItem extends StatelessWidget {
   Future _createSearch(BuildContext context) async {
     try {
       await Provider.of<CustomerService>(context, listen: false)
-          .postCustomerSearchCreate(28, dish.id);
+          .postCustomerSearchCreate(28, dish!.id!);
     } catch (e) {
       print(e);
     }

@@ -12,7 +12,7 @@ import 'package:sailor/sailor.dart';
 import 'order_detail_finish_bottom.dart';
 
 class OrderDetailFinish extends StatelessWidget {
-  const OrderDetailFinish({Key key}) : super(key: key);
+  const OrderDetailFinish({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

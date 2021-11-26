@@ -13,11 +13,11 @@ import 'purchase_style.dart';
 
 class PurchaseAddNotify extends StatefulWidget {
   const PurchaseAddNotify({
-    Key key,
+    Key? key,
     @required this.isCreated,
   }) : super(key: key);
 
-  final bool isCreated;
+  final bool? isCreated;
 
   @override
   _PurchaseAddNotifyState createState() => _PurchaseAddNotifyState();

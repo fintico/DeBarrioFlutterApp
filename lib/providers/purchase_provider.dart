@@ -10,18 +10,18 @@ class PurchaseBloc extends ChangeNotifier {
   double totalPrice = 0.0;
   double totalPriceOrder = 0.0;
   double totalPriceOrderTemp = 0.0;
-  double subTotalPrice;
-  int portion;
-  double priceDeliveryType;
+  double? subTotalPrice;
+  int? portion;
+  double? priceDeliveryType;
   String addressDish = '-';
-  int dishId;
+  int? dishId;
   String restaurantName = '';
   String dishName = '';
   String dateTime = '';
   String dishImage = '';
   int tip = 0;
-  bool delivery;
-  bool pickup;
+  bool? delivery;
+  bool? pickup;
   bool isCreated = false;
 
   //
@@ -30,8 +30,8 @@ class PurchaseBloc extends ChangeNotifier {
 
   //modal date
   int day = 0;
-  String deliveryDate;
-  String shortDate;
+  String? deliveryDate;
+  String? shortDate;
 
   UnmodifiableListView<OrderDetail> get orderDetails =>
       UnmodifiableListView(_orderDetail);
@@ -51,8 +51,8 @@ class PurchaseBloc extends ChangeNotifier {
 
   void removeOrder(int index) {
     totalPrice = 0.0;
-    totalPriceOrder -= _orderDetail[index].order.totalPrice;
-    totalPriceOrderTemp -= _orderDetail[index].order.totalPrice;
+    totalPriceOrder -= _orderDetail[index].order!.totalPrice!;
+    totalPriceOrderTemp -= _orderDetail[index].order!.totalPrice!;
 
     print(totalPriceOrder);
     print(totalPriceOrderTemp);
@@ -77,23 +77,28 @@ class PurchaseBloc extends ChangeNotifier {
   }
 
   void onAddItem(int index) {
-    _orderDetail[index].order.portion++;
-    orderDetails[index].order.totalPrice +=
-        orderDetails[index].order.subtotalPrice;
-    totalPriceOrder += _orderDetail[index].order.subtotalPrice;
+    _orderDetail[index].order!.portion =
+        _orderDetail[index].order!.portion! + 1;
+    orderDetails[index].order!.totalPrice =
+        orderDetails[index].order!.subtotalPrice! +
+            orderDetails[index].order!.totalPrice!;
+    totalPriceOrder =
+        totalPriceOrder + _orderDetail[index].order!.subtotalPrice!;
     totalPriceOrderTemp = totalPriceOrder;
 
     notifyListeners();
   }
 
   void onSubtractItem(int index) {
-    if (_orderDetail[index].order.portion <= 1) {
-      _orderDetail[index].order.portion = 1;
+    if (_orderDetail[index].order!.portion! <= 1) {
+      _orderDetail[index].order!.portion = 1;
     } else {
-      _orderDetail[index].order.portion--;
-      orderDetails[index].order.totalPrice -=
-          orderDetails[index].order.subtotalPrice;
-      totalPriceOrder -= _orderDetail[index].order.subtotalPrice;
+      _orderDetail[index].order!.portion =
+          _orderDetail[index].order!.portion! - 1;
+      orderDetails[index].order!.totalPrice =
+          orderDetails[index].order!.totalPrice! -
+              orderDetails[index].order!.subtotalPrice!;
+      totalPriceOrder -= _orderDetail[index].order!.subtotalPrice!;
       totalPriceOrderTemp = totalPriceOrder;
     }
     notifyListeners();

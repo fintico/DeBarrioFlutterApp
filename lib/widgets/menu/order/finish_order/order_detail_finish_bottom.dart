@@ -4,7 +4,7 @@ import 'package:debarrioapp/widgets/components/generics/button_orange_outline.da
 import 'package:flutter/material.dart';
 
 class OrderDetailFinishBottom extends StatelessWidget {
-  const OrderDetailFinishBottom({Key key}) : super(key: key);
+  const OrderDetailFinishBottom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

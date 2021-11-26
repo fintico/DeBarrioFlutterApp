@@ -13,8 +13,8 @@ import 'sale_route_delivery_page.dart';
 import 'sale_style.dart';
 
 class DeliveryDetail extends StatelessWidget {
-  final OrderDetail orderDetail;
-  const DeliveryDetail({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const DeliveryDetail({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +33,15 @@ class DeliveryDetail extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 24.0, bottom: 18.0),
                   child: Text(
                     /* "ORDEN #0${dish.id}", */
-                    'ORDEN #0${orderDetail.order.id}',
+                    'ORDEN #0${orderDetail!.order!.id}',
                     style: numberOrdersPickupStyle,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 26.0, bottom: 16.0),
-                  child: orderDetail.order.state == 4
+                  child: orderDetail!.order!.state == 4
                       ? stateOffBox()
-                      : stateOnBox(orderDetail.order.state),
+                      : stateOnBox(orderDetail!.order!.state!),
                 )
                 //getDishState(dishProvider.list[index])
                 /* getDishState(dish) && dish.isActive
@@ -50,15 +50,15 @@ class DeliveryDetail extends StatelessWidget {
               ],
             ),
           ),
-          RouteDeliveryPage(orderDetail: orderDetail),
-          _cardDish(orderDetail),
+          RouteDeliveryPage(orderDetail: orderDetail!),
+          _cardDish(orderDetail!),
           Divider(
             color: DBColors.GRAY_12,
             indent: 28.0,
             endIndent: 28.0,
             thickness: 1.0,
           ),
-          _clientName(orderDetail.order),
+          _clientName(orderDetail!.order!),
           Divider(
             color: DBColors.GRAY_12,
             indent: 28.0,
@@ -72,9 +72,9 @@ class DeliveryDetail extends StatelessWidget {
             endIndent: 28.0,
             thickness: 1.0,
           ),
-          _address(orderDetail.order),
-          _gridLabel(orderDetail),
-          _totalPrice(orderDetail.order),
+          _address(orderDetail!.order!),
+          _gridLabel(orderDetail!),
+          _totalPrice(orderDetail!.order!),
           Divider(
             color: DBColors.GRAY_12,
             indent: 28.0,
@@ -93,13 +93,13 @@ class DeliveryDetail extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.only(left: 28.0, top: 18.0, bottom: 40.0),
-          child: cZeroStr(orderDetail.dish.image)
+          child: cZeroStr(orderDetail.dish!.image)
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(4.0),
                   child: Image(
                     image: NetworkImage(
                         //dishProvider.list[index].image),
-                        orderDetail.dish.image),
+                        orderDetail.dish!.image!),
                     height: 56.0,
                     width: 56.0,
                     fit: BoxFit.cover,
@@ -109,7 +109,7 @@ class DeliveryDetail extends StatelessWidget {
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
                               ? loadingProgress.cumulativeBytesLoaded /
-                                  loadingProgress.expectedTotalBytes
+                                  loadingProgress.expectedTotalBytes!
                               : null,
                         ),
                       );
@@ -136,7 +136,7 @@ class DeliveryDetail extends StatelessWidget {
                 child: Text(
                   //dishProvider.list[index].dishName,
                   //'dish.dishName',
-                  orderDetail.dish.dishName,
+                  orderDetail.dish!.dishName!,
                   style: titleCardStyle,
                 ),
               ),
@@ -148,9 +148,9 @@ class DeliveryDetail extends StatelessWidget {
                                       dishProvider.list[index].deliveryTimeTo, */
                   //'Entrega ${dateTimeString(dishProvider.list[index])}',
                   //'Entrega ${dateTimeString(dish)}',
-                  orderDetail.dish.additional == null
+                  orderDetail.dish!.additional == null
                       ? '-'
-                      : '+ ${orderDetail.dish.additional.additionalDescription}',
+                      : '+ ${orderDetail.dish!.additional!.additionalDescription}',
                   style: subtitleCardPickupStyle,
                 ),
               ),
@@ -161,7 +161,7 @@ class DeliveryDetail extends StatelessWidget {
                   //'S/ ${dishProvider.list[index].priceDelivery}'
                   /* '${pluralPortion(dish)} | S/ ${dish.priceDelivery}'
                                 .toString(), */
-                  '${pluralPortion(orderDetail.order.portion)}',
+                  '${pluralPortion(orderDetail.order!.portion!)}',
                   style: priceCardStyle,
                 ),
               ),
@@ -193,7 +193,7 @@ class DeliveryDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Text(
-                    order.customerAddress.customer.user.username,
+                    order.customerAddress!.customer!.user!.username!,
                     style: subLabelTitlePickupStyle,
                   ),
                 ),
@@ -279,7 +279,7 @@ class DeliveryDetail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
-                '${order.customerAddress.address.address}',
+                '${order.customerAddress!.address!.address}',
                 style: subLabelTitlePickupStyle,
               ),
             ),
@@ -383,7 +383,7 @@ class DeliveryDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: _schedule(orderDetail.dish),
+                child: _schedule(orderDetail.dish!),
               ),
             ),
           ),
@@ -462,7 +462,7 @@ class DeliveryDetail extends StatelessWidget {
                       ? 'CONFIRMADA'
                       : state == 3
                           ? 'PREPARADA'
-                          : null,
+                          : 'null',
               style: stateOnStyle,
             ),
           ),

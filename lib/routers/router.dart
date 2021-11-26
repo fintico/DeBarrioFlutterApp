@@ -525,8 +525,8 @@ class Routes {
           return Material(
             type: MaterialType.transparency,
             child: VerifySMSPage(
-              args: args,
-            ),
+                //args: args,
+                ),
           );
         },
       ),

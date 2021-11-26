@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'filter_style.dart';
 
 class DeliveryTypeItem extends StatelessWidget {
-  const DeliveryTypeItem({Key key}) : super(key: key);
+  const DeliveryTypeItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

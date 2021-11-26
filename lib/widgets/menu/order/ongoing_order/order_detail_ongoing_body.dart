@@ -14,7 +14,7 @@ import '../../../../utilsFunctions.dart';
 import 'order_ongoing_style.dart';
 
 class OrderDetailOngoingBody extends StatelessWidget {
-  const OrderDetailOngoingBody({Key key}) : super(key: key);
+  const OrderDetailOngoingBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 28.0, top: 4.0, bottom: 24.0),
                   child: Text(
-                    '${dateSaleTimeString(orderBloc.orderDetail.dish, orderBloc.orderDetail.order)}',
+                    '${dateSaleTimeString(orderBloc.orderDetail!.dish!, orderBloc.orderDetail!.order!)}',
                     style: subtitleDetailBoxOrderOngoingStyle,
                   ),
                 ),
@@ -90,7 +90,8 @@ class OrderDetailOngoingBody extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        _imageBox(orderBloc.orderDetail.dish.seller.urlImage),
+                        _imageBox(
+                            orderBloc.orderDetail!.dish!.seller!.urlImage!),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -99,7 +100,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                                   const EdgeInsets.only(left: 16.0, top: 29.0),
                               child: Text(
                                 orderBloc
-                                    .orderDetail.dish.seller.restaurantName,
+                                    .orderDetail!.dish!.seller!.restaurantName!,
                                 style: titleDetailOrderOngoingStyle,
                               ),
                             ),
@@ -107,7 +108,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   left: 16.0, top: 4.0, bottom: 28.0),
                               child: Text(
-                                '${toAddressShort(orderBloc.orderDetail.dish.address.address)}',
+                                '${toAddressShort(orderBloc.orderDetail!.dish!.address!.address!)}',
                                 style: subtitleDetailOrderOngoingStyle,
                               ),
                             ),
@@ -128,7 +129,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 28.0, top: 16.0),
                   child: Text(
-                    '${orderBloc.orderDetail.order.portion}x ${orderBloc.orderDetail.dish.dishName}',
+                    '${orderBloc.orderDetail!.order!.portion}x ${orderBloc.orderDetail!.dish!.dishName}',
                     style: descriptionDetailOrderOngoingStyle,
                   ),
                 ),
@@ -136,9 +137,9 @@ class OrderDetailOngoingBody extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 28.0, top: 8.0, bottom: 24.0),
                   child: Text(
-                    orderBloc.orderDetail.dish.additional == null
+                    orderBloc.orderDetail!.dish!.additional == null
                         ? '-'
-                        : '1x ${orderBloc.orderDetail.dish.additional.additionalDescription}',
+                        : '1x ${orderBloc.orderDetail!.dish!.additional!.additionalDescription}',
                     style: descriptionDetailOrderOngoingStyle,
                   ),
                 ),
@@ -151,19 +152,19 @@ class OrderDetailOngoingBody extends StatelessWidget {
                 _detailBox(
                   title: 'DIRECCIÓN DE ENTREGA',
                   description:
-                      '${orderBloc.orderDetail.order.customerAddress.address.address}',
+                      '${orderBloc.orderDetail!.order!.customerAddress!.address!.address}',
                   state: 0,
                 ),
                 _detailBox(
                   title: 'TOTAL PAGADO',
-                  description: 'S/ ${orderBloc.orderDetail.order.totalPrice}',
+                  description: 'S/ ${orderBloc.orderDetail!.order!.totalPrice}',
                   state: 1,
                 ),
                 _detailPaymentMethodBox(
                   title: 'MÉTODO DE PAGO',
                   description:
-                      '${toShortCreditCardNumber(orderBloc.orderDetail.order.creditCard.cardNumber)}',
-                  type: orderBloc.orderDetail.order.creditCard.cardType.id,
+                      '${toShortCreditCardNumber(orderBloc.orderDetail!.order!.creditCard!.cardNumber!)}',
+                  type: orderBloc.orderDetail!.order!.creditCard!.cardType!.id!,
                 ),
               ],
             ),
@@ -192,7 +193,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );
@@ -211,7 +212,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
     );
   }
 
-  _detailBox({String title, String description, int state}) {
+  _detailBox({String? title, String? description, int? state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -224,7 +225,7 @@ class OrderDetailOngoingBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 28.0, top: 16.0),
                   child: Text(
-                    title,
+                    title!,
                     style: titleDetailBoxOrderOngoingStyle,
                   ),
                 ),
@@ -232,13 +233,13 @@ class OrderDetailOngoingBody extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 28.0, top: 4.0, bottom: 16.0),
                   child: Text(
-                    description,
+                    description!,
                     style: subtitleDetailBoxOrderOngoingStyle,
                   ),
                 ),
               ],
             ),
-            _caseBox(state),
+            _caseBox(state!),
           ],
         ),
         Divider(
@@ -251,14 +252,14 @@ class OrderDetailOngoingBody extends StatelessWidget {
     );
   }
 
-  _detailPaymentMethodBox({String title, String description, int type}) {
+  _detailPaymentMethodBox({String? title, String? description, int? type}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 28.0, top: 16.0),
           child: Text(
-            title,
+            title!,
             style: titleDetailBoxOrderOngoingStyle,
           ),
         ),

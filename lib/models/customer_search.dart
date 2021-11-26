@@ -1,9 +1,9 @@
 import 'dishModel.dart';
 
 class CustomerSearch {
-  int id;
-  DishModel dish;
-  int customerId;
+  int? id;
+  DishModel? dish;
+  int? customerId;
 
   CustomerSearch({
     this.id,

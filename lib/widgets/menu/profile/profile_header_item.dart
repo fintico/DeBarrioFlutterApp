@@ -19,7 +19,7 @@ import '../../../utilsFunctions.dart';
 import 'profile_style.dart';
 
 class ProfileHeader extends StatefulWidget {
-  const ProfileHeader({Key key}) : super(key: key);
+  const ProfileHeader({Key? key}) : super(key: key);
 
   @override
   _ProfileHeaderState createState() => _ProfileHeaderState();
@@ -33,7 +33,7 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       width: screenWidth(context),
       height: screenHeight(context, dividedBy: 4.0),
       color: DBColors.BLUE_LIGHT_5,
-      child: cZeroStr(homeBloc.sellerAddress.seller.urlImage)
+      child: cZeroStr(homeBloc.sellerAddress!.seller!.urlImage)
           ? Container(
               padding: const EdgeInsets.all(28.0),
               child: CircleAvatar(
@@ -44,7 +44,8 @@ class _ProfileHeaderState extends State<ProfileHeader> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: Image(
-                    image: NetworkImage(homeBloc.sellerAddress.seller.urlImage),
+                    image:
+                        NetworkImage(homeBloc.sellerAddress!.seller!.urlImage!),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -103,11 +104,11 @@ class _ProfileHeaderState extends State<ProfileHeader> {
       Map<String, dynamic> jsonMap = json.decode(res.bodyString);
 
       setState(() {
-        homeBloc.sellerAddress.seller.urlImage =
+        homeBloc.sellerAddress!.seller!.urlImage =
             '${Url.API_BASE_URL + jsonMap["urlImage"]}';
       });
 
-      print(homeBloc.sellerAddress.seller.urlImage);
+      print(homeBloc.sellerAddress!.seller!.urlImage);
       //print(uploadImage(imageFile));
       //inspect(await uploadImage(imageFile));
     } else {

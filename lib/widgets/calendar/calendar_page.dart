@@ -23,7 +23,7 @@ import 'calendar_style.dart';
 import 'calendar_week.dart';
 
 class CalendarPage extends StatefulWidget {
-  CalendarPage({Key key}) : super(key: key);
+  CalendarPage({Key? key}) : super(key: key);
 
   @override
   _CalendarPageState createState() => _CalendarPageState();
@@ -63,7 +63,7 @@ class _CalendarPageState extends State<CalendarPage> {
             text: '¡QUIERO VENDER!',
             disable: false,
             action: () {
-              if (homeBloc.sellerAddress.seller.restaurantName != null) {
+              if (homeBloc.sellerAddress!.seller!.restaurantName != null) {
                 Navigator.push(
                     //context, MaterialPageRoute(builder: (_) => CalenderFill()));
                     context,
@@ -71,13 +71,13 @@ class _CalendarPageState extends State<CalendarPage> {
               } else {
                 print('no hay perfil');
 
-                return showDialog(
+                /* return showDialog(
                   barrierDismissible: false,
                   context: context,
-                  builder: (_) {
+                  builder: (BuildContext) {
                     return CalendarAlertSeller();
                   },
-                );
+                ); */
               }
             },
           ),

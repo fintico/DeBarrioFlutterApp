@@ -1,6 +1,6 @@
 class CardType {
-  int id;
-  String cardTypeDescription;
+  int? id;
+  String? cardTypeDescription;
 
   CardType({this.id, this.cardTypeDescription});
 

@@ -6,18 +6,25 @@ part of 'location_service.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// ignore_for_file: always_put_control_body_on_new_line, always_specify_types, prefer_const_declarations
 class _$LocationService extends LocationService {
-  _$LocationService([ChopperClient client]) {
+  _$LocationService([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
   }
 
+  @override
   final definitionType = LocationService;
 
-  Future<Response> postUserLocation(String address, String addressDescription,
-      bool isActive, double longitude, double latitude) {
+  @override
+  Future<Response<dynamic>> postUserLocation(
+      String address,
+      String addressDescription,
+      bool isActive,
+      double longitude,
+      double latitude) {
     final $url = '/location/create/';
-    final $body = {
+    final $body = <String, dynamic>{
       'address_name': address,
       'address_description': addressDescription,
       'is_active': isActive,
@@ -28,7 +35,8 @@ class _$LocationService extends LocationService {
     return client.send<dynamic, dynamic>($request);
   }
 
-  Future<Response> getLocationList() {
+  @override
+  Future<Response<dynamic>> getLocationList() {
     final $url = '/location/list/';
     final $request = Request('GET', $url, client.baseUrl);
     return client.send<dynamic, dynamic>($request);

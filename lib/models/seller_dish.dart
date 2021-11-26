@@ -8,10 +8,10 @@ class SellerDish {
     this.dishes,
   });
 
-  int userId;
-  String restaurantName;
+  int? userId;
+  String? restaurantName;
   dynamic urlImage;
-  List<DishModel> dishes;
+  List<DishModel>? dishes;
 
   factory SellerDish.fromJson(Map<String, dynamic> json) => SellerDish(
         userId: json["user_id"],
@@ -30,6 +30,6 @@ class SellerDish {
         "urlImage": urlImage,
         "dishes": dishes == null
             ? null
-            : List<DishModel>.from(dishes.map((dish) => dish.toJson())),
+            : List<DishModel>.from(dishes!.map((dish) => dish.toJson())),
       };
 }

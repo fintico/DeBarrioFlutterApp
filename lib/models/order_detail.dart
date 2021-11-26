@@ -2,9 +2,9 @@ import 'package:debarrioapp/models/order.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 
 class OrderDetail {
-  int id;
-  DishModel dish;
-  Order order;
+  int? id;
+  DishModel? dish;
+  Order? order;
 
   OrderDetail({
     this.id,

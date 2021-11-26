@@ -20,12 +20,12 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  Function goToTab;
+  Function? goToTab;
   //AuthService authService = AuthService();
   //User user;
   //DatabaseService database = DatabaseService();
   // bool loading=true;
-  BuildContext currentContext;
+  BuildContext? currentContext;
 
   @override
   void initState() {
@@ -136,7 +136,7 @@ class _SplashState extends State<Splash> {
   } */
 
   void onSkipPress() {
-    this.goToTab(1);
+    this.goToTab!(1);
   }
 
   void gotoIntroScreen() {

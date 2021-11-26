@@ -1,34 +1,45 @@
-/* import 'dart:async';
+import 'dart:async';
 
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/Screens/Registration/map_loaction_set.dart';
+import 'package:debarrioapp/Screens/Registration/ui_screen.dart';
 import 'package:debarrioapp/Screens/map_screen.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseAuthService.dart';
 import 'package:debarrioapp/ServicesFire/FirebaseFireStoreService.dart';
+import 'package:debarrioapp/models/user.dart';
+import 'package:debarrioapp/providers/register_provider.dart';
+import 'package:debarrioapp/providers/user_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
+import 'package:debarrioapp/widgets/location/location_page.dart';
+import 'package:debarrioapp/widgets/registration/registration_splash.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:hexcolor/hexcolor.dart';
+//import 'package:hexcolor/hexcolor.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
+import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:provider/provider.dart';
 
 // ignore: camel_case_types
 class Otp_Verification extends StatefulWidget {
+  final String? phoneNumber;
+
+  const Otp_Verification({Key? key, this.phoneNumber}) : super(key: key);
   @override
   _Otp_VerificationState createState() => _Otp_VerificationState();
 }
 
 // ignore: camel_case_types
 class _Otp_VerificationState extends State<Otp_Verification> {
-  int otp;
+  int? otp;
   bool checkValue = false;
-  //User user;
-  //AuthService authService = AuthService();
+  User? user;
+  AuthService authService = AuthService();
   bool loading = false;
   bool isTimeout = false;
 
@@ -47,24 +58,37 @@ class _Otp_VerificationState extends State<Otp_Verification> {
     DBStyle.FONT_WEIGHT_SEMI_BOLD,
   );
 
+  Timer? _timer;
+  int _start = 45;
+
+  final register = registerProvider<RegisterProvider>();
+
   ///Database service
   //DatabaseService database = DatabaseService();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      authService.verifyPhone(user.phoneNumber, smsUIUpdate, updateUser,
+    print(widget.phoneNumber);
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      authService.verifyPhone(widget.phoneNumber!, smsUIUpdate, updateUser,
           phoneNumberNotOkay: phoneNumberNotOkay);
     });
     // phoneNumberNotOkay();
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    user = Provider.of<User>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     TextStyle headingtextStyle = TextStyle(
-        color: HexColor('4C6072'),
+        color: DBColors.GRAY_17,
         fontSize: 35.0,
         letterSpacing: 0.2,
         fontStyle: FontStyle.normal,
@@ -72,11 +96,11 @@ class _Otp_VerificationState extends State<Otp_Verification> {
         fontFamily: 'OpenSans');
 
     TextStyle subTextStyle = TextStyle(
-        color: HexColor('333333'),
+        color: DBColors.BLACK,
         fontSize: 16.0,
         letterSpacing: 0.2,
         fontStyle: FontStyle.normal,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w400,
         fontFamily: 'OpenSans');
     final appBar = PreferredSize(
       child: Container(
@@ -116,7 +140,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
     );
     return SafeArea(
       child: Scaffold(
-        backgroundColor: HexColor("#f2f2f2"),
+        backgroundColor: DBColors.WHITE,
         appBar: appBar,
         body: LoadingOverlay(
           color: Colors.black,
@@ -124,7 +148,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
           isLoading: loading,
           progressIndicator: LoadingIndicator(
             indicatorType: Indicator.ballSpinFadeLoader,
-            color: Colors.white,
+            colors: [Colors.white],
           ),
           child: SingleChildScrollView(
             child: Container(
@@ -159,17 +183,21 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24.0),
                     child: OTPTextField(
-                        length: 6,
-                        width: MediaQuery.of(context).size.width,
-                        fieldWidth: 45,
-                        style: TextStyle(fontSize: 17),
-                        textFieldAlignment: MainAxisAlignment.spaceAround,
-                        fieldStyle: FieldStyle.box,
-                        keyboardType: TextInputType.number,
-                        onCompleted: onOtpCompleted),
+                      length: 6,
+                      width: MediaQuery.of(context).size.width,
+                      fieldWidth: 45,
+                      style: TextStyle(fontSize: 17),
+                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                      fieldStyle: FieldStyle.box,
+                      keyboardType: TextInputType.number,
+                      onCompleted: onOtpCompleted,
+                      onChanged: (value) {
+                        print(value);
+                      },
+                    ),
                   ),
                   SizedBox(
-                    height: 40,
+                    height: 20,
                   ),
                   checkValue == false
                       ? Container(
@@ -191,8 +219,8 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                                   textColor: Colors.white,
                                   fontSize: 16.0);
                             } else {
-                              authService.verifyPhone(
-                                  user.phoneNumber, smsUIUpdate, updateUser,
+                              authService.verifyPhone(userProvider.phoneNumber!,
+                                  smsUIUpdate, updateUser,
                                   phoneNumberNotOkay: phoneNumberNotOkay);
                             }
                           },
@@ -205,7 +233,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
                                 textAlign: TextAlign.center,
                                 text: TextSpan(children: [
                                   TextSpan(
-                                    text: 'Código vence en: 45 seg\n',
+                                    text: 'Código vence en: $_start seg\n',
                                     style: timeOutStyle,
                                   ),
                                   TextSpan(
@@ -224,16 +252,38 @@ class _Otp_VerificationState extends State<Otp_Verification> {
     );
   }
 
-  void gotoHomeScreen() {
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  /* void gotoHomeScreen() {
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (_) => MapScreen()),
         (Route<dynamic> route) => false);
-  }
+  } */
 
   void onOtpCompleted(String value) {
+    startTimer();
+    print(value);
     checkValue = true;
+    register.code = value;
     authService.signInWithPhoneNumber(null, value, updateUser).then((val) {
+      print('otp completed $val');
       if (!val)
         Fluttertoast.showToast(
             msg: "The otp is not correct",
@@ -246,9 +296,25 @@ class _Otp_VerificationState extends State<Otp_Verification> {
     });
   }
 
-  updateUser(String userId) {
-    user.id = userId;
-    getUserDataFromDatabase();
+  updateUser(String uid) {
+    print(uid);
+    register.uid = uid;
+    //user.uid = userId;
+
+    /* Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => UiScreen(
+          uid: userId,
+        ),
+      ),
+    ); */
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => RegistrationSplash()),
+    );
+
+    //getUserDataFromDatabase();
   }
 
   smsUIUpdate(bool showEmpty) {
@@ -261,7 +327,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
     });
   }
 
-  void getUserDataFromDatabase() {
+  /* void getUserDataFromDatabase() {
     StreamSubscription userSubscription;
     userSubscription = database.getOtherUserData(user.id).listen((event) {
       if (event != null) {
@@ -276,9 +342,9 @@ class _Otp_VerificationState extends State<Otp_Verification> {
       }
       userSubscription.cancel();
     });
-  }
+  } */
 
-  void gotoSelectLocation() {
+  /* void gotoSelectLocation() {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -287,7 +353,7 @@ class _Otp_VerificationState extends State<Otp_Verification> {
         ),
       ),
     );
-  }
+  } */
 }
 
 void phoneNumberNotOkay(String message) {
@@ -300,4 +366,3 @@ void phoneNumberNotOkay(String message) {
       textColor: Colors.white,
       fontSize: 16.0);
 }
- */

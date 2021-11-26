@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class Address {
-  int id;
-  String address;
-  String addressDescription;
-  bool isActive;
-  double longitude;
-  double latitude;
+  int? id;
+  String? address;
+  String? addressDescription;
+  bool? isActive;
+  double? longitude;
+  double? latitude;
 
   Address({
     this.id,
@@ -39,7 +39,8 @@ class Address {
     };
   }
 
-  factory Address.fromRawJson(String str) => Address.fromJson(json.decode(str));
+  factory Address.fromRawJson(List<int> str) =>
+      Address.fromJson(json.decode(utf8.decode(str)));
 
   String toRawJson() => json.encode(toJson());
 }

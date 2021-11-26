@@ -6,11 +6,11 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
 class RadioListTitleButton extends StatefulWidget {
-  final Function action;
-  final String title;
-  final bool isActive;
+  final VoidCallback? action;
+  final String? title;
+  final bool? isActive;
   RadioListTitleButton({
-    Key key,
+    Key? key,
     @required this.action,
     @required this.title,
     @required this.isActive,
@@ -45,7 +45,7 @@ class _RadioListTitleButtonState extends State<RadioListTitleButton> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  widget.title,
+                  widget.title!,
                   textAlign: TextAlign.left,
                   style: DBStyles.getStyle(
                     DBStyles.BLACK,

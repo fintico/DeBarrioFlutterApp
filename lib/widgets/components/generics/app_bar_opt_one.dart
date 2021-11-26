@@ -5,8 +5,8 @@ import 'package:debarrioapp/widgets/components/icons/angle_left.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 class AppBarOptionOne extends StatelessWidget {
-  final Function leftIconAction;
-  const AppBarOptionOne({Key key, @required this.leftIconAction})
+  final VoidCallback? leftIconAction;
+  const AppBarOptionOne({Key? key, @required this.leftIconAction})
       : super(key: key);
 
   @override

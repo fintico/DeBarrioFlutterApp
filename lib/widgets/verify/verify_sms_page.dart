@@ -11,8 +11,8 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
 class VerifySMSPage extends StatefulWidget {
-  final VerifySMSPageArgs args;
-  VerifySMSPage({Key key, @required this.args}) : super(key: key);
+  final VerifySMSPageArgs? args;
+  VerifySMSPage({Key? key, this.args}) : super(key: key);
 
   @override
   _VerifySMSPageState createState() => _VerifySMSPageState();
@@ -153,15 +153,15 @@ class _VerifySMSPageState extends State<VerifySMSPage> {
               decoration: BoxLooseDecoration(
                 radius: Radius.circular(8),
                 strokeColorBuilder: FixedColorBuilder(
-                    widget.args.error ? DBColors.RED : DBColors.GREEN),
+                    widget.args!.error! ? DBColors.RED : DBColors.GREEN),
                 strokeWidth: 1,
                 textStyle: otpTextStyle,
               ),
               onCodeChanged: (val) {
                 print(val);
                 userAppData.verificationCode = val;
-                if (!widget.args.error &&
-                    userAppData.verificationCode.length == 6) {
+                if (!widget.args!.error! &&
+                    userAppData.verificationCode!.length == 6) {
                   print('codigo enviado');
                   Routes.sailor.navigate(
                     Routes.SPLASH_LOADING_VERIFICATION_SMS_SCREEN,
@@ -176,7 +176,7 @@ class _VerifySMSPageState extends State<VerifySMSPage> {
           ),
           Container(
             height: 20,
-            child: widget.args.error
+            child: widget.args!.error!
                 ? Text(
                     'Código inválido',
                     style: errorTextStyle,
@@ -201,7 +201,7 @@ class _VerifySMSPageState extends State<VerifySMSPage> {
         },
         child: Text("Enviar nuevo código",
             style: DBStyles.getStyle(
-              widget.args.error ? DBStyles.RED : DBStyles.GREEN,
+              widget.args!.error! ? DBStyles.RED : DBStyles.GREEN,
               DBStyles.FONT_SYZE_M,
               DBStyles.FONT_HEIGHT_M,
               0,

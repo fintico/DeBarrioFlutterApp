@@ -11,7 +11,7 @@ import 'package:sailor/sailor.dart';
 import 'shopping_cart_style.dart';
 
 class ShoppingCartBottom extends StatelessWidget {
-  const ShoppingCartBottom({Key key}) : super(key: key);
+  const ShoppingCartBottom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

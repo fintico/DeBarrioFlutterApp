@@ -15,8 +15,8 @@ import '../../../utilsFunctions.dart';
 import 'order_style.dart';
 
 class OrderCard extends StatelessWidget {
-  final OrderDetail orderDetail;
-  const OrderCard({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const OrderCard({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +26,10 @@ class OrderCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           //inspect(orderDetail);
-          orderBloc.setOrder(orderDetail);
+          orderBloc.setOrder(orderDetail!);
           //print(orderBloc.order.id);
           Routes.sailor.navigate(
-            orderDetail.order.state == 4
+            orderDetail!.order!.state == 4
                 ? Routes.ORDER_DETAIL_FINISH_SCREEN
                 : Routes.ORDER_DETAIL_ONGOING_SCREEN,
             navigationType: NavigationType.pushReplace,
@@ -50,10 +50,12 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       //"PUBLICACIÓN #0${dishProvider.list[index].id}",
-                      "ORDEN #0${orderDetail.order.id}",
+                      "ORDEN #0${orderDetail!.order!.id}",
                       style: numberOrdersStyle,
                     ),
-                    orderDetail.order.state == 4 ? stateOffBox() : stateOnBox()
+                    orderDetail!.order!.state == 4
+                        ? stateOffBox()
+                        : stateOnBox()
                     //stateOffBox()
                     //getDishState(dishProvider.list[index])
                     /* getDishState(dish) && dish.isActive
@@ -68,13 +70,13 @@ class OrderCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(
                       left: 28.0, top: 18.0, bottom: 40.0),
-                  child: cZeroStr(orderDetail.dish.image)
+                  child: cZeroStr(orderDetail!.dish!.image)
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(4.0),
                           child: Image(
                             image: NetworkImage(
                                 //dishProvider.list[index].image),
-                                orderDetail.dish.image),
+                                orderDetail!.dish!.image!),
                             height: 56.0,
                             width: 56.0,
                             fit: BoxFit.cover,
@@ -85,7 +87,7 @@ class OrderCard extends StatelessWidget {
                                   value: loadingProgress.expectedTotalBytes !=
                                           null
                                       ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
+                                          loadingProgress.expectedTotalBytes!
                                       : null,
                                 ),
                               );
@@ -111,7 +113,7 @@ class OrderCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16.0, top: 18.0),
                         child: Text(
                           //dishProvider.list[index].dishName,
-                          orderDetail.dish.dishName,
+                          orderDetail!.dish!.dishName!,
                           style: titleCardStyle,
                         ),
                       ),
@@ -122,7 +124,7 @@ class OrderCard extends StatelessWidget {
                                     dishProvider.list[index].deliveryTimeFrom +
                                     dishProvider.list[index].deliveryTimeTo, */
                           //'Entrega ${dateTimeString(dishProvider.list[index])}',
-                          'Entrega ${dateSaleTimeString(orderDetail.dish, orderDetail.order)}',
+                          'Entrega ${dateSaleTimeString(orderDetail!.dish!, orderDetail!.order!)}',
                           style: subtitleCardStyle,
                         ),
                       ),
@@ -131,7 +133,7 @@ class OrderCard extends StatelessWidget {
                             left: 16.0, top: 4.0, bottom: 24.0),
                         child: Text(
                           //'S/ ${dishProvider.list[index].priceDelivery}'
-                          '${pluralPortion(orderDetail.order.portion)} | S/ ${orderDetail.order.totalPrice}'
+                          '${pluralPortion(orderDetail!.order!.portion!)} | S/ ${orderDetail!.order!.totalPrice}'
                               .toString(),
                           style: priceCardStyle,
                         ),

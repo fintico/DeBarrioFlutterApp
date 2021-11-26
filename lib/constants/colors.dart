@@ -18,6 +18,7 @@ const Color GREEN_DARK = const Color(0xFF58A86E);
 const Color GREEN_LIGHT = const Color(0xFFE8FAF2);
 const Color GREEN = const Color(0xFF52D176);
 const Color WHITE = const Color(0xFFFFFFFF);
+const Color GRAY_17 = const Color(0xFF4C6072);
 const Color GRAY_16 = const Color(0xFFE0E4EE);
 const Color GRAY_15 = const Color(0xFFECECEC);
 const Color GRAY_14 = const Color(0xFFDFE2E6);

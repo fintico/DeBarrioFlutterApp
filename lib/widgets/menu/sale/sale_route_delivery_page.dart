@@ -7,18 +7,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../utilsFunctions.dart';
 
 class RouteDeliveryPage extends StatefulWidget {
-  final OrderDetail orderDetail;
-  const RouteDeliveryPage({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const RouteDeliveryPage({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   _RouteDeliveryPageState createState() => _RouteDeliveryPageState();
 }
 
 class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
-  GoogleMapController mapController;
-  BitmapDescriptor customStartMark;
-  BitmapDescriptor customDestinationMark;
-  CameraPosition _initialLocation;
+  GoogleMapController? mapController;
+  BitmapDescriptor? customStartMark;
+  BitmapDescriptor? customDestinationMark;
+  CameraPosition? _initialLocation;
   Set<Marker> markers = {};
 
   @override
@@ -29,19 +29,19 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
   }
 
   //Geolocator _geolocator = Geolocator();
-  Position _currentPosition;
+  Position? _currentPosition;
   @override
   Widget build(BuildContext context) {
-    double latStart = widget.orderDetail.dish.address.latitude;
-    double lngStart = widget.orderDetail.dish.address.longitude;
+    double? latStart = widget.orderDetail!.dish!.address!.latitude;
+    double? lngStart = widget.orderDetail!.dish!.address!.longitude;
 
-    double latDestination =
-        widget.orderDetail.order.customerAddress.address.latitude;
-    double lngDestination =
-        widget.orderDetail.order.customerAddress.address.longitude;
+    double? latDestination =
+        widget.orderDetail!.order!.customerAddress!.address!.latitude;
+    double? lngDestination =
+        widget.orderDetail!.order!.customerAddress!.address!.longitude;
 
-    _setStartMarker(latStart, lngStart);
-    _setDestinationMarker(latDestination, lngDestination);
+    _setStartMarker(latStart!, lngStart!);
+    _setDestinationMarker(latDestination!, lngDestination!);
     return Container(
       height: screenHeight(context, dividedBy: 3.0),
       child: Stack(
@@ -55,7 +55,7 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
 
   _map() {
     return GoogleMap(
-      initialCameraPosition: _initialLocation,
+      initialCameraPosition: _initialLocation!,
       myLocationEnabled: false,
       myLocationButtonEnabled: false,
       buildingsEnabled: false,
@@ -89,18 +89,17 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
                 child: Icon(Icons.my_location),
               ),
               onTap: () {
-                mapController.animateCamera(
+                mapController!.animateCamera(
                   CameraUpdate.newCameraPosition(
                     CameraPosition(
                       target: LatLng(
-                        _currentPosition.latitude,
-                        _currentPosition.longitude,
+                        _currentPosition!.latitude,
+                        _currentPosition!.longitude,
                       ),
                       zoom: 18.0,
                     ),
                   ),
                 );
-                ;
               },
             ),
           ),
@@ -109,7 +108,7 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
     );
   }
 
-  _getCurrentLocation() async {
+  /* _getCurrentLocation() async {
     setState(() {
       // Store the position in the variable
       //_currentPosition = position;
@@ -135,14 +134,14 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
           ),
         ),
       );
-    });
-    /* await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+    }); */
+  /* await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       
     }).catchError((e) {
       print(e);
-    }); */
-  }
+    }); 
+  }*/
 
   _setStartMarker(double lat, double lng) {
     //setState(() {
@@ -156,7 +155,7 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
         title: 'Start',
         snippet: _startAddress,
       ), */
-      icon: customStartMark,
+      icon: customStartMark!,
     );
     markers.add(startMarker);
     _initialLocation = CameraPosition(target: LatLng(lat, lng), zoom: 15.0);
@@ -175,7 +174,7 @@ class _RouteDeliveryPageState extends State<RouteDeliveryPage> {
         title: 'Start',
         snippet: _startAddress,
       ), */
-      icon: customDestinationMark,
+      icon: customDestinationMark!,
     );
     markers.add(destinationMarker);
   }

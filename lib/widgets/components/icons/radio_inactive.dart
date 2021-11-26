@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class RadioInactiveIcon extends StatelessWidget {
-  final double height;
-  final double width;
-  final Color color;
+  final double? height;
+  final double? width;
+  final Color? color;
   const RadioInactiveIcon({
-    Key key,
+    Key? key,
     @required this.height,
     @required this.width,
     this.color,

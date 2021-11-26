@@ -2,22 +2,22 @@ import 'additional.dart';
 import 'dish_category.dart';
 
 class Test {
-  int id;
-  Additional additional;
-  DishCategory dishCategory;
-  String dishName;
-  String image;
-  int stock;
-  String deliveryDate;
-  String deliveryTimeFrom;
-  String deliveryTimeTo;
-  double priceDelivery;
-  double pricePickup;
-  bool isActive;
-  bool isDeleted;
-  String createdAt;
-  String updatedAt;
-  int seller;
+  int? id;
+  Additional? additional;
+  DishCategory? dishCategory;
+  String? dishName;
+  String? image;
+  int? stock;
+  String? deliveryDate;
+  String? deliveryTimeFrom;
+  String? deliveryTimeTo;
+  double? priceDelivery;
+  double? pricePickup;
+  bool? isActive;
+  bool? isDeleted;
+  String? createdAt;
+  String? updatedAt;
+  int? seller;
 
   Test({
     this.id,

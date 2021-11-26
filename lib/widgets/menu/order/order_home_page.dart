@@ -17,7 +17,7 @@ import '../../../utilsFunctions.dart';
 import 'order_style.dart';
 
 class HomeOrderPage extends StatelessWidget {
-  const HomeOrderPage({Key key}) : super(key: key);
+  const HomeOrderPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class HomeOrderPage extends StatelessWidget {
             print(snapshot.error.toString());
           }
           final List<OrderDetail> ordersDetail =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => OrderDetail.fromJson(e))
                   .toList();
           return _buildOrders(context, ordersDetail);

@@ -1,12 +1,12 @@
 import 'package:debarrioapp/utilProperties.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
+//import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 class FoodSearchFilterScreen extends StatefulWidget {
-  final Function setCategory;
+  final Function? setCategory;
 
-  const FoodSearchFilterScreen({Key key, this.setCategory}) : super(key: key);
+  const FoodSearchFilterScreen({Key? key, this.setCategory}) : super(key: key);
 
   @override
   _FoodSearchFilterScreenState createState() => _FoodSearchFilterScreenState();
@@ -101,7 +101,7 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
       ],
     );
     return Scaffold(
-      backgroundColor: HexColor("#f2f2f2"),
+      //backgroundColor: HexColor("#f2f2f2"),
       appBar: appBar,
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height * 0.2,
@@ -944,7 +944,7 @@ class _FoodSearchFilterScreenState extends State<FoodSearchFilterScreen> {
     if (isVegetariano) selectedCategory.add(category[11]);
     if (isVegano) selectedCategory.add(category[12]);
     if (isSinGluten) selectedCategory.add(category[13]);
-    widget.setCategory(selectedCategory, toSendBack);
+    widget.setCategory!(selectedCategory, toSendBack);
     Navigator.pop(context);
   }
 }

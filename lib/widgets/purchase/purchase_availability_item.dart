@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'purchase_style.dart';
 
 class PurchaseAvailability extends StatelessWidget {
-  const PurchaseAvailability({Key key}) : super(key: key);
+  const PurchaseAvailability({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,7 @@ class PurchaseAvailability extends StatelessWidget {
     final formatterDay = new DateFormat('EEE', 'es');
     final formatterMonth = new DateFormat('dd MMM', 'es');
     DateTime time = date.add(Duration(days: dayNumber));
-    String day = formatterDay.format(time);
+    String? day = formatterDay.format(time);
     String month = formatterMonth.format(time);
     return Container(
       height: 56.0,
@@ -152,7 +152,7 @@ class PurchaseAvailability extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
-              toBeginningOfSentenceCase(day),
+              toBeginningOfSentenceCase(day)!,
               style: purchaseBloc.day == dayNumber ? dayInvStyle : dayStyle,
             ),
           ),

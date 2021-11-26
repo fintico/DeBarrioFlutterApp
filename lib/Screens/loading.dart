@@ -17,7 +17,7 @@ class _LoadingState extends State<Loading> {
         isLoading: _saving,
         progressIndicator: LoadingIndicator(
           indicatorType: Indicator.ballSpinFadeLoader,
-          color: Colors.white,
+          colors: [Colors.white],
         ),
       ),
     );

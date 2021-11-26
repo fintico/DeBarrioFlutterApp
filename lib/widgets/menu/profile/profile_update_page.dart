@@ -14,7 +14,7 @@ import '../../../utilsFunctions.dart';
 import 'profile_text_field_item.dart';
 
 class ProfileUpdate extends StatelessWidget {
-  const ProfileUpdate({Key key}) : super(key: key);
+  const ProfileUpdate({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +36,33 @@ class ProfileUpdate extends StatelessWidget {
             children: [
               ProfileTextField(
                 title: 'Nombre del restaurante',
-                description: homeBloc.sellerAddress.seller.restaurantName,
+                description: homeBloc.sellerAddress!.seller!.restaurantName,
                 fieldType: 1,
               ),
               ProfileTextField(
                 title: 'Nombre y apellidos',
-                description: homeBloc.sellerAddress.seller.user.username ==
-                        homeBloc.sellerAddress.seller.user.phoneNumber
+                description: homeBloc.sellerAddress!.seller!.user!.username ==
+                        homeBloc.sellerAddress!.seller!.user!.phoneNumber
                     ? ''
-                    : homeBloc.sellerAddress.seller.user.username,
+                    : homeBloc.sellerAddress!.seller!.user!.username,
                 fieldType: 2,
               ),
               ProfileTextField(
                 title: 'Correo electrónico',
-                description: homeBloc.sellerAddress.seller.user.email ==
-                        homeBloc.sellerAddress.seller.user.phoneNumber
+                description: homeBloc.sellerAddress!.seller!.user!.email ==
+                        homeBloc.sellerAddress!.seller!.user!.phoneNumber
                     ? ''
-                    : homeBloc.sellerAddress.seller.user.email,
+                    : homeBloc.sellerAddress!.seller!.user!.email,
                 fieldType: 3,
               ),
               ProfileTextField(
                 title: 'Celular',
-                description: homeBloc.sellerAddress.seller.user.phoneNumber,
+                description: homeBloc.sellerAddress!.seller!.user!.phoneNumber,
                 fieldType: 4,
               ),
               ProfileTextField(
                 title: 'Dirección',
-                description: homeBloc.sellerAddress.address.address,
+                description: homeBloc.sellerAddress!.address!.address,
                 fieldType: 5,
               ),
             ],
@@ -97,32 +97,32 @@ class ProfileUpdate extends StatelessWidget {
   _validateForm(
       BuildContext context, ProfileBloc profileBloc, HomeBloc homeBloc) async {
     if (!cZeroStr(profileBloc.restaurantName) &&
-        !cZeroStr(homeBloc.sellerAddress.seller.restaurantName)) {
+        !cZeroStr(homeBloc.sellerAddress!.seller!.restaurantName)) {
       print('Ingresa el restaurant');
       return;
     } else if (!cZeroStr(profileBloc.fullName) &&
-        !cZeroStr(homeBloc.sellerAddress.seller.user.username)) {
+        !cZeroStr(homeBloc.sellerAddress!.seller!.user!.username)) {
       print('Ingresa el nombre');
       return;
     } else if (!cZeroStr(profileBloc.email) &&
-        !cZeroStr(homeBloc.sellerAddress.seller.user.email)) {
+        !cZeroStr(homeBloc.sellerAddress!.seller!.user!.email)) {
       print('Ingresa el email');
       return;
     }
     print(profileBloc.restaurantName);
     print(profileBloc.fullName);
     print(profileBloc.email);
-    homeBloc.sellerAddress.seller.restaurantName = profileBloc.restaurantName;
-    homeBloc.sellerAddress.seller.user.email = profileBloc.email;
-    homeBloc.sellerAddress.seller.user.username = profileBloc.fullName;
+    homeBloc.sellerAddress!.seller!.restaurantName = profileBloc.restaurantName;
+    homeBloc.sellerAddress!.seller!.user!.email = profileBloc.email;
+    homeBloc.sellerAddress!.seller!.user!.username = profileBloc.fullName;
     profileBloc.removeAll();
     Routes.sailor.navigate(
       Routes.PROFILE_HOME_SCREEN,
       navigationType: NavigationType.pushReplace,
     );
     await Provider.of<SellerService>(context, listen: false).putSeller(
-      homeBloc.sellerAddress.seller.user.id,
-      homeBloc.sellerAddress.seller.restaurantName,
+      homeBloc.sellerAddress!.seller!.user!.id!,
+      homeBloc.sellerAddress!.seller!.restaurantName!,
     );
   }
 }

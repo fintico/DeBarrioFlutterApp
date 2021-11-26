@@ -26,10 +26,10 @@ import '../../../utilsFunctions.dart';
 import 'publish_style.dart';
 
 class PublishDetail extends StatelessWidget {
-  final int dishId;
-  final bool isActive;
-  final DishModel dishModel;
-  const PublishDetail({Key key, this.dishId, this.isActive, this.dishModel})
+  final int? dishId;
+  final bool? isActive;
+  final DishModel? dishModel;
+  const PublishDetail({Key? key, this.dishId, this.isActive, this.dishModel})
       : super(key: key);
 
   @override
@@ -42,14 +42,14 @@ class PublishDetail extends StatelessWidget {
                 Routes.DISH_LIST_SCREEN,
                 navigationType: NavigationType.push),
             headerTitle: 'Detalle de la publicación',
-            rightIconAction: () => {detailsBottomSheet(context, dishModel)}),
+            rightIconAction: () => {detailsBottomSheet(context, dishModel!)}),
         preferredSize: Size.fromHeight(56.0));
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
         backgroundColor: DBColors.GRAY_12,
         body: _buildBody(context),
-        bottomNavigationBar: _bottomNavBar(dishModel),
+        bottomNavigationBar: _bottomNavBar(dishModel!),
       ),
     );
   }
@@ -57,7 +57,7 @@ class PublishDetail extends StatelessWidget {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future:
-          Provider.of<DishService>(context, listen: false).getDishById(dishId),
+          Provider.of<DishService>(context, listen: false).getDishById(dishId!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -70,7 +70,7 @@ class PublishDetail extends StatelessWidget {
             );
           }
           DishModel dish =
-              DishModel.fromJson(json.decode(snapshot.data.bodyString));
+              DishModel.fromJson(json.decode(snapshot.data!.bodyString));
           //dishProvider.onActive(true);
           //isActive = dish.isActive;
           return _buildDish(context, dish);
@@ -106,7 +106,7 @@ class PublishDetail extends StatelessWidget {
                       "PUBLICACIÓN #0${dish.id}",
                       style: publishtitleDetailStyle,
                     ),
-                    getDishState(dish) && dish.isActive
+                    getDishState(dish) && dish.isActive!
                         ? stateOnBox()
                         : stateOffBox(),
                   ],
@@ -117,12 +117,12 @@ class PublishDetail extends StatelessWidget {
             DishStatisticsCard(),
             detailsDish(
               title: 'TÍTULO DE LA VENTA',
-              description: dish.dishName,
+              description: dish.dishName!,
               descriptionStyle: descriptionDishStyle,
             ),
             detailsDish(
               title: 'CATEGORÍA',
-              description: dish.dishCategory.dishCategoryDescription,
+              description: dish.dishCategory!.dishCategoryDescription!,
               descriptionStyle: descriptionStyle,
             ),
             detailsDish(
@@ -146,7 +146,7 @@ class PublishDetail extends StatelessWidget {
             ),
             detailsDish(
               title: 'UBICACIÓN ACTUAL',
-              description: dish.address.address,
+              description: dish.address!.address!,
               descriptionStyle: descriptionStyle,
             ),
             _additionalDetail(context, dish),
@@ -161,7 +161,7 @@ class PublishDetail extends StatelessWidget {
     try {
       Response<dynamic> res =
           await Provider.of<DishService>(context, listen: false)
-              .getDishById(dishId);
+              .getDishById(dishId!);
       //inspect(res);
       if (res.isSuccessful) {
         DishModel dishModel = DishModel.fromJson(json.decode(res.bodyString));
@@ -183,7 +183,7 @@ class PublishDetail extends StatelessWidget {
         padding: const EdgeInsets.only(left: 0.0, top: 18.0, bottom: 24.0),
         child: cZeroStr(dish.image)
             ? Image(
-                image: NetworkImage(dish.image),
+                image: NetworkImage(dish.image!),
                 //height: 56.0,
                 //width: 56.0,
                 fit: BoxFit.cover,
@@ -193,7 +193,7 @@ class PublishDetail extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );
@@ -210,9 +210,9 @@ class PublishDetail extends StatelessWidget {
   }
 
   Widget detailsDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -225,14 +225,14 @@ class PublishDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title!,
             style: subTitleStyle,
           ),
           SizedBox(
             height: 4.0,
           ),
           Text(
-            description,
+            description!,
             style: descriptionStyle,
           ),
           title == 'UBICACIÓN ACTUAL'
@@ -254,9 +254,9 @@ class PublishDetail extends StatelessWidget {
   }
 
   Widget detailsRightDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -269,7 +269,7 @@ class PublishDetail extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: Text(
-              title,
+              title!,
               style: subTitleStyle,
             ),
           ),
@@ -279,7 +279,7 @@ class PublishDetail extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 24.0),
             child: Text(
-              description,
+              description!,
               style: descriptionStyle,
             ),
           ),
@@ -298,9 +298,9 @@ class PublishDetail extends StatelessWidget {
   }
 
   Widget detailsLefttDish({
-    String title,
-    String description,
-    TextStyle descriptionStyle,
+    String? title,
+    String? description,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       padding: const EdgeInsets.only(
@@ -312,14 +312,14 @@ class PublishDetail extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title!,
             style: subTitleStyle,
           ),
           SizedBox(
             height: 4.0,
           ),
           Text(
-            description,
+            description!,
             style: descriptionStyle,
           ),
           Padding(
@@ -337,11 +337,11 @@ class PublishDetail extends StatelessWidget {
   }
 
   Widget gridDetailDish({
-    String titleLeft,
-    String titleRight,
-    String descriptionLeft,
-    String descriptionRight,
-    TextStyle descriptionStyle,
+    String? titleLeft,
+    String? titleRight,
+    String? descriptionLeft,
+    String? descriptionRight,
+    TextStyle? descriptionStyle,
   }) {
     return Container(
       child: Row(
@@ -428,7 +428,8 @@ class PublishDetail extends StatelessWidget {
                                           top: 20.0,
                                         ),
                                         child: Text(
-                                          dish.additional.additionalDescription,
+                                          dish.additional!
+                                              .additionalDescription!,
                                           style: bNavbarSubTitleStyle,
                                         ),
                                       ),
@@ -438,7 +439,7 @@ class PublishDetail extends StatelessWidget {
                                           bottom: 20.0,
                                         ),
                                         child: Text(
-                                          'S/ ${dish.additional.price.toString()}',
+                                          'S/ ${dish.additional!.price.toString()}',
                                           style: bNavbarDescriptionStyle,
                                         ),
                                       ),
@@ -545,7 +546,7 @@ class PublishDetail extends StatelessWidget {
   }
 
   _bottomNavBar(DishModel dishModel) {
-    return getDishState(dishModel) && dishModel.isActive
+    return getDishState(dishModel) && dishModel.isActive!
         ? SizedBox(height: 1.0)
         : Container(
             color: DBColors.WHITE,
@@ -574,7 +575,7 @@ class PublishDetail extends StatelessWidget {
         builder: (context) {
           return Container(
             //height: MediaQuery.of(context).size.height * 0.25,
-            height: getDishState(dishModel) && dishModel.isActive
+            height: getDishState(dishModel) && dishModel.isActive!
                 ? screenHeight(context, dividedBy: 4.0)
                 : screenHeight(context, dividedBy: 7.0),
             child: Column(
@@ -609,7 +610,7 @@ class PublishDetail extends StatelessWidget {
                   indent: 28.0,
                   endIndent: 28.0,
                 ),
-                getDishState(dishModel) && dishModel.isActive
+                getDishState(dishModel) && dishModel.isActive!
                     ? InkWell(
                         onTap: () {
                           Navigator.pop(context);

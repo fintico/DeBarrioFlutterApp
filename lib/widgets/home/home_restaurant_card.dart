@@ -21,8 +21,8 @@ import 'home_style.dart';
 class RestaurantCard extends StatefulWidget {
   //final DishModel dish;
   //final SellerDish seller;
-  final SellerDetail seller;
-  const RestaurantCard({Key key, this.seller}) : super(key: key);
+  final SellerDetail? seller;
+  const RestaurantCard({Key? key, this.seller}) : super(key: key);
 
   @override
   _RestaurantCardState createState() => _RestaurantCardState();
@@ -50,7 +50,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                   'sellerDish': widget.seller,
                 },
               );
-              print(widget.seller.userId);
+              print(widget.seller!.userId);
               print('card');
             },
             child: Card(
@@ -76,13 +76,13 @@ class _RestaurantCardState extends State<RestaurantCard> {
                     padding: const EdgeInsets.only(
                         left: 12.0, top: 12.0, bottom: 16.0),
 
-                    child: cZeroStr(widget.seller.urlImage)
+                    child: cZeroStr(widget.seller!.urlImage)
                         ? ClipRRect(
                             borderRadius: BorderRadius.circular(4.0),
                             child: Image(
                               image: NetworkImage(
                                   //dishProvider.list[index].image),
-                                  widget.seller.urlImage),
+                                  widget.seller!.urlImage),
                               height: 56.0,
                               width: 56.0,
                               fit: BoxFit.cover,
@@ -95,7 +95,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
                                             null
                                         ? loadingProgress
                                                 .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes
+                                            loadingProgress.expectedTotalBytes!
                                         : null,
                                   ),
                                 );
@@ -128,16 +128,16 @@ class _RestaurantCardState extends State<RestaurantCard> {
                           padding: const EdgeInsets.only(left: 16.0, top: 10.0),
                           child: Text(
                             //widget.customer.name,
-                            widget.seller.restaurantName,
+                            widget.seller!.restaurantName!,
                             style: titleCardStyle,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 16.0, top: 2.0),
                           child: Text(
-                            widget.seller.dishes.length >= 1
-                                ? widget.seller.dishes[0].dishCategory
-                                    .dishCategoryDescription
+                            widget.seller!.dishes!.length >= 1
+                                ? widget.seller!.dishes![0].dishCategory!
+                                    .dishCategoryDescription!
                                 : '-',
                             style: subtitleCardStyle,
                           ),

@@ -18,14 +18,14 @@ import 'payment_method_alert_item.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodAddCard extends StatefulWidget {
-  PaymentMethodAddCard({Key key}) : super(key: key);
+  PaymentMethodAddCard({Key? key}) : super(key: key);
 
   @override
   _PaymentMethodAddCardState createState() => _PaymentMethodAddCardState();
 }
 
 class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
-  CreditCardModel creditCard;
+  CreditCardModel? creditCard;
   String cardNumber = '';
   String expiryDate = '';
   String cardHolderName = '';
@@ -189,22 +189,22 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
         text: 'GUARDAR TARJETA',
         disable: false,
         action: () {
-          if (formKey.currentState.validate()) {
+          if (formKey.currentState!.validate()) {
             //print('valid!');
 
-            if (detectCCType(creditCard.cardNumber) ==
+            if (detectCCType(creditCard!.cardNumber) ==
                     CreditCard.CardType.visa ||
-                detectCCType(creditCard.cardNumber) ==
+                detectCCType(creditCard!.cardNumber) ==
                     CreditCard.CardType.mastercard) {
-              switch (detectCCType(creditCard.cardNumber)) {
+              switch (detectCCType(creditCard!.cardNumber)) {
                 case CreditCard.CardType.visa:
-                  creditCard.brand = '1';
+                  creditCard!.brand = '1';
                   break;
                 case CreditCard.CardType.mastercard:
-                  creditCard.brand = '2';
+                  creditCard!.brand = '2';
                   break;
                 default:
-                  creditCard.brand = null;
+                  creditCard!.brand = '0';
               }
               Routes.sailor.navigate(
                 Routes.SPLASH_LOADING_ADD_CREDIT_CARD_SCREEN,
@@ -215,13 +215,13 @@ class _PaymentMethodAddCardState extends State<PaymentMethodAddCard> {
               );
             } else {
               print('other brand');
-              return showDialog(
+              /* return showDialog(
                 barrierDismissible: false,
                 context: context,
                 builder: (_) {
                   return PaymentMethodAlert();
                 },
-              );
+              ); */
             }
           } else {
             print('invalid!');

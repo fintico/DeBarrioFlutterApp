@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class DishSplash extends StatefulWidget {
-  DishSplash({Key key}) : super(key: key);
+  DishSplash({Key? key}) : super(key: key);
 
   @override
   _DishSplashState createState() => _DishSplashState();
@@ -81,24 +81,24 @@ class _DishSplashState extends State<DishSplash> {
     try {
       Response<dynamic> res =
           await Provider.of<DishService>(context).postSellerDish(
-        dish.dishName,
+        dish.dishName!,
         //dish.urlImage,
-        dish.dishStock,
-        dish.dishDeliveryDate,
-        dish.dishDeliveryFromTime,
-        dish.dishDeliveryToTime,
-        dish.dishDeliveryPrice,
-        dish.dishPickUpPrice,
+        dish.dishStock!,
+        dish.dishDeliveryDate!,
+        dish.dishDeliveryFromTime!,
+        dish.dishDeliveryToTime!,
+        dish.dishDeliveryPrice!,
+        dish.dishPickUpPrice!,
         prefs.userId,
-        dish.dishCategory,
-        dish.dishAdditional,
-        homeBloc.sellerAddress.address.id,
+        dish.dishCategory!,
+        dish.dishAdditional!,
+        homeBloc.sellerAddress!.address!.id!,
       );
 
       Map<String, dynamic> jsonMap = json.decode(res.bodyString);
       await Future.delayed(Duration(seconds: 1));
       await Provider.of<DishService>(context, listen: false)
-          .updateDishImage(jsonMap["id"], 'urlImage', dish.urlImage);
+          .updateDishImage(jsonMap["id"], 'urlImage', dish.urlImage!);
 
       //Map<String, dynamic> jsonImage = json.decode(resImage.bodyString);
       //dish.urlImage = '${Url.API_BASE_URL + jsonImage["image"]}';

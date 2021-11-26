@@ -9,7 +9,7 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
 class CalendarSplash extends StatefulWidget {
-  CalendarSplash({Key key}) : super(key: key);
+  CalendarSplash({Key? key}) : super(key: key);
 
   @override
   _CalendarSplashState createState() => _CalendarSplashState();

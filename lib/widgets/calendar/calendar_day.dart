@@ -10,7 +10,7 @@ import 'calendar_bloc.dart';
 import 'calendar_style.dart';
 
 class CalendarDay extends StatelessWidget {
-  const CalendarDay({Key key}) : super(key: key);
+  const CalendarDay({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final calendarBloc = Provider.of<CalendarBloc>(context, listen: false);
@@ -58,9 +58,9 @@ class DataSource extends CalendarDataSource {
 
   @override
   DateTime getStartTime(int index) {
-    String date = appointments[index].deliveryDate +
+    String date = appointments![index].deliveryDate +
         ' ' +
-        appointments[index].deliveryTimeFrom;
+        appointments![index].deliveryTimeFrom;
     return DateTime.parse(date);
   }
 
@@ -71,14 +71,14 @@ class DataSource extends CalendarDataSource {
 
   @override
   String getSubject(int index) {
-    return appointments[index].dishName;
+    return appointments![index].dishName;
   }
 
   @override
   DateTime getEndTime(int index) {
-    String date = appointments[index].deliveryDate +
+    String date = appointments![index].deliveryDate +
         ' ' +
-        appointments[index].deliveryTimeTo;
+        appointments![index].deliveryTimeTo;
     return DateTime.parse(date);
   }
 }

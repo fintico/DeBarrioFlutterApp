@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 class AppBarOptionFour extends StatelessWidget {
-  final Function leftIconAction;
-  final Function rightIconAction;
-  final String headerTitle;
+  final VoidCallback? leftIconAction;
+  final VoidCallback? rightIconAction;
+  final String? headerTitle;
   const AppBarOptionFour(
-      {Key key,
+      {Key? key,
       @required this.leftIconAction,
       @required this.rightIconAction,
       @required this.headerTitle})

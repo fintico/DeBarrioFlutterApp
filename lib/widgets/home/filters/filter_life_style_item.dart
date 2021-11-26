@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'filter_style.dart';
 
 class LifeStyleItem extends StatelessWidget {
-  const LifeStyleItem({Key key}) : super(key: key);
+  const LifeStyleItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

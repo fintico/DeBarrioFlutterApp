@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FilterIcon extends StatelessWidget {
-  final double height;
-  final double width;
-  final int type;
-  final Color color;
+  final double? height;
+  final double? width;
+  final int? type;
+  final Color? color;
   const FilterIcon(
-      {Key key,
+      {Key? key,
       @required this.height,
       @required this.width,
       @required this.type,

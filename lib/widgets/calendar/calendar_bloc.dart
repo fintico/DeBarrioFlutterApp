@@ -15,7 +15,7 @@ class CalendarBloc extends ChangeNotifier {
 
   CalendarController calendarController = CalendarController();
 
-  String _dateFormated = '';
+  String? _dateFormated = '';
 
   final formatter = new DateFormat.yMMMMEEEEd('es');
 
@@ -37,11 +37,11 @@ class CalendarBloc extends ChangeNotifier {
     notifyListeners();
   }
 
-  get dateFormated {
+  String? get dateFormated {
     return _dateFormated;
   }
 
-  set dateFormated(DateTime date) {
+  set dateFormated(String? date) {
     _dateFormated = formatter.format(dayView);
   }
 }

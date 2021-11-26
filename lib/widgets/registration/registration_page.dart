@@ -8,8 +8,8 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
 class RegistrationPage extends StatefulWidget {
-  final RegistrationArgs args;
-  RegistrationPage({Key key, this.args}) : super(key: key);
+  final RegistrationArgs? args;
+  RegistrationPage({Key? key, this.args}) : super(key: key);
 
   @override
   _RegistrationPageState createState() => _RegistrationPageState();

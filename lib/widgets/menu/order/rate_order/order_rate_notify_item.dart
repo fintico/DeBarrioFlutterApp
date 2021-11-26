@@ -11,7 +11,7 @@ import 'order_rate_style.dart';
 import 'order_rate_bottom_sheet.dart';
 
 class OrderDetailFinishNotifyItem extends StatelessWidget {
-  const OrderDetailFinishNotifyItem({Key key}) : super(key: key);
+  const OrderDetailFinishNotifyItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

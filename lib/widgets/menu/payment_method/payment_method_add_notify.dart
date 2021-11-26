@@ -8,11 +8,11 @@ import 'payment_method_style.dart';
 
 class AddNotify extends StatefulWidget {
   const AddNotify({
-    Key key,
-    @required this.isCreated,
+    Key? key,
+    this.isCreated,
   }) : super(key: key);
 
-  final bool isCreated;
+  final bool? isCreated;
 
   @override
   _AddNotifyState createState() => _AddNotifyState();

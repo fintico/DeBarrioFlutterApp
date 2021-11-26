@@ -8,7 +8,7 @@ import 'package:sailor/sailor.dart';
 import 'calendar_style.dart';
 
 class CalendarAlertSeller extends StatelessWidget {
-  const CalendarAlertSeller({Key key}) : super(key: key);
+  const CalendarAlertSeller({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

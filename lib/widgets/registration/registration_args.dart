@@ -1,8 +1,8 @@
 class RegistrationArgs {
-  String phoneNumber;
-  bool isReady;
-  String errorMessage;
-  bool alreadyExist;
+  String? phoneNumber;
+  bool? isReady;
+  String? errorMessage;
+  bool? alreadyExist;
 
   RegistrationArgs(
       {this.phoneNumber,

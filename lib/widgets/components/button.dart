@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:debarrioapp/constants/text_style.dart' as DBStyle;
 
 class ButtonWidget extends StatefulWidget {
-  final String text;
-  final List<Color> buttonColors;
-  final List<Color> textColors;
-  final bool disable;
-  final Function action;
-  final BoxBorder border;
-  final double height;
+  final String? text;
+  final List<Color>? buttonColors;
+  final List<Color>? textColors;
+  final bool? disable;
+  final VoidCallback? action;
+  final BoxBorder? border;
+  final double? height;
 
   ButtonWidget(
-      {Key key,
+      {Key? key,
       @required this.text,
       @required this.buttonColors,
       @required this.textColors,
       @required this.disable,
       @required this.action,
-      @required this.border,
+      this.border,
       this.height})
       : super(key: key);
 
@@ -30,7 +30,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      if (widget.disable) {
+      if (widget.disable!) {
         this.state = 2;
       } else {
         this.state = 1;
@@ -39,15 +39,15 @@ class _ButtonWidgetState extends State<ButtonWidget> {
     return GestureDetector(
       onTapDown: (details) {
         setState(() {
-          if (!widget.disable) this.state = 1;
+          if (!widget.disable!) this.state = 1;
         });
       },
       onTapUp: (details) {
         setState(() {
-          if (!widget.disable) this.state = 0;
+          if (!widget.disable!) this.state = 0;
         });
       },
-      onTap: widget.disable ? () {} : widget.action,
+      onTap: widget.disable! ? () {} : widget.action,
       child: Container(
         width: double.infinity,
         height: widget.height ?? 48.0,
@@ -59,15 +59,15 @@ class _ButtonWidgetState extends State<ButtonWidget> {
             bottomRight: Radius.circular(8.0),
           ),
           //color: widget.buttonColors[state],
-          color: widget.buttonColors[state],
+          color: widget.buttonColors![state],
           border: widget.border,
         ),
         child: Center(
           child: Text(
-            widget.text,
+            widget.text!,
             textAlign: TextAlign.center,
             style: DBStyle.getStyle(
-                widget.textColors[state],
+                widget.textColors![state],
                 DBStyle.FONT_SYZE_M,
                 DBStyle.FONT_HEIGHT_M,
                 0,

@@ -1,4 +1,7 @@
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/register_provider.dart';
+import 'package:debarrioapp/providers/user_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/register_service.dart';
 import 'package:debarrioapp/routers/router.dart';
 import 'package:debarrioapp/utils/user_app_data.dart';
@@ -7,10 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:debarrioapp/ModelClass/UserModel.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_one.dart';
 import 'package:debarrioapp/widgets/components/generics/button_orange.dart';
-import 'package:hexcolor/hexcolor.dart';
+//import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 import 'package:sms_autofill/sms_autofill.dart';
+
+import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 import 'OnBoardingScreen.dart';
 import 'otp_verification.dart';
@@ -26,11 +31,13 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
 
   final prefs = new UserPreferences();
 
+  final register = registerProvider<RegisterProvider>();
+
   //User user;
   bool disable = true;
   var isActive = false;
   TextStyle subtextStyle = TextStyle(
-    color: HexColor('333333'),
+    color: Colors.black,
     fontSize: 14.0,
     letterSpacing: 0.2,
     fontStyle: FontStyle.normal,
@@ -38,7 +45,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
     fontFamily: 'OpenSans',
   );
   TextStyle richSubtextStyle = TextStyle(
-    color: HexColor('333333'),
+    color: Colors.black,
     fontSize: 14.0,
     letterSpacing: 0.2,
     fontStyle: FontStyle.normal,
@@ -47,10 +54,10 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
   );
   @override
   Widget build(BuildContext context) {
-    //user = Provider.of<User>(context);
+    final userProvider = Provider.of<UserProvider>(context);
     prefs.screen = 1;
     TextStyle textStyle = TextStyle(
-        color: HexColor('4C6072'),
+        color: Colors.grey,
         fontSize: 35.0,
         letterSpacing: 0.2,
         fontStyle: FontStyle.normal,
@@ -69,7 +76,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
     );
 
     TextStyle termTextStyle = TextStyle(
-        color: HexColor('333333'),
+        color: Colors.black,
         fontSize: 12.0,
         letterSpacing: 0.2,
         fontStyle: FontStyle.normal,
@@ -138,22 +145,23 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: RaisedButton(
-                    elevation: 0.0,
-                    color: !userAppData.registrationArgs.isReady
-                        ? HexColor('E3E3E3')
-                        : HexColor('E84A31'),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      primary: !userAppData.registrationArgs.isReady!
+                          ? DBColors.GRAY_3
+                          : DBColors.RED_DARK_1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     ),
-                    onPressed: onSubmit,
+                    onPressed: () => onSubmit(userProvider),
                     child: Text(
                       "CONTINUAR",
                       style: TextStyle(
-                        color: !userAppData.registrationArgs.isReady
-                            ? Colors.blueGrey[700]
-                            : Colors.white,
-                      ),
+                          color: !userAppData.registrationArgs.isReady!
+                              ? DBColors.GRAY_7
+                              : DBColors.WHITE),
                     ),
                   ),
                 ),
@@ -268,17 +276,20 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
     );
   }
 
-  String validateChange(phoneNumber) {
+  String? validateChange(phoneNumber) {
     if (phoneNumber.length < 9) {
       return 'El número ingresado no es válido';
     }
     return null;
   }
 
-  Future<dynamic> onSubmit() async {
-    if (userAppData.registrationArgs.isReady) {
+  Future<dynamic> onSubmit(UserProvider userProvider) async {
+    //print('+51${_phoneCheck.text}');
+    /* if (userAppData.registrationArgs.isReady) {
       userAppData.phoneNumber = userAppData.registrationArgs.phoneNumber;
       userAppData.signCode = await SmsAutoFill().getAppSignature;
+        
+      
 
       /* Response<dynamic> res =
           await Provider.of<RegisterService>(context, listen: false)
@@ -288,17 +299,20 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
           navigationType: NavigationType.pushReplace);
     } else {
       print('No esta ready');
-    }
+    } */
 
-    /* if (_formKey.currentState.validate()) {
-      user.phoneNumber = '+' + _phoneCheck.text;
+    if (_formKey.currentState!.validate()) {
+      userProvider.phoneNumber = '+51' + _phoneCheck.text;
+      register.phoneNumber = '51' + _phoneCheck.text;
       return Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => Otp_Verification(),
+          builder: (_) => Otp_Verification(
+            phoneNumber: userProvider.phoneNumber,
+          ),
         ),
       );
-    } */
+    }
     return null;
   }
 
@@ -309,7 +323,7 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
             ? true
             : (_phoneCheck.text.length <= 10 ? true : false), */
         disable: disable,
-        action: onSubmit);
+        action: () => onSubmit);
   }
 
   Widget subTitleDescription() {
@@ -330,13 +344,13 @@ class _PhoneNumScreenState extends State<PhoneNumScreen> {
     );
   }
 
-  bool setButtonDisable() {
-    bool disable;
+  /* bool? setButtonDisable() {
+    bool? disable;
     setState(() {
-      disable = _phoneCheck.text.isEmpty ? true : false;
+      bool? disable = _phoneCheck.text.isEmpty ? true : false;
       print(disable);
       return disable;
     });
     return disable;
-  }
+  } */
 }

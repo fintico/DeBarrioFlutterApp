@@ -7,7 +7,7 @@ class OrderBloc extends ChangeNotifier {
   int rateComment = 0;
   bool isDisable = true;
 
-  OrderDetail orderDetail;
+  OrderDetail? orderDetail;
 
   void onGone() {
     isGone = true;

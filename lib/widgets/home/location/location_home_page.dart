@@ -22,7 +22,7 @@ import 'package:sailor/sailor.dart';
 import 'location_style.dart';
 
 class HomeLocation extends StatelessWidget {
-  const HomeLocation({Key key}) : super(key: key);
+  const HomeLocation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class HomeLocation extends StatelessWidget {
               print(snapshot.error.toString());
             }
             final List<SellerAddress> sellerAddress =
-                (json.decode(snapshot.data.bodyString) as List)
+                (json.decode(snapshot.data!.bodyString) as List)
                     .map((e) => SellerAddress.fromJson(e))
                     .toList();
             return _buildAddress(context, sellerAddress);
@@ -149,7 +149,7 @@ class HomeLocation extends StatelessWidget {
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
-              homeBloc.onAddressId(sellerAddress[index].address.id);
+              homeBloc.onAddressId(sellerAddress[index].address!.id!);
               Routes.sailor.navigate(
                 Routes.HOME_SCREEN,
                 navigationType: NavigationType.pushReplace,

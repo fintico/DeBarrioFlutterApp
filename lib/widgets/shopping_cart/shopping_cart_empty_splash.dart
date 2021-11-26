@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'shopping_cart_style.dart';
 
 class ShoppingCartEmptySplash extends StatelessWidget {
-  const ShoppingCartEmptySplash({Key key}) : super(key: key);
+  const ShoppingCartEmptySplash({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

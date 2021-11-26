@@ -12,7 +12,7 @@ import '../../../../utilsFunctions.dart';
 import '../order_style.dart';
 
 class OrderDetailFinishBody extends StatelessWidget {
-  const OrderDetailFinishBody({Key key}) : super(key: key);
+  const OrderDetailFinishBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,14 @@ class OrderDetailFinishBody extends StatelessWidget {
         ),
         Row(
           children: <Widget>[
-            _imageBox(orderBloc.orderDetail.dish.image),
+            _imageBox(orderBloc.orderDetail!.dish!.image!),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, top: 16.0),
                   child: Text(
-                    '${orderBloc.orderDetail.order.portion}x ${orderBloc.orderDetail.dish.dishName}',
+                    '${orderBloc.orderDetail!.order!.portion}x ${orderBloc.orderDetail!.dish!.dishName}',
                     style: titledishOrderBodyStyle,
                   ),
                 ),
@@ -44,9 +44,9 @@ class OrderDetailFinishBody extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 16.0, top: 4.0, bottom: 28.0),
                   child: Text(
-                    orderBloc.orderDetail.dish.additional == null
+                    orderBloc.orderDetail!.dish!.additional == null
                         ? '-'
-                        : '1x ${orderBloc.orderDetail.dish.additional.additionalDescription}',
+                        : '1x ${orderBloc.orderDetail!.dish!.additional!.additionalDescription}',
                     style: subtitledishOrderBodyStyle,
                   ),
                 ),
@@ -63,30 +63,30 @@ class OrderDetailFinishBody extends StatelessWidget {
         SizedBox(height: 8.0),
         _detailBox(
             title: 'TIPO DE ENTREGA',
-            description: orderBloc.orderDetail.order.isDelivery
+            description: orderBloc.orderDetail!.order!.isDelivery!
                 ? 'Delivery'
                 : 'Recojo en tienda',
             state: 0),
         _detailBox(
             title: 'REPARTIDOR',
             description: orderBloc
-                .orderDetail.order.customerAddress.customer.user.username,
+                .orderDetail!.order!.customerAddress!.customer!.user!.username!,
             state: 1),
         _detailBox(
             title: 'DIRECCIÓN DE ENTREGA',
-            description:
-                orderBloc.orderDetail.order.customerAddress.address.address,
+            description: orderBloc
+                .orderDetail!.order!.customerAddress!.address!.address!,
             state: 0),
         _detailBox(
             title: 'TOTAL PAGADO',
-            description: 'S/ ${orderBloc.orderDetail.order.totalPrice}',
+            description: 'S/ ${orderBloc.orderDetail!.order!.totalPrice}',
             state: 2),
         _detailPaymentMethodBox(
           title: 'MÉTODO DE PAGO',
           description:
-              '${toShortCreditCardNumber(orderBloc.orderDetail.order.creditCard.cardNumber)}',
-          date: '${orderBloc.orderDetail.order.createdAt}',
-          type: orderBloc.orderDetail.order.creditCard.cardType.id,
+              '${toShortCreditCardNumber(orderBloc.orderDetail!.order!.creditCard!.cardNumber!)}',
+          date: '${orderBloc.orderDetail!.order!.createdAt!}',
+          type: orderBloc.orderDetail!.order!.creditCard!.cardType!.id!,
         ),
       ],
     );
@@ -111,7 +111,7 @@ class OrderDetailFinishBody extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );
@@ -130,7 +130,7 @@ class OrderDetailFinishBody extends StatelessWidget {
     );
   }
 
-  _detailBox({String title, String description, int state}) {
+  _detailBox({String? title, String? description, int? state}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -143,7 +143,7 @@ class OrderDetailFinishBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 28.0, top: 16.0),
                   child: Text(
-                    title,
+                    title!,
                     style: titleDetailBoxOrderBodyStyle,
                   ),
                 ),
@@ -151,13 +151,13 @@ class OrderDetailFinishBody extends StatelessWidget {
                   padding:
                       const EdgeInsets.only(left: 28.0, top: 4.0, bottom: 16.0),
                   child: Text(
-                    description,
+                    description!,
                     style: subtitleDetailBoxOrderBodyStyle,
                   ),
                 ),
               ],
             ),
-            _caseBox(state),
+            _caseBox(state!),
           ],
         ),
         Divider(
@@ -171,7 +171,7 @@ class OrderDetailFinishBody extends StatelessWidget {
   }
 
   _detailPaymentMethodBox(
-      {String title, String description, String date, int type}) {
+      {String? title, String? description, String? date, int? type}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -207,7 +207,7 @@ class OrderDetailFinishBody extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 28.0, top: 3.0, bottom: 15.0),
           child: Text(
-            '${convertUtcToLocal(date)}',
+            '${convertUtcToLocal(date!)}',
             style: subtitleDetailBoxOrderBodyStyle,
           ),
         ),

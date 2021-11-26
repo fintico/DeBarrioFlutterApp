@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:debarrioapp/widgets/components/generics/app_bar_opt_five.dart';
 
 class HomeFilter extends StatelessWidget {
-  const HomeFilter({Key key}) : super(key: key);
+  const HomeFilter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

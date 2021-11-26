@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/register_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/models/auth.dart';
@@ -19,14 +21,16 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class RegistrationSplash extends StatefulWidget {
-  RegistrationSplash({Key key}) : super(key: key);
+  RegistrationSplash({Key? key}) : super(key: key);
 
   @override
   _RegistrationSplashState createState() => _RegistrationSplashState();
 }
 
 class _RegistrationSplashState extends State<RegistrationSplash> {
-  final prefs = new UserPreferences();
+  //final prefs = new UserPreferences();
+
+  final register = registerProvider<RegisterProvider>();
 
   TextStyle title = DBStyles.getStyle(
     DBStyles.WHITE,
@@ -37,6 +41,11 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
   );
   var isActive = true;
 
+  /* void _createUser(BuildContext context, String? code, String? phonenumber) {
+    Provider.of<RegisterProvider>(context, listen: false)
+        .createUser(code, phonenumber);
+  } */
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +53,8 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
 
   @override
   Widget build(BuildContext context) {
-    register();
+    register.createUser(register.code, register.phoneNumber, register.uid);
+    verificationSuccess();
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -81,22 +91,35 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
     );
   }
 
-  Future register() async {
+  verificationSuccess() async {
+    //verificationSuccessSplash();
+    await Future.delayed(const Duration(seconds: 2));
+    _navigateLocationRegistration();
+  }
+
+  void _navigateLocationRegistration() {
+    Routes.sailor.navigate(
+      Routes.REGISTRATION_LOCATION,
+      navigationType: NavigationType.pushReplace,
+    );
+  }
+
+  /* Future register() async {
     Response<dynamic> res = await Provider.of<RegisterService>(context)
-        .postUserRegister(userAppData.signCode, userAppData.phoneNumber);
+        .postUserRegister(userAppData.signCode!, userAppData.phoneNumber!);
     //print(res.bodyString);
 
     Auth auth = Auth.fromRawJson(res.bodyString);
 
     await Provider.of<SellerService>(context, listen: false)
-        .postSeller(auth.data.id);
+        .postSeller(auth.data!.id!);
 
     await Provider.of<CustomerService>(context, listen: false)
-        .postCustomer(auth.data.id);
+        .postCustomer(auth.data!.id!);
 
     inspect(auth);
-    prefs.username = auth.data.username;
-    prefs.userId = auth.data.id;
+    prefs.username = auth.data!.username!;
+    prefs.userId = auth.data!.id!;
     Routes.sailor.navigate(
       Routes.VERIFY_SMS,
       args:
@@ -105,5 +128,5 @@ class _RegistrationSplashState extends State<RegistrationSplash> {
       removeUntilPredicate: (route) => true,
       //args:
     );
-  }
+  } */
 }

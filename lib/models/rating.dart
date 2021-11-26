@@ -1,5 +1,5 @@
 class Rating {
-  double rated;
+  double? rated;
 
   Rating({
     this.rated,

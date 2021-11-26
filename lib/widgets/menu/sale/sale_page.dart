@@ -18,7 +18,7 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'sale_style.dart';
 
 class SalePage extends StatelessWidget {
-  const SalePage({Key key}) : super(key: key);
+  const SalePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class SalePage extends StatelessWidget {
             print(snapshot.error.toString());
           }
           final List<OrderDetail> ordersDetail =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => OrderDetail.fromJson(e))
                   .toList();
           return _buildOrders(context, ordersDetail);

@@ -6,10 +6,10 @@ import 'package:debarrioapp/widgets/components/app_bar.dart';
 import 'package:debarrioapp/constants/colors.dart' as DBColors;
 
 class AppBarOptionSeven extends StatelessWidget {
-  final Function leftIconAction;
-  final String title;
+  final VoidCallback? leftIconAction;
+  final String? title;
   const AppBarOptionSeven({
-    Key key,
+    Key? key,
     @required this.leftIconAction,
     @required this.title,
   }) : super(key: key);

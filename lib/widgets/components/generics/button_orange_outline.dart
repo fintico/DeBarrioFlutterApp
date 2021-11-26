@@ -4,12 +4,12 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/widgets/components/button.dart';
 
 class GenericButtonOrangeOutline extends StatelessWidget {
-  final String text;
-  final bool disable;
-  final Function action;
+  final String? text;
+  final bool? disable;
+  final VoidCallback? action;
 
   const GenericButtonOrangeOutline(
-      {Key key,
+      {Key? key,
       @required this.text,
       @required this.disable,
       @required this.action})
@@ -19,7 +19,7 @@ class GenericButtonOrangeOutline extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: ButtonWidget(
-        text: this.text,
+        text: this.text!,
         buttonColors: [
           DBStyles.WHITE,
           DBStyles.WHITE,
@@ -30,7 +30,7 @@ class GenericButtonOrangeOutline extends StatelessWidget {
           DBColors.RED_DARK_1,
           DBColors.RED_DARK_1,
         ],
-        disable: this.disable,
+        disable: this.disable!,
         action: action,
         border: Border.all(color: DBColors.RED_DARK_1),
       ),

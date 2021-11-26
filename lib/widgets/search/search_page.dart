@@ -19,7 +19,7 @@ import 'search_history_item.dart';
 import 'search_appbar.dart';
 
 class SearchPage extends StatefulWidget {
-  SearchPage({Key key}) : super(key: key);
+  SearchPage({Key? key}) : super(key: key);
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -55,19 +55,19 @@ class _SearchPageState extends State<SearchPage> {
     return FutureBuilder(
       future: Provider.of<DishService>(context).getDishByName(plate),
       builder: (context, snapshot) {
-        List<DishModel> dishes;
+        List<DishModel>? dishes;
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             print(snapshot.error.toString());
           }
           if (snapshot.hasData) {
             /* final List<DishModel>  */ dishes =
-                (json.decode(snapshot.data.bodyString) as List)
+                (json.decode(snapshot.data!.bodyString) as List)
                     .map((e) => DishModel.fromJson(e))
                     .toList();
             return _buildSearch(context, dishes);
           }
-          return _buildSearch(context, dishes);
+          return _buildSearch(context, dishes!);
         } else {
           return Center(
             child: CircularProgressIndicator(),
@@ -118,7 +118,7 @@ class _SearchPageState extends State<SearchPage> {
             print(snapshot.error.toString());
           }
           final List<CustomerSearch> customerHistory =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => CustomerSearch.fromJson(e))
                   .toList();
           return _buildHistory(context, customerHistory);

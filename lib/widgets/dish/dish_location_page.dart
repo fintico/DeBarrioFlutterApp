@@ -23,7 +23,7 @@ import 'package:provider/provider.dart';
 import 'dish_style.dart';
 
 class DishLocation extends StatelessWidget {
-  const DishLocation({Key key}) : super(key: key);
+  const DishLocation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class DishLocation extends StatelessWidget {
               print(snapshot.error.toString());
             }
             final List<SellerAddress> sellerAddress =
-                (json.decode(snapshot.data.bodyString) as List)
+                (json.decode(snapshot.data!.bodyString) as List)
                     .map((e) => SellerAddress.fromJson(e))
                     .toList();
             return _buildAddress(context, sellerAddress);

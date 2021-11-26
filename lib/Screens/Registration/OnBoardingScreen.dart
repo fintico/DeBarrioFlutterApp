@@ -12,14 +12,14 @@ import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 import 'phonenumber.dart';
 
 class IntroScreen extends StatefulWidget {
-  IntroScreen({Key key}) : super(key: key);
+  IntroScreen({Key? key}) : super(key: key);
 
   @override
   IntroScreenState createState() => new IntroScreenState();
 }
 
 class IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides = new List();
+  List<Slide> slides = [];
 
   TextStyle titleStyle = DBStyles.getStyle(
     DBStyles.WHITE,
@@ -148,10 +148,10 @@ class IntroScreenState extends State<IntroScreen> {
             slides: this.slides,
             colorActiveDot: Colors.green,
             colorDot: Colors.white,
-            isShowNextBtn: false,
-            isShowSkipBtn: false,
-            shouldHideStatusBar: true,
-            isShowDoneBtn: false,
+            showNextBtn: false,
+            showSkipBtn: false,
+            hideStatusBar: true,
+            showDoneBtn: false,
             isScrollable: true,
             sizeDot: 16,
             typeDotAnimation: dotSliderAnimation.DOT_MOVEMENT,

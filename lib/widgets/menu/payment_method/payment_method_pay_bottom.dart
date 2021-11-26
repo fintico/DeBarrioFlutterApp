@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class PaymentMethodPayBottom extends StatelessWidget {
-  const PaymentMethodPayBottom({Key key}) : super(key: key);
+  const PaymentMethodPayBottom({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

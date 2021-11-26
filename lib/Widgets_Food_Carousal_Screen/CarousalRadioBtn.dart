@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 
 class RadioCarousal extends StatefulWidget {
-  final Function setOrderType;
+  final Function? setOrderType;
 
-  const RadioCarousal({Key key, this.setOrderType}) : super(key: key);
+  const RadioCarousal({Key? key, this.setOrderType}) : super(key: key);
   @override
   _RadioCarousalState createState() => _RadioCarousalState();
 }
@@ -17,10 +17,10 @@ class _RadioCarousalState extends State<RadioCarousal> {
   }
 
 // Changes the selected value on 'onChanged' click on each radio button
-  setSelectedRadio(int val) {
-    widget.setOrderType(val);
+  setSelectedRadio(int? val) {
+    widget.setOrderType!(val);
     setState(() {
-      selectedRadio = val;
+      selectedRadio = val!;
     });
   }
 
@@ -58,3 +58,4 @@ class _RadioCarousalState extends State<RadioCarousal> {
     );
   }
 }
+ */

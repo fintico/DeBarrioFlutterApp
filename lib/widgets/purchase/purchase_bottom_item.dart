@@ -18,7 +18,7 @@ import 'purchase_style.dart';
 
 class PurchaseBottom extends StatelessWidget {
   //final OrderDetail orderDetail;
-  const PurchaseBottom({Key key /* , this.orderDetail */}) : super(key: key);
+  const PurchaseBottom({Key? key /* , this.orderDetail */}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

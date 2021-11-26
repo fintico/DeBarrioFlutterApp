@@ -1,8 +1,8 @@
 class Additional {
-  int id;
-  String additionalDescription;
-  double price;
-  bool isFree;
+  int? id;
+  String? additionalDescription;
+  double? price;
+  bool? isFree;
 
   Additional({
     this.id,

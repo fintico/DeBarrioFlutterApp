@@ -1,10 +1,10 @@
 class LocationModel {
-  int id;
-  String addressName;
-  String addressDescription;
-  bool isActive;
-  double longitude;
-  double latitude;
+  int? id;
+  String? addressName;
+  String? addressDescription;
+  bool? isActive;
+  double? longitude;
+  double? latitude;
 
   LocationModel({
     this.id,

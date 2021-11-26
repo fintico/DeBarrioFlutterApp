@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ShoppingCartBloc extends ChangeNotifier {
-  int tiped;
+  int? tiped;
 
   void onTiped(int tip) {
     tiped = tip;

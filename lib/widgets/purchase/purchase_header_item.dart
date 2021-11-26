@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class PurchaseHeader extends StatelessWidget {
   //final SellerDish sellerDish;
-  final SellerDetail sellerDish;
-  const PurchaseHeader({Key key, this.sellerDish}) : super(key: key);
+  final SellerDetail? sellerDish;
+  const PurchaseHeader({Key? key, this.sellerDish}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,8 @@ class PurchaseHeader extends StatelessWidget {
           Container(
             child: Row(
               children: <Widget>[
-                _imageBox(sellerDish.urlImage),
-                _informationBox(sellerDish.restaurantName, purchaseBloc),
+                _imageBox(sellerDish!.urlImage),
+                _informationBox(sellerDish!.restaurantName!, purchaseBloc),
               ],
             ),
           ),
@@ -64,7 +64,7 @@ class PurchaseHeader extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );

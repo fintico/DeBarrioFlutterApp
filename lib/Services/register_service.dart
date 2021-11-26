@@ -28,6 +28,12 @@ abstract class RegisterService extends ChopperService {
   Future<Response> postUserLogin(
       @Field('code') String code, @Field('username') String username);
 
+  @Patch(path: '/update/{id}')
+  Future<Response> patchUser(
+    @Path("id") int userId,
+    @Field('uid') String uid,
+  );
+
   static RegisterService create() {
     final client = ChopperClient(
       baseUrl: Url.API_BASE_URL,

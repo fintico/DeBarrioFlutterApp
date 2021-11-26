@@ -22,8 +22,8 @@ import 'package:sailor/sailor.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodPage extends StatelessWidget {
-  final bool isCreated;
-  const PaymentMethodPage({Key key, this.isCreated}) : super(key: key);
+  final bool? isCreated;
+  const PaymentMethodPage({Key? key, this.isCreated}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class PaymentMethodPage extends StatelessWidget {
             print(snapshot.error.toString());
           }
           final List<CreditCard> creditCard =
-              (json.decode(snapshot.data.bodyString) as List)
+              (json.decode(snapshot.data!.bodyString) as List)
                   .map((e) => CreditCard.fromJson(e))
                   .toList();
           return _buildCreditCard(context, creditCard);
@@ -143,7 +143,7 @@ class PaymentMethodPage extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
-            child: isCreated
+            child: isCreated!
                 ? AddNotify(isCreated: isCreated)
                 : SizedBox(
                     height: 0.1,

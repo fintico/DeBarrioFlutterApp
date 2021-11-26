@@ -1,10 +1,10 @@
 import 'package:debarrioapp/models/rating.dart';
 
 class Seller {
-  int id;
-  Rating rating;
-  String restaurantName;
-  String urlImage;
+  int? id;
+  Rating? rating;
+  String? restaurantName;
+  String? urlImage;
 
   Seller({
     this.id,

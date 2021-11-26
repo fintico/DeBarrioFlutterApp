@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'order_ongoing_style.dart';
 
 class OrderDetailOngoingHeader extends StatelessWidget {
-  const OrderDetailOngoingHeader({Key key}) : super(key: key);
+  const OrderDetailOngoingHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class OrderDetailOngoingHeader extends StatelessWidget {
                 padding:
                     const EdgeInsets.only(top: 26.0, left: 28.0, bottom: 18.0),
                 child: Text(
-                  'ORDEN #0${orderBloc.orderDetail.order.id}',
+                  'ORDEN #0${orderBloc.orderDetail!.order!.id!}',
                   style: numberHeaderOrderOngoingStyle,
                 ),
               ),

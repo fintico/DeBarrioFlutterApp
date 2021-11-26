@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/seller_detail.dart';
 import 'package:debarrioapp/providers/home_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/seller_service.dart';
 import 'package:debarrioapp/models/seller_dish.dart';
 import 'package:debarrioapp/routers/router.dart';
@@ -28,8 +29,8 @@ class BottomModal extends StatefulWidget {
   _BottomModalState createState() => _BottomModalState();
 }
 
-class _BottomModalState extends State<BottomModal>
-/* with AutomaticKeepAliveClientMixin */ {
+class _BottomModalState
+    extends State<BottomModal> /* with AutomaticKeepAliveClientMixin */ {
   /* var dishes;
   @override
   void initState() {
@@ -37,10 +38,11 @@ class _BottomModalState extends State<BottomModal>
     super.initState();
     dishes = Provider.of<DishService>(context).getDishList();
   } */
+  final home = homeProvider<HomeBloc>();
 
   @override
   Widget build(BuildContext context) {
-    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
+    //final homeBloc = Provider.of<HomeBloc>(context, listen: false);
     //super.build(context);
     //_getDish(context);
     return DraggableScrollableSheet(
@@ -60,7 +62,7 @@ class _BottomModalState extends State<BottomModal>
               ),
               //_buildBody(context, scrollController),
               //Expanded(child: _buildBody(context))
-              Expanded(child: _buildCard(context, homeBloc.seller))
+              //Expanded(child: _buildCard(context, home.seller!))
               /* Expanded(
                 child: ListaItems(scrollController),
               ) */

@@ -18,8 +18,8 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class LocationButton extends StatelessWidget {
-  final SellerAddress sellerAddress;
-  const LocationButton({Key key, this.sellerAddress}) : super(key: key);
+  final SellerAddress? sellerAddress;
+  const LocationButton({Key? key, this.sellerAddress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class LocationButton extends StatelessWidget {
         Provider.of<LocationProvider>(context, listen: false); */
     return InkWell(
       onTap: () async {
-        inspect(sellerAddress.address);
+        inspect(sellerAddress!.address);
         Navigator.pop(context);
         //_setAddres();
       },
@@ -68,7 +68,7 @@ class LocationButton extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: 14.0, top: 20.0),
                             child: Text(
-                              sellerAddress.address.address,
+                              sellerAddress!.address!.address!,
                               textAlign: TextAlign.left,
                               style: DBStyles.getStyle(
                                 DBStyles.BLACK,
@@ -84,7 +84,7 @@ class LocationButton extends StatelessWidget {
                             padding:
                                 const EdgeInsets.only(left: 14.0, bottom: 20.0),
                             child: Text(
-                              sellerAddress.address.addressDescription ?? '-',
+                              sellerAddress!.address!.addressDescription ?? '-',
                               textAlign: TextAlign.left,
                               style: DBStyles.getStyle(
                                 DBStyles.GRAY_2,
@@ -122,7 +122,7 @@ class LocationButton extends StatelessWidget {
   }
 
   Widget iconState() {
-    return sellerAddress.isActive
+    return sellerAddress!.isActive!
         ? RadioActiveIcon(
             height: 20.0,
             width: 20.0,

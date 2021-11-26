@@ -1,11 +1,13 @@
 class User {
-  int id;
-  String username;
-  String phoneNumber;
-  String email;
+  int? id;
+  String? uid;
+  String? username;
+  String? phoneNumber;
+  String? email;
 
   User({
     this.id,
+    this.uid,
     this.username,
     this.phoneNumber,
     this.email,
@@ -27,5 +29,9 @@ class User {
       'phone_number': phoneNumber,
       'email': email,
     };
+  }
+
+  User.fromData(String uid) {
+    this.uid = uid;
   }
 }

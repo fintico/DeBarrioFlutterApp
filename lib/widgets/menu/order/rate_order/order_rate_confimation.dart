@@ -9,7 +9,7 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'order_rate_style.dart';
 
 class OrderRateConfirmation extends StatelessWidget {
-  const OrderRateConfirmation({Key key}) : super(key: key);
+  const OrderRateConfirmation({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

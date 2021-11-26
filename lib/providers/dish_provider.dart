@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:chopper/chopper.dart';
 import 'package:debarrioapp/models/dishModel.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/dish_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +42,23 @@ class DishProvider extends ChangeNotifier {
 
   void onActive(bool isActive) {
     isActive = isActive;
+    notifyListeners();
+  }
+
+  void loadPosts() async {
+    /* final DishService instanceDish =
+        dishService.get(instanceName: 'DishService'); */
+
+    DishService dishService = DishService.create();
+
+    final response = await Future.value(dishService.getDishList());
+    List<DishModel> dishList = (json.decode(response.bodyString) as List)
+        .map((e) => DishModel.fromJson(e))
+        .toList();
+    setList(dishList);
+
+    inspect(dishList);
+
     notifyListeners();
   }
 }

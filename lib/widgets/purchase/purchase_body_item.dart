@@ -20,8 +20,8 @@ import 'purchase_style.dart';
 
 class PurchaseBody extends StatefulWidget {
   //final SellerDish sellerDish;
-  final SellerDetail sellerDish;
-  PurchaseBody({Key key, this.sellerDish}) : super(key: key);
+  final SellerDetail? sellerDish;
+  PurchaseBody({Key? key, this.sellerDish}) : super(key: key);
 
   @override
   _PurchaseBodyState createState() => _PurchaseBodyState();
@@ -31,7 +31,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
   int _current = 0;
   int counter = 1;
   bool checkAdd = false;
-  int delivery = 1;
+  int? delivery = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +39,33 @@ class _PurchaseBodyState extends State<PurchaseBody> {
     final purchaseBloc = Provider.of<PurchaseBloc>(context);
     Future.delayed(Duration.zero, () async {
       purchaseBloc
-          .onAddress(widget.sellerDish.dishes[_current].address.address);
-      purchaseBloc.onDishName(widget.sellerDish.dishes[_current].dishName);
-      purchaseBloc.onDishId(widget.sellerDish.dishes[_current].id);
-      purchaseBloc.onRestaurant(widget.sellerDish.restaurantName);
-      purchaseBloc.onDishImage(widget.sellerDish.dishes[_current].image);
+          .onAddress(widget.sellerDish!.dishes![_current].address!.address!);
+      purchaseBloc.onDishName(widget.sellerDish!.dishes![_current].dishName!);
+      purchaseBloc.onDishId(widget.sellerDish!.dishes![_current].id!);
+      purchaseBloc.onRestaurant(widget.sellerDish!.restaurantName!);
+      purchaseBloc.onDishImage(widget.sellerDish!.dishes![_current].image!);
       if (delivery == 1) {
         purchaseBloc.onPriceDeliveryType(
-            widget.sellerDish.dishes[_current].priceDelivery);
+            widget.sellerDish!.dishes![_current].priceDelivery!);
         purchaseBloc.onDelivery();
         //print(purchaseBloc.delivery);
       } else {
         purchaseBloc.onPriceDeliveryType(
-            widget.sellerDish.dishes[_current].pricePickup);
+            widget.sellerDish!.dishes![_current].pricePickup!);
         purchaseBloc.onPickup();
         //print(purchaseBloc.pickup);
       }
-      if (widget.sellerDish.dishes[_current].additional != null) {
+      if (widget.sellerDish!.dishes![_current].additional != null) {
         if (checkAdd == true) {
-          purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType +
-              (widget.sellerDish.dishes[_current].additional.isFree
+          purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType! +
+              (widget.sellerDish!.dishes![_current].additional!.isFree!
                   ? 0
-                  : widget.sellerDish.dishes[_current].additional.price));
+                  : widget.sellerDish!.dishes![_current].additional!.price!));
         } else {
-          purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType);
+          purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType!);
         }
       } else {
-        purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType);
+        purchaseBloc.onTotalPrice(purchaseBloc.priceDeliveryType!);
       }
     });
 
@@ -120,8 +120,8 @@ class _PurchaseBodyState extends State<PurchaseBody> {
             });
           },
         ),
-        items: widget.sellerDish.dishes.map((item) {
-          int index = widget.sellerDish.dishes.indexOf(item);
+        items: widget.sellerDish!.dishes!.map((item) {
+          int index = widget.sellerDish!.dishes!.indexOf(item);
           return Container(
             child: Stack(
               alignment: AlignmentDirectional.topEnd,
@@ -130,7 +130,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: Image(
-                          image: NetworkImage(item.image),
+                          image: NetworkImage(item.image!),
                           //height: 56.0,
                           width: screenWidth(context, dividedBy: 1.2),
                           fit: BoxFit.cover,
@@ -141,7 +141,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
                                 value: loadingProgress.expectedTotalBytes !=
                                         null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
@@ -193,8 +193,8 @@ class _PurchaseBodyState extends State<PurchaseBody> {
       padding: const EdgeInsets.only(top: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: widget.sellerDish.dishes.map((i) {
-          int index = widget.sellerDish.dishes.indexOf(i);
+        children: widget.sellerDish!.dishes!.map((i) {
+          int index = widget.sellerDish!.dishes!.indexOf(i);
           return Container(
             width: 8.0,
             height: 8.0,
@@ -217,7 +217,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
           Padding(
             padding: const EdgeInsets.only(left: 24.0, top: 20.0),
             child: Text(
-              widget.sellerDish.dishes[_current].dishName,
+              widget.sellerDish!.dishes![_current].dishName!,
               style: dishBodyStyle,
             ),
           ),
@@ -225,8 +225,8 @@ class _PurchaseBodyState extends State<PurchaseBody> {
             padding: const EdgeInsets.only(left: 24.0, top: 4.0),
             child: Text(
               delivery == 1
-                  ? 'S/ ${widget.sellerDish.dishes[_current].priceDelivery.toStringAsFixed(2)}'
-                  : 'S/ ${widget.sellerDish.dishes[_current].pricePickup.toStringAsFixed(2)}',
+                  ? 'S/ ${widget.sellerDish!.dishes![_current].priceDelivery!.toStringAsFixed(2)}'
+                  : 'S/ ${widget.sellerDish!.dishes![_current].pricePickup!.toStringAsFixed(2)}',
               style: priceBodyStyle,
             ),
           ),
@@ -268,7 +268,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
               ],
             ),
           ),
-          widget.sellerDish.dishes[_current].additional != null
+          widget.sellerDish!.dishes![_current].additional != null
               ? Container(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -310,7 +310,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
                 Radio(
                   onChanged: (value) => {
                     setState(() {
-                      delivery = value;
+                      delivery = value as int?;
                       print(delivery);
                     })
                   },
@@ -332,7 +332,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
                 Radio(
                   onChanged: (value) => {
                     setState(() {
-                      delivery = value;
+                      delivery = value as int?;
                       print(delivery);
                     })
                   },
@@ -364,7 +364,7 @@ class _PurchaseBodyState extends State<PurchaseBody> {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, top: 16.0),
             child: Text(
-              '${timeDetail24H(widget.sellerDish.dishes[_current])}',
+              '${timeDetail24H(widget.sellerDish!.dishes![_current])}',
               style: timeBodyStyle,
             ),
           ),
@@ -438,14 +438,14 @@ class _PurchaseBodyState extends State<PurchaseBody> {
                   value: checkAdd,
                   onChanged: (value) {
                     setState(() {
-                      checkAdd = value;
+                      checkAdd = value!;
                       print(checkAdd);
                     });
                   },
                 ),
                 Text(
-                  widget.sellerDish.dishes[_current].additional
-                      .additionalDescription,
+                  widget.sellerDish!.dishes![_current].additional!
+                      .additionalDescription!,
                   style: additionalTextBodyStyle,
                 ),
               ],
@@ -454,9 +454,9 @@ class _PurchaseBodyState extends State<PurchaseBody> {
           Padding(
             padding: const EdgeInsets.only(right: 24.0, top: 12.0),
             child: Text(
-              widget.sellerDish.dishes[_current].additional.isFree
+              widget.sellerDish!.dishes![_current].additional!.isFree!
                   ? 'Gratis'
-                  : 'S/ ${widget.sellerDish.dishes[_current].additional.price.toString()}',
+                  : 'S/ ${widget.sellerDish!.dishes![_current].additional!.price.toString()}',
               style: priceAdditionalTextBodyStyle,
             ),
           ),

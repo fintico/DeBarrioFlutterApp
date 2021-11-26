@@ -15,7 +15,7 @@ import 'order_rate_style.dart';
 import '../../../../utilsFunctions.dart';
 
 class OrderRateBottomSheet extends StatelessWidget {
-  const OrderRateBottomSheet({Key key}) : super(key: key);
+  const OrderRateBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class OrderRateBottomSheet extends StatelessWidget {
                                 value: loadingProgress.expectedTotalBytes !=
                                         null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
@@ -287,7 +287,7 @@ class OrderRateBottomSheet extends StatelessWidget {
             action: () {
               print('enviar');
               print(orderBloc.rate);
-              print(orderBloc.orderDetail.dish.seller.id);
+              print(orderBloc.orderDetail!.dish!.seller!.id);
               Navigator.pop(context);
               _ratingSeller(context, orderBloc);
               orderBloc.removeAll();
@@ -329,7 +329,7 @@ class OrderRateBottomSheet extends StatelessWidget {
   }
 
   Future _ratingSeller(BuildContext context, OrderBloc orderBloc) async {
-    await Provider.of<RatingService>(context, listen: false)
-        .postRateSeller(orderBloc.rate, orderBloc.orderDetail.dish.seller.id);
+    await Provider.of<RatingService>(context, listen: false).postRateSeller(
+        orderBloc.rate, orderBloc.orderDetail!.dish!.seller!.id!);
   }
 }

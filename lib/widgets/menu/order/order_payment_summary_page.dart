@@ -10,8 +10,8 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'order_style.dart';
 
 class OrderPaymentSummary extends StatelessWidget {
-  final int type;
-  const OrderPaymentSummary({Key key, this.type}) : super(key: key);
+  final int? type;
+  const OrderPaymentSummary({Key? key, this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class OrderPaymentSummary extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 28.0, top: 32.0),
                   child: Text(
-                    'S/ ${orderBloc.orderDetail.order.subtotalPrice}',
+                    'S/ ${orderBloc.orderDetail!.order!.subtotalPrice}',
                     style: pricePaymentSummaryStyle,
                   ),
                 ),
@@ -69,7 +69,7 @@ class OrderPaymentSummary extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       right: 28.0, top: 16.0, bottom: 16.0),
                   child: Text(
-                    'S/ ${orderBloc.orderDetail.order.tip}',
+                    'S/ ${orderBloc.orderDetail!.order!.tip}',
                     style: pricePaymentSummaryStyle,
                   ),
                 ),
@@ -94,7 +94,7 @@ class OrderPaymentSummary extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 28.0, top: 16.0),
                   child: Text(
-                    'S/ ${orderBloc.orderDetail.order.totalPrice}',
+                    'S/ ${orderBloc.orderDetail!.order!.totalPrice}',
                     style: totalPricePaymentSummaryStyle,
                   ),
                 ),

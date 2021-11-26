@@ -21,8 +21,8 @@ import 'sale_pickup_detail_item.dart';
 import 'sale_style.dart';
 
 class SaleDetailsPrepared extends StatefulWidget {
-  final OrderDetail orderDetail;
-  const SaleDetailsPrepared({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const SaleDetailsPrepared({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   _SaleDetailsPreparedState createState() => _SaleDetailsPreparedState();
@@ -58,7 +58,7 @@ class _SaleDetailsPreparedState extends State<SaleDetailsPrepared> {
   FutureBuilder<Response> _buildBody(BuildContext context) {
     return FutureBuilder(
       future: Provider.of<OrderService>(context, listen: false)
-          .ordersDetailbyId(widget.orderDetail.id),
+          .ordersDetailbyId(widget.orderDetail!.id!),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -66,9 +66,9 @@ class _SaleDetailsPreparedState extends State<SaleDetailsPrepared> {
           }
 
           OrderDetail orderDetail =
-              OrderDetail.fromJson(json.decode(snapshot.data.bodyString));
+              OrderDetail.fromJson(json.decode(snapshot.data!.bodyString));
           //inspect(orderDetail);
-          if (orderDetail.order.isDelivery) {
+          if (orderDetail.order!.isDelivery!) {
             return _buildOrderDetailDelivery(context, orderDetail);
           } else {
             return _buildOrderDetailPickup(context, orderDetail);
@@ -104,7 +104,7 @@ class _SaleDetailsPreparedState extends State<SaleDetailsPrepared> {
         text: 'ORDEN PREPARADA',
         disable: false,
         action: () {
-          _setStateOrder(context, widget.orderDetail.order.id, 3);
+          _setStateOrder(context, widget.orderDetail!.order!.id!, 3);
         },
       ),
     );

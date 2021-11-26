@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'order_ongoing_style.dart';
 
 class OrderDetailOngingStatus extends StatelessWidget {
-  const OrderDetailOngingStatus({Key key}) : super(key: key);
+  const OrderDetailOngingStatus({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +46,13 @@ class OrderDetailOngingStatus extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  orderBloc.orderDetail.order.state >= 2
+                  orderBloc.orderDetail!.order!.state! >= 2
                       ? CircleCheckOnIcon(height: 24.0, width: 24.0)
                       : CircleCheckOffIcon(height: 24.0, width: 24.0),
                   StatusLineIcon(
                     height: 38.0,
                     width: 38.0,
-                    color: orderBloc.orderDetail.order.state >= 2
+                    color: orderBloc.orderDetail!.order!.state! >= 2
                         ? DBColors.GREEN
                         : DBColors.GRAY_7,
                   ),
@@ -62,7 +62,7 @@ class OrderDetailOngingStatus extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
                   'Orden confirmada',
-                  style: orderBloc.orderDetail.order.state >= 2
+                  style: orderBloc.orderDetail!.order!.state! >= 2
                       ? titleStatusOnOrderOngoingStyle
                       : titleStatusOffOrderOngoingStyle,
                 ),
@@ -75,13 +75,13 @@ class OrderDetailOngingStatus extends StatelessWidget {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  orderBloc.orderDetail.order.state >= 3
+                  orderBloc.orderDetail!.order!.state! >= 3
                       ? CircleCheckOnIcon(height: 24.0, width: 24.0)
                       : CircleCheckOffIcon(height: 24.0, width: 24.0),
                   StatusLineIcon(
                     height: 38.0,
                     width: 38.0,
-                    color: orderBloc.orderDetail.order.state >= 3
+                    color: orderBloc.orderDetail!.order!.state! >= 3
                         ? DBColors.GREEN
                         : DBColors.GRAY_7,
                   ),
@@ -91,7 +91,7 @@ class OrderDetailOngingStatus extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
                   'Orden preparada',
-                  style: orderBloc.orderDetail.order.state >= 3
+                  style: orderBloc.orderDetail!.order!.state! >= 3
                       ? titleStatusOnOrderOngoingStyle
                       : titleStatusOffOrderOngoingStyle,
                 ),
@@ -102,14 +102,14 @@ class OrderDetailOngingStatus extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              orderBloc.orderDetail.order.state >= 4
+              orderBloc.orderDetail!.order!.state! >= 4
                   ? CircleCheckOnIcon(height: 24.0, width: 24.0)
                   : CircleCheckOffIcon(height: 24.0, width: 24.0),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
                   'Orden entregada',
-                  style: orderBloc.orderDetail.order.state >= 4
+                  style: orderBloc.orderDetail!.order!.state! >= 4
                       ? titleStatusOnOrderOngoingStyle
                       : titleStatusOffOrderOngoingStyle,
                 ),

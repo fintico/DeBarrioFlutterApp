@@ -4,10 +4,10 @@ import 'package:debarrioapp/models/address.dart';
 import 'package:debarrioapp/models/seller_user.dart';
 
 class SellerAddress {
-  int id;
-  SellerUser seller;
-  Address address;
-  bool isActive;
+  int? id;
+  SellerUser? seller;
+  Address? address;
+  bool? isActive;
 
   SellerAddress({this.id, this.seller, this.address, this.isActive});
 

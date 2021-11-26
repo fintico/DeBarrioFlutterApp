@@ -15,8 +15,8 @@ import 'shopping_cart_style.dart';
 
 class ShoppingCartCard extends StatelessWidget {
   //final OrderDetail orderDetail;
-  final int index;
-  const ShoppingCartCard({Key key, this.index}) : super(key: key);
+  final int? index;
+  const ShoppingCartCard({Key? key, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,13 @@ class ShoppingCartCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 24.0, top: 20.0, bottom: 21.0),
-                  child: cZeroStr(purchaseBloc.orderDetails[index].dish.image)
+                  child: cZeroStr(purchaseBloc.orderDetails[index!].dish!.image)
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(4.0),
                           child: Image(
                             image: NetworkImage(
                                 //dishProvider.list[index].image),
-                                purchaseBloc.orderDetails[index].dish.image),
+                                purchaseBloc.orderDetails[index!].dish!.image!),
                             height: 56.0,
                             width: 56.0,
                             fit: BoxFit.cover,
@@ -60,7 +60,7 @@ class ShoppingCartCard extends StatelessWidget {
                                   value: loadingProgress.expectedTotalBytes !=
                                           null
                                       ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes
+                                          loadingProgress.expectedTotalBytes!
                                       : null,
                                 ),
                               );
@@ -84,7 +84,7 @@ class ShoppingCartCard extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 16.0, top: 20.0),
                       child: Text(
                         //purchaseBloc.dishName,
-                        purchaseBloc.orderDetails[index].dish.dishName,
+                        purchaseBloc.orderDetails[index!].dish!.dishName!,
                         style: titleDishHeaderStyle,
                       ),
                     ),
@@ -92,7 +92,7 @@ class ShoppingCartCard extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           left: 16.0, top: 4.0, bottom: 21.0),
                       child: Text(
-                        'S/ ${purchaseBloc.orderDetails[index].order.totalPrice.toStringAsFixed(2)}',
+                        'S/ ${purchaseBloc.orderDetails[index!].order!.totalPrice!.toStringAsFixed(2)}',
                         style: titlePriceHeaderStyle,
                       ),
                     ),
@@ -109,14 +109,15 @@ class ShoppingCartCard extends StatelessWidget {
                   InkWell(
                       onTap: () {
                         print('menos');
-                        purchaseBloc.onSubtractItem(index);
+                        purchaseBloc.onSubtractItem(index!);
                       },
                       borderRadius: BorderRadius.circular(20.0),
                       child: MinusIcon()),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0, right: 12.0),
                     child: Text(
-                      purchaseBloc.orderDetails[index].order.portion.toString(),
+                      purchaseBloc.orderDetails[index!].order!.portion
+                          .toString(),
                       //purchaseBloc.counter.toString(),
                       style: numberCardStyle,
                     ),
@@ -124,7 +125,7 @@ class ShoppingCartCard extends StatelessWidget {
                   InkWell(
                       onTap: () {
                         print('mas');
-                        purchaseBloc.onAddItem(index);
+                        purchaseBloc.onAddItem(index!);
                       },
                       borderRadius: BorderRadius.circular(20.0),
                       child: PlusIcon()),

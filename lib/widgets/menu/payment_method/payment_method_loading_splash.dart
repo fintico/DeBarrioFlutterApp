@@ -17,8 +17,8 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class CreditCardAddSplash extends StatelessWidget {
-  final CreditCardModel creditCard;
-  const CreditCardAddSplash({Key key, this.creditCard}) : super(key: key);
+  final CreditCardModel? creditCard;
+  const CreditCardAddSplash({Key? key, this.creditCard}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +73,12 @@ class CreditCardAddSplash extends StatelessWidget {
     final prefs = new UserPreferences();
     try {
       await Provider.of<PaymentService>(context).postCreditCardCreate(
-        creditCard.cardNumber,
-        creditCard.cardHolderName,
-        creditCard.expiryDate,
-        creditCard.cvvCode,
+        creditCard!.cardNumber,
+        creditCard!.cardHolderName,
+        creditCard!.expiryDate,
+        creditCard!.cvvCode,
         false,
-        int.parse(creditCard.brand) ?? null,
+        int.parse(creditCard!.brand),
         prefs.userId,
       );
       await Future.delayed(Duration(milliseconds: 200));

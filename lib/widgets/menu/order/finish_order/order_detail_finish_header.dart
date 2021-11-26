@@ -10,7 +10,7 @@ import '../../../../utilsFunctions.dart';
 import '../order_style.dart';
 
 class OrderDetailFinishHeader extends StatelessWidget {
-  const OrderDetailFinishHeader({Key key}) : super(key: key);
+  const OrderDetailFinishHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +23,14 @@ class OrderDetailFinishHeader extends StatelessWidget {
           children: <Widget>[
             Row(
               children: <Widget>[
-                _imageBox(orderBloc.orderDetail.dish.seller.urlImage),
+                _imageBox(orderBloc.orderDetail!.dish!.seller!.urlImage!),
                 _informationBox(
-                    orderBloc.orderDetail.dish.seller.restaurantName),
+                    orderBloc.orderDetail!.dish!.seller!.restaurantName!),
               ],
             ),
             _rateBox(
-              orderBloc.orderDetail.dish.seller.rating.rated != null
-                  ? orderBloc.orderDetail.dish.seller.rating.rated
+              orderBloc.orderDetail!.dish!.seller!.rating!.rated != null
+                  ? orderBloc.orderDetail!.dish!.seller!.rating!.rated!
                       .toStringAsFixed(1)
                   : '0.0',
             ),
@@ -42,7 +42,7 @@ class OrderDetailFinishHeader extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 28.0, top: 32.0),
               child: Text(
-                'ORDEN #0${orderBloc.orderDetail.order.id}',
+                'ORDEN #0${orderBloc.orderDetail!.order!.id}',
                 style: titleOrderHeaderStyle,
               ),
             ),
@@ -52,7 +52,7 @@ class OrderDetailFinishHeader extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 28.0, top: 3.0, bottom: 15.0),
           child: Text(
-            'Entregada ${dateOrderedTimeString(orderBloc.orderDetail.order)}',
+            'Entregada ${dateOrderedTimeString(orderBloc.orderDetail!.order!)}',
             style: subtitleOrderHeaderStyle,
           ),
         ),
@@ -85,7 +85,7 @@ class OrderDetailFinishHeader extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: loadingProgress.expectedTotalBytes != null
                           ? loadingProgress.cumulativeBytesLoaded /
-                              loadingProgress.expectedTotalBytes
+                              loadingProgress.expectedTotalBytes!
                           : null,
                     ),
                   );

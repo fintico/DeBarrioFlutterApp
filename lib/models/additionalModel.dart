@@ -1,8 +1,8 @@
 class AdditionalModel {
-  int id;
-  String additionalDescription;
-  double price;
-  bool isFree;
+  int? id;
+  String? additionalDescription;
+  double? price;
+  bool? isFree;
 
   AdditionalModel(
       {this.id, this.additionalDescription, this.price, this.isFree});

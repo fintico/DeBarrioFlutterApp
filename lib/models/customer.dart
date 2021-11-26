@@ -1,7 +1,7 @@
 import 'package:debarrioapp/models/user.dart';
 
 class Customer {
-  User user;
+  User? user;
 
   Customer({this.user});
 

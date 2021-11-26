@@ -1,6 +1,6 @@
 class DishCategory {
-  int id;
-  String dishCategoryDescription;
+  int? id;
+  String? dishCategoryDescription;
 
   DishCategory({this.id, this.dishCategoryDescription});
 

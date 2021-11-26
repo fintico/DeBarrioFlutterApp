@@ -1,13 +1,13 @@
 import 'card_type.dart';
 
 class CreditCard {
-  int id;
-  CardType cardType;
-  String cardNumber;
-  String cardHolder;
-  String expiredDate;
-  String cvv;
-  bool isDeleted;
+  int? id;
+  CardType? cardType;
+  String? cardNumber;
+  String? cardHolder;
+  String? expiredDate;
+  String? cvv;
+  bool? isDeleted;
 
   CreditCard({
     this.id,

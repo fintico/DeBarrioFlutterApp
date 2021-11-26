@@ -15,9 +15,9 @@ import '../../../utilsFunctions.dart';
 import 'publish_style.dart';
 
 class PublishCard extends StatelessWidget {
-  final int index;
-  final DishModel dish;
-  const PublishCard({Key key, this.index, this.dish}) : super(key: key);
+  final int? index;
+  final DishModel? dish;
+  const PublishCard({Key? key, this.index, this.dish}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +33,8 @@ class PublishCard extends StatelessWidget {
                 //params: {'id': dishProvider.list[index].id}),
                 navigationType: NavigationType.pushReplace,
                 params: {
-                  'id': dish.id,
-                  'isActive': dish.isActive,
+                  'id': dish!.id,
+                  'isActive': dish!.isActive,
                   'dishModel': dish
                 }),
             //print('${dishProvider.list[index].id}')
@@ -53,11 +53,11 @@ class PublishCard extends StatelessWidget {
                         children: [
                           Text(
                             //"PUBLICACIÓN #0${dishProvider.list[index].id}",
-                            "PUBLICACIÓN #0${dish.id}",
+                            "PUBLICACIÓN #0${dish!.id}",
                             style: publishCardtitleStyle,
                           ),
                           //getDishState(dishProvider.list[index])
-                          getDishState(dish) && dish.isActive
+                          getDishState(dish!) && dish!.isActive!
                               ? stateOnBox()
                               : stateOffBox(),
                         ],
@@ -70,13 +70,13 @@ class PublishCard extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 28.0, top: 18.0, bottom: 40.0),
                         child: //cZeroStr(dishProvider.list[index].image)
-                            cZeroStr(dish.image)
+                            cZeroStr(dish!.image)
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(4.0),
                                     child: Image(
                                       image: NetworkImage(
                                           //dishProvider.list[index].image),
-                                          dish.image),
+                                          dish!.image!),
                                       height: 56.0,
                                       width: 56.0,
                                       fit: BoxFit.cover,
@@ -92,7 +92,7 @@ class PublishCard extends StatelessWidget {
                                                 ? loadingProgress
                                                         .cumulativeBytesLoaded /
                                                     loadingProgress
-                                                        .expectedTotalBytes
+                                                        .expectedTotalBytes!
                                                 : null,
                                           ),
                                         );
@@ -119,7 +119,7 @@ class PublishCard extends StatelessWidget {
                                   const EdgeInsets.only(left: 16.0, top: 18.0),
                               child: Text(
                                 //dishProvider.list[index].dishName,
-                                dish.dishName,
+                                dish!.dishName!,
                                 style: titleCardStyle,
                               ),
                             ),
@@ -131,7 +131,7 @@ class PublishCard extends StatelessWidget {
                                     dishProvider.list[index].deliveryTimeFrom +
                                     dishProvider.list[index].deliveryTimeTo, */
                                 //'Entrega ${dateTimeString(dishProvider.list[index])}',
-                                'Entrega ${dateTimeString(dish)}',
+                                'Entrega ${dateTimeString(dish!)}',
                                 style: subtitleCardStyle,
                               ),
                             ),
@@ -140,7 +140,7 @@ class PublishCard extends StatelessWidget {
                                   left: 16.0, top: 4.0, bottom: 24.0),
                               child: Text(
                                 //'S/ ${dishProvider.list[index].priceDelivery}'
-                                'S/ ${dish.priceDelivery}'.toString(),
+                                'S/ ${dish!.priceDelivery}'.toString(),
                                 style: priceCardStyle,
                               ),
                             ),

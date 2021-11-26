@@ -8,8 +8,8 @@ class Auth {
     this.data,
   });
 
-  final String status;
-  final User data;
+  final String? status;
+  final User? data;
 
   factory Auth.fromJson(Map<String, dynamic> json) => Auth(
         status: json["status"] == null ? null : json["status"],
@@ -18,7 +18,7 @@ class Auth {
 
   Map<String, dynamic> toJson() => {
         "status": status == null ? null : status,
-        "data": data == null ? null : data.toJson(),
+        "data": data == null ? null : data!.toJson(),
       };
 
   factory Auth.fromRawJson(String str) => Auth.fromJson(json.decode(str));

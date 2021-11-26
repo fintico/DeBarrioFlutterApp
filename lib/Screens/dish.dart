@@ -17,9 +17,9 @@ import 'fullproductinfo.dart';
 import 'map_screen.dart';
 
 class DishConfirm extends StatefulWidget {
-  final int dishId;
+  final int? dishId;
 
-  const DishConfirm({Key key, this.dishId}) : super(key: key);
+  const DishConfirm({Key? key, this.dishId}) : super(key: key);
   @override
   _DishConfirmState createState() => _DishConfirmState();
 }

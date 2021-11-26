@@ -1,19 +1,19 @@
-import 'package:dropdown_formfield/dropdown_formfield.dart';
+/* import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:flutter/material.dart';
 
 import '../utilProperties.dart';
 
 class DropDownCategory extends StatefulWidget {
-  final Function setCategory;
+  final Function? setCategory;
 
-  const DropDownCategory({Key key, this.setCategory}) : super(key: key);
+  const DropDownCategory({Key? key, this.setCategory}) : super(key: key);
 
   @override
   _DropDownCategoryState createState() => _DropDownCategoryState();
 }
 
 class _DropDownCategoryState extends State<DropDownCategory> {
-  String _myCategoria;
+  late String _myCategoria;
 
   @override
   Widget build(BuildContext context) {
@@ -63,3 +63,4 @@ class _DropDownCategoryState extends State<DropDownCategory> {
     );
   }
 }
+ */

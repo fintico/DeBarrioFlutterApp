@@ -6,11 +6,11 @@ import 'package:debarrioapp/constants/colors.dart' as DBColors;
 import 'package:debarrioapp/constants/text_style.dart' as DBStyles;
 
 class ListTitleButton extends StatefulWidget {
-  final Function action;
-  final String title;
-  final Widget icon;
+  final VoidCallback? action;
+  final String? title;
+  final Widget? icon;
   ListTitleButton({
-    Key key,
+    Key? key,
     @required this.action,
     @required this.title,
     @required this.icon,
@@ -70,7 +70,7 @@ class _ListTitleButtonState extends State<ListTitleButton> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
                         child: Text(
-                          widget.title,
+                          widget.title!,
                           textAlign: TextAlign.left,
                           style: DBStyles.getStyle(
                             DBStyles.BLACK,

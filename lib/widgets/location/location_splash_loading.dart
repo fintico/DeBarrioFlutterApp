@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
+import 'package:debarrioapp/providers/location_provider.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/providers/home_provider.dart';
 import 'package:debarrioapp/services/seller_address_service.dart';
@@ -19,7 +21,7 @@ import 'package:provider/provider.dart';
 import 'package:sailor/sailor.dart';
 
 class LocationSplash extends StatefulWidget {
-  LocationSplash({Key key}) : super(key: key);
+  LocationSplash({Key? key}) : super(key: key);
 
   @override
   _LocationSplashState createState() => _LocationSplashState();
@@ -40,9 +42,17 @@ class _LocationSplashState extends State<LocationSplash> {
     super.initState();
   }
 
+  final location = locationProvider<LocationProvider>();
+
   @override
   Widget build(BuildContext context) {
-    setLocation();
+    //setLocation();
+    location.createUserLocation(
+      location.address,
+      location.addressDescription,
+      location.latitude,
+      location.longitude,
+    );
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -79,23 +89,27 @@ class _LocationSplashState extends State<LocationSplash> {
     );
   }
 
-  Future setLocation() async {
+  /*  Future setLocation() async {
     try {
       Response<dynamic> res = await Provider.of<LocationService>(context)
-          .postUserLocation(userAppData.address, userAppData.addressDescription,
-              true, userAppData.longitude, userAppData.latitude);
+          .postUserLocation(
+              userAppData.address!,
+              userAppData.addressDescription!,
+              true,
+              userAppData.longitude!,
+              userAppData.latitude!);
 
       Address address = Address.fromRawJson(res.bodyString);
 
-      prefs.address = address.address;
-      prefs.latitude = address.latitude;
-      prefs.longitude = address.longitude;
+      prefs.address = address.address!;
+      prefs.latitude = address.latitude!;
+      prefs.longitude = address.longitude!;
 
       await Provider.of<SellerAddressService>(context, listen: false)
-          .postSellerAddress(prefs.userId, address.id, true);
+          .postSellerAddress(prefs.userId, address.id!, true);
 
       await Provider.of<CustomerService>(context, listen: false)
-          .postCustomerAddress(prefs.userId, address.id, true);
+          .postCustomerAddress(prefs.userId, address.id!, true);
 
       await Future.delayed(Duration(milliseconds: 200));
 
@@ -107,5 +121,5 @@ class _LocationSplashState extends State<LocationSplash> {
     } catch (e) {
       print(e.toString());
     }
-  }
+  } */
 }

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../../../../utilsFunctions.dart';
 
 class OrderDetailOngoingRoute extends StatefulWidget {
-  OrderDetailOngoingRoute({Key key}) : super(key: key);
+  OrderDetailOngoingRoute({Key? key}) : super(key: key);
 
   @override
   _OrderDetailOngoingRouteState createState() =>
@@ -16,41 +16,41 @@ class OrderDetailOngoingRoute extends StatefulWidget {
 }
 
 class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
-  GoogleMapController mapController;
-  BitmapDescriptor customStartMark;
-  BitmapDescriptor customDestinationMark;
-  CameraPosition _initialLocation;
+  GoogleMapController? mapController;
+  BitmapDescriptor? customStartMark;
+  BitmapDescriptor? customDestinationMark;
+  CameraPosition? _initialLocation;
   Set<Marker> markers = {};
-  String _mapStyle;
+  String? _mapStyle;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await _setIconStartMarker();
       await _setIconDestinatioMarker();
-      await rootBundle.loadString('assets/map_style.txt').then((string) {
+      /* await rootBundle.loadString('assets/map_style.txt').then((string) {
         _mapStyle = string;
-      });
+      }); */
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final orderBloc = Provider.of<OrderBloc>(context);
-    double latStart = //-12.089114550550791;
-        orderBloc.orderDetail.dish.address.latitude;
-    double lngStart = //-77.07022860227016;
-        orderBloc.orderDetail.dish.address.longitude;
+    double? latStart = //-12.089114550550791;
+        orderBloc.orderDetail!.dish!.address!.latitude;
+    double? lngStart = //-77.07022860227016;
+        orderBloc.orderDetail!.dish!.address!.longitude;
 
-    double latDestination = //-12.090008898541878;
-        orderBloc.orderDetail.order.customerAddress.address.latitude;
-    double lngDestination = //-77.06993355923846;
-        orderBloc.orderDetail.order.customerAddress.address.longitude;
+    double? latDestination = //-12.090008898541878;
+        orderBloc.orderDetail!.order!.customerAddress!.address!.latitude;
+    double? lngDestination = //-77.06993355923846;
+        orderBloc.orderDetail!.order!.customerAddress!.address!.longitude;
 
-    _setStartMarker(latStart, lngStart);
-    _setDestinationMarker(latDestination, lngDestination);
+    _setStartMarker(latStart!, lngStart!);
+    _setDestinationMarker(latDestination!, lngDestination!);
     return Container(
       height: screenHeight(context, dividedBy: 1.8),
       child: _map(),
@@ -59,7 +59,7 @@ class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
 
   _map() {
     return GoogleMap(
-      initialCameraPosition: _initialLocation,
+      initialCameraPosition: _initialLocation!,
       myLocationEnabled: false,
       myLocationButtonEnabled: false,
       buildingsEnabled: true,
@@ -67,19 +67,19 @@ class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
       markers: markers,
       zoomGesturesEnabled: true,
       zoomControlsEnabled: false,
-      onMapCreated: _onMapCreated,
+      onMapCreated: onMapCreatedEvent,
       trafficEnabled: false,
       indoorViewEnabled: false,
     );
   }
 
-  _onMapCreated(GoogleMapController controller) {
+  /* _onMapCreated(GoogleMapController controller) {
     //if (mounted)
     setState(() {
       mapController = controller;
       controller.setMapStyle(_mapStyle);
     });
-  }
+  } */
 
   _setStartMarker(double lat, double lng) {
     //setState(() {
@@ -89,7 +89,7 @@ class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
         lat,
         lng,
       ),
-      icon: customStartMark,
+      icon: customStartMark!,
     );
     markers.add(startMarker);
     _initialLocation = CameraPosition(target: LatLng(lat, lng), zoom: 15.0);
@@ -104,7 +104,7 @@ class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
         lat,
         lng,
       ),
-      icon: customDestinationMark,
+      icon: customDestinationMark!,
     );
     markers.add(destinationMarker);
   }
@@ -119,5 +119,17 @@ class _OrderDetailOngoingRouteState extends State<OrderDetailOngoingRoute> {
     await getBytesFromAsset('assets/icons/placeholder.png', 84).then(
         (value) => customDestinationMark = BitmapDescriptor.fromBytes(value));
     //});
+  }
+
+  void onMapCreatedEvent(controller) {
+    mapController = controller;
+    _loadMapStyle(mapController!);
+  }
+
+  void _loadMapStyle(GoogleMapController googleMapController) {
+    rootBundle.loadString('assets/map_style.json').then((mapStyle) {
+      _mapStyle = mapStyle;
+      googleMapController.setMapStyle(_mapStyle);
+    });
   }
 }

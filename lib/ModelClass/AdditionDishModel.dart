@@ -1,8 +1,8 @@
 import 'dart:core';
 
 class AdditionDish {
-  String additionName;
-  String price;
+  String? additionName;
+  String? price;
 
   //Do not upload
   bool isSelected = false;

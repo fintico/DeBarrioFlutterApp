@@ -9,7 +9,7 @@ import 'calendar_bloc.dart';
 import 'calendar_style.dart';
 
 class CalendarHeader extends StatelessWidget {
-  const CalendarHeader({Key key}) : super(key: key);
+  const CalendarHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

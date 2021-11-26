@@ -18,8 +18,8 @@ import 'package:sailor/sailor.dart';
 import 'payment_method_style.dart';
 
 class PaymentMethodItem extends StatelessWidget {
-  final CreditCard creditCard;
-  const PaymentMethodItem({Key key, this.creditCard}) : super(key: key);
+  final CreditCard? creditCard;
+  const PaymentMethodItem({Key? key, this.creditCard}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PaymentMethodItem extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 28.0, top: 20.0, bottom: 20.0),
                         child: SvgPicture.asset(
-                          creditCard.cardType.id == 1
+                          creditCard!.cardType!.id == 1
                               ? 'assets/images/visa.svg'
                               : 'assets/images/mastercard.svg',
                           height: 24.0,
@@ -51,7 +51,7 @@ class PaymentMethodItem extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 16.0, top: 20.0, bottom: 20.0),
                         child: Text(
-                          '**** ${creditCard.cardNumber.substring(creditCard.cardNumber.length - 5)}',
+                          '**** ${creditCard!.cardNumber!.substring(creditCard!.cardNumber!.length - 5)}',
                           style: numberStyle,
                         ),
                       ),
@@ -147,7 +147,7 @@ class PaymentMethodItem extends StatelessWidget {
   Future deletedCreditCard(BuildContext context) async {
     try {
       await Provider.of<PaymentService>(context, listen: false)
-          .putUpdateStateByCreditCard(creditCard.id, true);
+          .putUpdateStateByCreditCard(creditCard!.id!, true);
       Routes.sailor.navigate(
         Routes.PAYMENT_METHOD_LIST_SCREEN,
         navigationType: NavigationType.pushReplace,

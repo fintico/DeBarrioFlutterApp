@@ -11,8 +11,8 @@ import '../../../utilsFunctions.dart';
 import 'sale_style.dart';
 
 class PickupDetail extends StatelessWidget {
-  final OrderDetail orderDetail;
-  const PickupDetail({Key key, this.orderDetail}) : super(key: key);
+  final OrderDetail? orderDetail;
+  const PickupDetail({Key? key, this.orderDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +29,15 @@ class PickupDetail extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 24.0),
                   child: Text(
                     /* "ORDEN #0${dish.id}", */
-                    'ORDEN #0${orderDetail.order.id}',
+                    'ORDEN #0${orderDetail!.order!.id}',
                     style: numberOrdersPickupStyle,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 26.0),
-                  child: orderDetail.order.state == 4
+                  child: orderDetail!.order!.state == 4
                       ? stateOffBox()
-                      : stateOnBox(orderDetail.order.state),
+                      : stateOnBox(orderDetail!.order!.state!),
                 )
                 //getDishState(dishProvider.list[index])
                 /* getDishState(dish) && dish.isActive
@@ -51,13 +51,13 @@ class PickupDetail extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.only(left: 28.0, top: 18.0, bottom: 40.0),
-                child: cZeroStr(orderDetail.dish.image)
+                child: cZeroStr(orderDetail!.dish!.image)
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(4.0),
                         child: Image(
                           image: NetworkImage(
                               //dishProvider.list[index].image),
-                              orderDetail.dish.image),
+                              orderDetail!.dish!.image!),
                           height: 56.0,
                           width: 56.0,
                           fit: BoxFit.cover,
@@ -68,7 +68,7 @@ class PickupDetail extends StatelessWidget {
                                 value: loadingProgress.expectedTotalBytes !=
                                         null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             );
@@ -95,7 +95,7 @@ class PickupDetail extends StatelessWidget {
                       child: Text(
                         //dishProvider.list[index].dishName,
                         //'dish.dishName',
-                        orderDetail.dish.dishName,
+                        orderDetail!.dish!.dishName!,
                         style: titleCardStyle,
                       ),
                     ),
@@ -107,9 +107,9 @@ class PickupDetail extends StatelessWidget {
                                     dishProvider.list[index].deliveryTimeTo, */
                         //'Entrega ${dateTimeString(dishProvider.list[index])}',
                         //'Entrega ${dateTimeString(dish)}',
-                        orderDetail.dish.additional == null
+                        orderDetail!.dish!.additional == null
                             ? '-'
-                            : '+ ${orderDetail.dish.additional.additionalDescription}',
+                            : '+ ${orderDetail!.dish!.additional!.additionalDescription}',
                         style: subtitleCardPickupStyle,
                       ),
                     ),
@@ -121,7 +121,7 @@ class PickupDetail extends StatelessWidget {
                         /* '${pluralPortion(dish)} | S/ ${dish.priceDelivery}'
                               .toString(), */
                         //'02 Porciones',
-                        '${pluralPortion(orderDetail.order.portion)}',
+                        '${pluralPortion(orderDetail!.order!.portion!)}',
                         style: priceCardStyle,
                       ),
                     ),
@@ -136,7 +136,7 @@ class PickupDetail extends StatelessWidget {
             endIndent: 28.0,
             thickness: 1.0,
           ),
-          _clientName(orderDetail.order),
+          _clientName(orderDetail!.order!),
           Divider(
             color: DBColors.GRAY_12,
             indent: 28.0,
@@ -144,9 +144,9 @@ class PickupDetail extends StatelessWidget {
             thickness: 1.0,
           ),
           _deliveryType(),
-          _gridLabel(orderDetail),
+          _gridLabel(orderDetail!),
           //_address(),
-          _totalPrice(orderDetail.order),
+          _totalPrice(orderDetail!.order!),
           Divider(
             color: DBColors.GRAY_12,
             indent: 28.0,
@@ -179,7 +179,7 @@ class PickupDetail extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16.0),
                   child: Text(
-                    order.customerAddress.customer.user.username,
+                    order.customerAddress!.customer!.user!.username!,
                     style: subLabelTitlePickupStyle,
                   ),
                 ),
@@ -342,7 +342,7 @@ class PickupDetail extends StatelessWidget {
                     ),
                   ),
                 ),
-                child: _schedule(orderDetail.dish),
+                child: _schedule(orderDetail.dish!),
               ),
             ),
           ),
@@ -449,7 +449,7 @@ class PickupDetail extends StatelessWidget {
                       ? 'CONFIRMADA'
                       : state == 3
                           ? 'PREPARADA'
-                          : null,
+                          : 'null',
               style: stateOnStyle,
             ),
           ),

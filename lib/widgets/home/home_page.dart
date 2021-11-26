@@ -6,6 +6,7 @@ import 'package:debarrioapp/Screens/calendar_splash.dart';
 import 'package:debarrioapp/Screens/nav_drawer.dart';
 import 'package:debarrioapp/Screens/paysplash.dart';
 import 'package:debarrioapp/models/customer_address.dart';
+import 'package:debarrioapp/service_locator.dart';
 import 'package:debarrioapp/services/customer_service.dart';
 import 'package:debarrioapp/models/dishModel.dart';
 import 'package:debarrioapp/models/seller_address.dart';
@@ -38,58 +39,51 @@ import '../../utilsFunctions.dart';
 import 'home_bottom_modal.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  GoogleMapController myMapController;
+  GoogleMapController? myMapController;
   final prefs = new UserPreferences();
   static const LatLng _mainLocation =
       const LatLng(-12.03264748063415, -77.0454660731605);
-  CameraPosition _initialLocation;
-  //double latitude = userAppData.latitude;
-  double latitude;
-  //double longitude = userAppData.longitude;
-  double longitude;
-  BitmapDescriptor customStartMark;
+  CameraPosition? _initialLocation;
+  double? latitude;
+  double? longitude;
+  BitmapDescriptor? customStartMark;
   Set<Marker> markers = {};
   Set<Marker> markersList = {};
-  String _mapStyle;
+  String? _mapStyle;
   String address = '';
+
+  final home = homeProvider<HomeBloc>();
+  final dish = dishProvider<DishProvider>();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
+    WidgetsBinding.instance!.addPostFrameCallback((_) async {
       await _setIconStartMarker();
       _fetchData();
     });
 
-    rootBundle.loadString('assets/map_style.txt').then((string) {
+    /* rootBundle.loadString('assets/map_style.txt').then((string) {
       _mapStyle = string;
-    });
-    //_setIconStartMarker();
-
+    }); */
     latitude = prefs.latitude;
     longitude = prefs.longitude;
     address = prefs.address;
 
     _initialLocation =
-        CameraPosition(target: LatLng(latitude, longitude), zoom: 16.0);
-    //print('Home Page');
-    //print(latitude);
-    //print(longitude);
-
-    //_onAddMarkers();
+        CameraPosition(target: LatLng(latitude!, longitude!), zoom: 16.0);
   }
 
   @override
   Widget build(BuildContext context) {
     final purchaseBloc = Provider.of<PurchaseBloc>(context);
-    //print(address);
     final appBar = PreferredSize(
       child: AppBarOptionThree(
         leftIconAction: () {
@@ -119,25 +113,19 @@ class _HomePageState extends State<HomePage> {
         },
         secondaryIconAction: () {
           Navigator.push(
-              //context, MaterialPageRoute(builder: (_) => CalendarTimeline()));
-              context,
-              MaterialPageRoute(builder: (_) => CalendarSplash()));
+              context, MaterialPageRoute(builder: (_) => CalendarSplash()));
         },
         subTitleIconAction: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (_) => HomeLocation()));
         },
         subTitle: address,
-        //subTitle: '-',
       ),
       preferredSize: Size.fromHeight(104.0),
     );
-    //_setStartMarker(-12.0891486, -77.0724173);
-    //_setStartMarker(-12.0891486, -77.0724173);
     return SafeArea(
       child: Scaffold(
         appBar: appBar,
-        //backgroundColor: DBC,
         body: Stack(
           children: [
             _myMap(),
@@ -150,8 +138,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void moveCamera(lat, lng) {
-    //print(lat);
-    myMapController.animateCamera(
+    myMapController!.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(lat, lng),
@@ -165,9 +152,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       height: screenHeight(context, dividedBy: 1),
       child: GoogleMap(
-        initialCameraPosition:
-            //CameraPosition(target: _mainLocation, zoom: 10.0),
-            _initialLocation,
+        initialCameraPosition: _initialLocation!,
         myLocationEnabled: true,
         zoomControlsEnabled: false,
         myLocationButtonEnabled: false,
@@ -177,15 +162,14 @@ class _HomePageState extends State<HomePage> {
         markers: markersList,
         trafficEnabled: false,
         indoorViewEnabled: false,
-
-        //markers: _markers,
-        //onTap: setCurrentMarkerFromCoordinates,
-        onMapCreated: (controller) {
-          setState(() {
+        onMapCreated:
+            onMapCreatedEvent, /* (controller) {
+          _onMapCreated(controller);
+          /*  setState(() {
             myMapController = controller;
-          });
-        },
-        //onMapCreated: _onMapCreated,
+            _loadMapStyle(myMapController);
+          }); */
+        }, */
       ),
     );
   }
@@ -209,17 +193,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   _setStartMarker(double lat, double lng) {
-    //setState(() {
     Marker startMarker = Marker(
       markerId: MarkerId('1'),
       position: LatLng(
         lat,
         lng,
       ),
-      icon: customStartMark,
+      icon: customStartMark!,
     );
     markers.add(startMarker);
-    //_initialLocation = CameraPosition(target: LatLng(lat, lng), zoom: 15.0);
 
     //});
   }
@@ -230,16 +212,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   _onAddMarkers() {
-    final homeBloc = Provider.of<HomeBloc>(context, listen: false);
-    if (cZeroStr(homeBloc.seller)) {
-      for (var i = 0; i < homeBloc.seller.length; i++) {
+    //final homeBloc = Provider.of<HomeBloc>(context, listen: false);
+    if (cZeroStr(home.seller)) {
+      for (var i = 0; i < home.seller!.length; i++) {
         Marker marker = Marker(
-          markerId: MarkerId((homeBloc.seller[i].userId).toString()),
+          markerId: MarkerId((home.seller![i].userId).toString()),
           position: LatLng(
-            homeBloc.seller[i].sellers[0].address.latitude,
-            homeBloc.seller[i].sellers[0].address.longitude,
+            home.seller![i].sellers![0].address!.latitude!,
+            home.seller![i].sellers![0].address!.longitude!,
           ),
-          icon: customStartMark,
+          icon: customStartMark!,
         );
         markersList.add(marker);
       }
@@ -248,21 +230,37 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  _onMapCreated(GoogleMapController controller) {
+  /* _onMapCreated(GoogleMapController controller) {
     if (mounted)
       setState(() {
         myMapController = controller;
         controller.setMapStyle(_mapStyle);
       });
+  } */
+
+  void onMapCreatedEvent(controller) {
+    myMapController = controller;
+    _loadMapStyle(myMapController!);
+  }
+
+  void _loadMapStyle(GoogleMapController googleMapController) {
+    rootBundle.loadString('assets/map_style.json').then((mapStyle) {
+      _mapStyle = mapStyle;
+      googleMapController.setMapStyle(_mapStyle);
+    });
   }
 
   _fetchData() async {
-    await _getUserData();
-    await _getRestaurants();
-    await _getPosts();
+    home.loadUser();
+    home.loadRestaurants();
+    dish.loadPosts();
+    _onAddMarkers();
+    //await _getUserData();
+    //await _getRestaurants();
+    //await _getPosts();
   }
 
-  Future _getRestaurants() async {
+/*   Future _getRestaurants() async {
     try {
       final homeBloc = Provider.of<HomeBloc>(context, listen: false);
       //print(homeBloc.deliveryDate);
@@ -306,7 +304,7 @@ class _HomePageState extends State<HomePage> {
       CustomerAddress customerAddress =
           CustomerAddress.fromRawJson(resCustomer.bodyString);
       homeBloc.onSetCustomerAddress(customerAddress);
-      print(homeBloc.customerAddress.id);
+      print(homeBloc.customerAddress!.id);
     } catch (e) {
       print(e.toString());
     }
@@ -326,5 +324,5 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print(e.toString());
     }
-  }
+  } */
 }

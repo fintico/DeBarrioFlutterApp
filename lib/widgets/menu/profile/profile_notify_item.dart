@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'profile_style.dart';
 
 class ProfileNotify extends StatelessWidget {
-  const ProfileNotify({Key key}) : super(key: key);
+  const ProfileNotify({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
